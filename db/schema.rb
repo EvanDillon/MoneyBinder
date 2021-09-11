@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_10_142254) do
+ActiveRecord::Schema.define(version: 2021_09_11_152900) do
 
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "userType", default: 3
+    t.string "firstName"
+    t.string "lastName"
+    t.date "dob"
+    t.string "email"
+    t.string "phoneNum"
+    t.string "address"
+    t.datetime "passUpdatedAt", default: "2021-09-11 16:03:52"
+    t.boolean "active", default: true
   end
 
 end
