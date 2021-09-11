@@ -1,8 +1,20 @@
 <h1>Sign Up</h1>
 <%= form_for @user do |f|%>
-  <%= f.label :username%><br>
-  <%= f.text_field :username%><br>
+  <%= f.label :first_name%><br>
+  <%= f.text_field :firstName, {required: true}%><br>
+  <%= f.label :last_name %><br>
+  <%= f.text_field :lastName, {required: true}%><br>
   <%= f.label :password%><br>
-  <%= f.password_field :password%><br>
+  <%= f.password_field :password, {required: true}%><br>
+  <%= f.label :address%><br>
+  <%= f.text_field :address, {required: true}%><br>
+  <%= f.label :email%><br>
+  <%= f.email_field :email, {required: true}%><br>
+  <%= f.label :phone_number%><br>
+  <%= f.text_field :phoneNum, {required: true}%><br>
+  <%= f.label :date_of_birth%><br>
+  <%= f.date_select :dob, { :order => [:month, :day, :year], :start_year => 1920, :end_year => 2021, required: true}%><br>
+  <%= f.label :Role%><br>
+  <%= f.select :userType, [1, 2, 3]%><br>
   <%= f.submit %>
 <%end%>
