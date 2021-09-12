@@ -29,6 +29,7 @@ class UsersController < ApplicationController
   end
 
   private
+  
   def create_username(fname, lname, accountCreated)
     if fname && lname && accountCreated
       user_name = "#{fname.first}#{lname}#{accountCreated.strftime("%m")}#{accountCreated.strftime("%y")}"
