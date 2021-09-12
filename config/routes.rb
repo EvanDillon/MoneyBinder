@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   root to: 'sessions#welcome'
   resources :users, only: [:new, :create]
-  get 'login', to: 'sessions#new'
-  post 'login', to: 'sessions#create'
-  get 'welcome', to: 'sessions#welcome'
-  get 'authorized', to: 'sessions#page_requires_login'
+
+  scope '', controller: 'sessions' do
+    post 'login/', action: 'login'
+    get 'welcome/', action: 'welcome'
+    get 'authorized/', action: 'page_requires_login'
+    get 'password_reset/', action: 'password_reset'
+  end
 end
