@@ -4,10 +4,10 @@ class SessionsController < ApplicationController
   def login
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
-        session[:user_id] = @user.id
-        redirect_to authorized_path
+      session[:user_id] = @user.id
+      redirect_to authorized_path
     else
-        redirect_to welcome_path, danger: "Username/Password not found"
+      redirect_to welcome_path, danger: "Username/Password not found"
     end
   end
 
@@ -18,5 +18,6 @@ class SessionsController < ApplicationController
   end
 
   def password_reset
+    @user_email = params[:email]
   end
 end
