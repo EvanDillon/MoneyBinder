@@ -20,16 +20,23 @@ class UsersController < ApplicationController
                 userType: "#{params[:user][:userType]}",
             )
     
+    # If user/pass already exists the @user will not be created and it wil print the error message. 
     if !@user.id.nil?
-      session[:user_id] = @user.id
-      redirect_to '/authorized'
+      pass_check = valid_pass?(params[:user][:password])
+      if pass_check.empty?
+        session[:user_id] = @user.id
+        redirect_to '/authorized'
+      else
+        redirect_to '/users/new', danger: "#{pass_check}"
+      end
     else
-      redirect_to '/users/new', danger: "Username has already been taken"
+      redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
     end
   end
 
   private
   
+  # Creates username for new user
   def create_username(fname, lname, accountCreated)
     if fname && lname && accountCreated
       user_name = "#{fname.first}#{lname}#{accountCreated.strftime("%m")}#{accountCreated.strftime("%y")}"
@@ -37,5 +44,21 @@ class UsersController < ApplicationController
     else 
       return nil
     end 
+  end
+
+  def valid_pass?(pass)
+    if pass.length >= 8 
+      if pass.first.match?(/[[:alpha:]]/)
+        if pass.match?(/[[:alpha:]]/) && pass.match?(/[[:digit:]]/) && pass.index( /[^[:alnum:]]/ ) != nil
+          return ""
+        else
+          return "Password must have a letter, a number, and a special character. \n"
+        end
+      else 
+        return "Password must start with a letter. \n"
+      end
+    else
+      return "Password needs to be at least 8 characters. \n"
+    end   
   end
 end
