@@ -1,22 +1,45 @@
-<h1>Sign Up</h1>
-<%= form_for @user do |f|%>
-  <%= f.label :first_name%><br>
-  <%= f.text_field :firstName, {required: true}%><br>
-  <%= f.label :last_name %><br>
-  <%= f.text_field :lastName, {required: true}%><br>
-  <%= f.label :password%><br>
-  <%= f.password_field :password, {required: true}%><br>
-  <%= f.label :address%><br>
-  <%= f.text_field :address, {required: true}%><br>
-  <%= f.label :email%><br>
-  <%= f.email_field :email, {required: true}%><br>
-  <%= f.label :phone_number%><br>
-  <%= f.text_field :phoneNum, {required: true}%><br>
-  <%= f.label :date_of_birth%><br>
-  <%= f.date_select :dob, { :order => [:month, :day, :year], :start_year => 1920, :end_year => 2021, required: true}%><br>
-  <%= f.label :Role%><br>
-  <%= f.select :userType, [1, 2, 3]%><br>
-  <%= f.submit %>
-<%end%>
+<div class="container">  
+  <h1>Sign Up</h1>
+  <%= form_for @user do |f|%>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label 'First Name'%>
+      <%= f.text_field :firstName, {required: true, class: 'form-control'}%>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.label 'Last Name' %>
+      <%= f.text_field :lastName, {required: true, class: 'form-control'}%>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :password%>
+    <%= f.password_field :password, {required: true, class: 'form-control'}%>
+  </div>
+  <div class="form-group">
+    <%= f.label :address%>
+    <%= f.text_field :address, {required: true, class: 'form-control'}%>
+  </div>
+  <div class="form-group">
+    <%= f.label :email%>
+    <%= f.email_field :email, {required: true, class: 'form-control'}%>
+  </div>    
 
-<%= link_to 'Back to Login', welcome_path %>
+  <div class="form-group">
+    <%= f.label :phone_number%>
+    <%= f.text_field :phoneNum, {required: true, class: 'form-control'}%>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label :date_of_birth%>
+      <%= f.date_select :dob, { :order => [:month, :day, :year], :start_year => 1920, :end_year => 2021, required: true}%>
+    </div>
+        
+    <div class="form-group col-md-6">
+      <%= f.label :Role%>
+      <%= f.select :userType, [1, 2, 3]%>
+    </div>
+  </div>
+      <%= f.submit 'Submit', :class => 'btn btn-primary btn-block' %>
+    <%end%>
+  <%= link_to 'Back to Login', welcome_path %>
+</div>
