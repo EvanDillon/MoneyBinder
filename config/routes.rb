@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   scope '', controller: 'sessions' do
     post 'login/', action: 'login'
     get 'welcome/', action: 'welcome'
-    get 'authorized/', action: 'page_requires_login'
+    get 'homepage/', action: 'homepage'
     get 'password_reset/', action: 'password_reset'
     post 'password_reset/', action: 'password_reset'
   end
