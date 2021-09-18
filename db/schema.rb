@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_09_11_152900) do
     t.string "email"
     t.string "phoneNum"
     t.string "address"
-    t.datetime "passUpdatedAt", default: "2021-09-11 16:03:52"
+    t.datetime "passUpdatedAt", default: "2021-09-16 05:04:31"
     t.boolean "active", default: true
   end
 

@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       pass_check = valid_pass?(params[:user][:password])
       if pass_check.empty?
         session[:user_id] = @user.id
-        redirect_to '/authorized'
+        redirect_to '/homepage'
       else
         redirect_to '/users/new', danger: "#{pass_check}"
       end
