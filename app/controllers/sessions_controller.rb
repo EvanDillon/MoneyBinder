@@ -20,6 +20,9 @@ class SessionsController < ApplicationController
   def user_management
   end
 
+  def create
+  end
+
   def password_reset
     @user_email = params[:email]
   end

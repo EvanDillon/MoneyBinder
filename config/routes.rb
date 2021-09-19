@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     get 'password_reset/', action: 'password_reset'
     post 'password_reset/', action: 'password_reset'
     get 'user_management/', action: 'user_management'
+    get 'create/', action: 'create'
   end
 end
