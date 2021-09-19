@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect_to authorized_path
+      redirect_to homepage_path
     else
       redirect_to welcome_path, danger: "Username/Password not found"
     end
@@ -15,6 +15,6 @@ class SessionsController < ApplicationController
   def welcome
   end
 
-  def page_requires_login
+  def homepage
   end
 end

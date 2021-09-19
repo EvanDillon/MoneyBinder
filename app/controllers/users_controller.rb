@@ -15,8 +15,7 @@ class UsersController < ApplicationController
       @user.username = user_name
       if @user.save 
         session[:user_id] = @user.id
-        redirect_to '/authorized'
-        
+        redirect_to '/homepage'        
       else 
         redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
       end
