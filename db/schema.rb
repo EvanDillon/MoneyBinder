@@ -10,7 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_11_152900) do
+ActiveRecord::Schema.define(version: 2021_09_19_014848) do
+
+  create_table "password_authorization", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "password_question_id"
+    t.string "answer"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["password_question_id"], name: "index_password_authorization_on_password_question_id"
+    t.index ["user_id"], name: "index_password_authorization_on_user_id"
+  end
+
+  create_table "security_questions", force: :cascade do |t|
+    t.string "question"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
@@ -26,6 +42,9 @@ ActiveRecord::Schema.define(version: 2021_09_11_152900) do
     t.string "address"
     t.datetime "passUpdatedAt", default: "2021-09-16 05:04:31"
     t.boolean "active", default: true
+    t.string "reset"
   end
 
+  add_foreign_key "password_authorization", "password_questions"
+  add_foreign_key "password_authorization", "users"
 end

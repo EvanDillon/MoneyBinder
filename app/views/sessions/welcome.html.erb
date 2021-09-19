@@ -26,7 +26,7 @@
       </text-align>
       <%= password_field_tag :password, nil, placeholder: 'Enter Password', class: 'form-control' %>
       </h2>
-      <%= link_to 'Forgotten password?', password_reset_path, class: 'form-text text-muted', data: {icon: 'info', mini: 'true', role: 'button'} %>
+      <%= link_to 'Forgotten password?', "/password/forgot", class: 'form-text text-muted', data: {icon: 'info', mini: 'true', role: 'button'} %>
     </div>
       <%= submit_tag "Log In", class: "btn btn-primary"%>
     <%end%>
