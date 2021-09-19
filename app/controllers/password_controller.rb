@@ -6,6 +6,13 @@ class PasswordController < ApplicationController
     if token.nil? 
       token = params['token'] or not_found
     end
+    
+    # @correct_answer = true
+    # if @correct_answer
+    #   redirect_back fallback_location: root_path, success: "Correct answer"
+    # elsif @correct_answer == false
+    #   redirect_back fallback_location: root_path, danger: "Incorrect answer"
+    # end
 
     @user = User.find_by_reset(token) or not_found  
     if params['password']
@@ -34,7 +41,22 @@ class PasswordController < ApplicationController
         @user.save
         ResetMailer.with(user: @user).reset_password.deliver_later
       end
-      render plain: "A link has been sent to your email to reset your password (#{token})"
+      render plain: "A link has been sent to your email to reset your password \n http://localhost:3000/password/reset?token=#{token}"
+    end
+  end
+
+
+  # Could not get this to work
+  def check_answer
+    if params[:security_question_answer]
+      @user = User.find_by_reset(params[:token])  
+      if User.find(@user.id).password_authorization.pluck(:answer).first == params[:security_question_answer]
+        return true
+      else
+        return false
+      end
+    else 
+      return nil
     end
   end
 

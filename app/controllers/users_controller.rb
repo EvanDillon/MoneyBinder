@@ -14,6 +14,7 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
       @user.username = user_name
       if @user.save 
+        initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
         session[:user_id] = @user.id
         redirect_to '/homepage'        
       else 
@@ -40,19 +41,7 @@ class UsersController < ApplicationController
     end 
   end
 
-  # def valid_pass?(pass)
-  #   if pass.length >= 8 
-  #     if pass.first.match?(/[[:alpha:]]/)
-  #       if pass.match?(/[[:alpha:]]/) && pass.match?(/[[:digit:]]/) && pass.index( /[^[:alnum:]]/ ) != nil
-  #         return ""
-  #       else
-  #         return "Password must have a letter, a number, and a special character. \n"
-  #       end
-  #     else 
-  #       return "Password must start with a letter. \n"
-  #     end
-  #   else
-  #     return "Password needs to be at least 8 characters. \n"
-  #   end   
-  # end
+  def initialize_security_question(user, question_id, answer)
+    PasswordAuthorization.create(user_id: user.id, security_question_id: question_id.to_i, answer: answer)
+  end
 end
