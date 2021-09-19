@@ -17,4 +17,7 @@ class SessionsController < ApplicationController
 
   def homepage
   end
+
+  def create
+  end
 end

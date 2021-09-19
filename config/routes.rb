@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'welcome/', action: 'welcome'
     get 'homepage/', action: 'homepage'
     get 'user_management/', action: 'user_management'
+    get 'create/', action: 'create'
   end
 
   scope 'password/', controller: 'password' do 
