@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authorized, only: [:new, :create, :welcome]
+  skip_before_action :authorized, only: [:login, :welcome]
 
   def login
     @user = User.find_by(username: params[:username])
@@ -11,13 +11,10 @@ class SessionsController < ApplicationController
     end
   end
 
+
   def welcome
   end
 
   def page_requires_login
-  end
-
-  def password_reset
-    @user_email = params[:email]
   end
 end
