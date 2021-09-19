@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     get 'homepage/', action: 'homepage'
     get 'password_reset/', action: 'password_reset'
     post 'password_reset/', action: 'password_reset'
+    get 'user_management/', action: 'user_management'
   end
 end

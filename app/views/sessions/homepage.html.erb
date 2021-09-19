@@ -1,38 +1,14 @@
-<body>
-    <h2>
-    
-    </h2>
-</body>
-
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Users</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link 1</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link 2</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link 3</a>
-            </li>
-        </ul>
-    </div>
-    <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="#">Home</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link"><%= current_user.username %></a>
-            </li>
-            <%= image_tag("profile.jpeg", width: '50px', :class => "ml-auto d-block")%>
-        </ul>
-    </div>
-</nav>
+<!DOCTYPE html>
+<html>
+    <%= render partial: "shared/navigation_bar"%>
+    <body>
+        <div class="container">
+        <%= yield %>
+        <text-align>
+        <center>
+        <h2>Welcome to the homepage, please choose a feature to begin.</h2>
+        </center>
+        </text-align>
+        </div>
+    </body>
+</html>

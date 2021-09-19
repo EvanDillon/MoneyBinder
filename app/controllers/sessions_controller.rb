@@ -17,6 +17,9 @@ class SessionsController < ApplicationController
   def homepage
   end
 
+  def user_management
+  end
+
   def password_reset
     @user_email = params[:email]
   end
