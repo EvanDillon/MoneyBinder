@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <%= render partial: "shared/navigation_bar"%>
+    <body>
+    <div class="container">
+        <%= yield %>
+        <% if current_user.userType == 1 %>
+        <text-align>
+        <center>
+        <h1>Here is the page where you can do stuff as an admin.</h1>
+        </center>
+        </text-align>
+        <% else %>
+        <text-align>
+        <center>
+        <h1>Forbidden. You do not have access to this page.</h1>
+        </center>
+        </text-align>
+        <% end %>
+    </div>
+    </body>
+</html>

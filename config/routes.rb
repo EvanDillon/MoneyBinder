@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     post 'login/', action: 'login'
     get 'welcome/', action: 'welcome'
     get 'homepage/', action: 'homepage'
+    get 'user_management/', action: 'user_management'
   end
 
   scope 'password/', controller: 'password' do 
