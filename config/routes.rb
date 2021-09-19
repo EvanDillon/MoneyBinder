@@ -6,7 +6,12 @@ Rails.application.routes.draw do
     post 'login/', action: 'login'
     get 'welcome/', action: 'welcome'
     get 'homepage/', action: 'homepage'
-    get 'password_reset/', action: 'password_reset'
-    post 'password_reset/', action: 'password_reset'
+  end
+
+  scope 'password/', controller: 'password' do 
+    get 'reset/', action: 'reset'
+    post 'reset/', action: 'reset'
+    get 'forgot/', action: 'forgot'
+    post 'forgot/', action: 'forgot'
   end
 end
