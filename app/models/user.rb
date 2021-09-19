@@ -2,6 +2,9 @@ class User < ApplicationRecord
     validates :username, :email, uniqueness: true
     has_secure_password
 
+    has_many :password_authorization, dependent: :destroy
+    has_many :security_question, through: :password_authorization
+
     def self.valid_pass?(pass)
         if pass.length >= 8 
           if pass.first.match?(/[[:alpha:]]/)

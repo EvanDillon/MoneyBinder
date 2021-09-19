@@ -1,8 +1,33 @@
 <h1>Reset Password for <%= @user.username%></h1>
+
+<!-- <% if @correct_answer == true %>
+  <%= label_tag "#{User.find(@user.id).security_question.pluck(:question).first}" %>
+  <%= text_field_tag :security_question_answer, "#{User.find(@user.id).password_authorization.pluck(:answer).first}", required: true, readonly: true %>
+  <%= form_tag('/password/reset', method: 'post') do %>
+    <%= password_field_tag :password, nil, placeholder: 'Enter New Password' %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag "token", @user.reset %>
+    <%= submit_tag "Submit"%>
+  <%end%>
+
+<% else %>
+  <%= form_tag('/password/reset', method: 'post') do %>
+    <p>Please answer this security question before entering new password</p>
+    <%= label_tag "#{User.find(@user.id).security_question.pluck(:question).first}" %>
+    <%= text_field_tag :security_question_answer, nil, required: true %>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <%= hidden_field_tag "token", @user.reset %>
+    <%= submit_tag "Enter"%><br>
+  <%end%>
+<%end%> -->
+
 <%= form_tag('/password/reset', method: 'post') do %>
-  <%= password_field_tag :password, nil, placeholder: 'Enter Password' %>
+  <%= password_field_tag :password, nil, placeholder: 'Enter New Password' %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
   <%= hidden_field_tag "token", @user.reset %>
   <%= submit_tag "Submit"%>
 <%end%>
+
 <%= link_to 'Back to Login', welcome_path %>
+
+

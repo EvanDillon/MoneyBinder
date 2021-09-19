@@ -12,14 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2021_09_19_014848) do
 
-  create_table "password_authorization", force: :cascade do |t|
+  create_table "password_authorizations", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "password_question_id"
+    t.integer "security_question_id"
     t.string "answer"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["password_question_id"], name: "index_password_authorization_on_password_question_id"
-    t.index ["user_id"], name: "index_password_authorization_on_user_id"
+    t.index ["security_question_id"], name: "index_password_authorizations_on_security_question_id"
+    t.index ["user_id"], name: "index_password_authorizations_on_user_id"
   end
 
   create_table "security_questions", force: :cascade do |t|
@@ -45,6 +45,6 @@ ActiveRecord::Schema.define(version: 2021_09_19_014848) do
     t.string "reset"
   end
 
-  add_foreign_key "password_authorization", "password_questions"
-  add_foreign_key "password_authorization", "users"
+  add_foreign_key "password_authorizations", "security_questions"
+  add_foreign_key "password_authorizations", "users"
 end
