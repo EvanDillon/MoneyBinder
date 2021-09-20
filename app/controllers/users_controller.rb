@@ -25,6 +25,31 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to user_management_path, success: "Account Deleted"
+  end
+
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    id = params[:user_id].to_i
+    @user = User.find(id)
+    userType = params[:userType].to_i
+    if params[:active].nil?
+      active = false
+    else
+      active = true
+    end
+    User.update(id, username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, active: active)
+    auth_id = @user.password_authorization_ids.first
+    PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])
+    redirect_to user_management_path, success: "Account Updated"
+  end
+
   private
 
   def user_params

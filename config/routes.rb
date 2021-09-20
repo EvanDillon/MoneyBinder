@@ -10,6 +10,13 @@ Rails.application.routes.draw do
     get 'create/', action: 'create'
   end
 
+  get 'user/destroy/:id', to: 'users#destroy'
+  get 'user/edit/:id', to: 'users#edit'
+  post 'user/edit/:id', to: 'users#edit'
+  get 'user/update/:id', to: 'users#update'
+  post 'user/update', to: 'users#update'
+
+
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'
     post 'reset/', action: 'reset'

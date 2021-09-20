@@ -16,8 +16,15 @@ class SessionsController < ApplicationController
   end
 
   def homepage
+
   end
 
   def create
+    @user = User.new
+  end
+
+  def user_management
+    @all_users = User.all
+    
   end
 end

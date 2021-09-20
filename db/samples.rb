@@ -10,7 +10,7 @@ User.create! do |a|
     a.userType = 3
     a.dob = '3/13/1999'
     a.email = 'evanjdillon@gmail.com'
-    a.phoneNum = '7705555555'
+    a.phoneNum = '7704444444'
     a.address = '317 Apple Street'
     a.active = true
 end
@@ -24,7 +24,7 @@ User.create! do |a|
     a.userType = 1
     a.email = 'test@gmail.com'
     a.phoneNum = '7705555555'
-    a.address = '317 Apple Street'
+    a.address = '555 Test Street'
     a.active = true
 end
 puts "Created Admin" 
