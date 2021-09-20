@@ -59,7 +59,9 @@
 =end%>
     <%= label_tag @user.security_question.first.question%>
     <%= text_field_tag :security_question_answer, "#{@user.password_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
-    <%= hidden_field_tag "user_id", @user.id %> <br>
+    <%= hidden_field_tag "user_id", @user.id %>
+    <%= label_tag 'Suspend User Until: '%><br>
+    <%= datetime_select 'suspend_time', '', {ampm: true}%><br> 
     <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block' %>
   <%end%>
 </div>

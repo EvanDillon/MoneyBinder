@@ -13,6 +13,7 @@ User.create! do |a|
     a.phoneNum = '7704444444'
     a.address = '317 Apple Street'
     a.active = true
+    a.suspendedTill = Time.now
 end
 puts "Created Evan Dillon" 
 
@@ -26,6 +27,7 @@ User.create! do |a|
     a.phoneNum = '7705555555'
     a.address = '555 Test Street'
     a.active = true
+    a.suspendedTill = Time.now
 end
 puts "Created Admin" 
 

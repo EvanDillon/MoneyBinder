@@ -55,6 +55,7 @@ class UsersController < ApplicationController
     else
       active = true
     end
+
     User.update(id, username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, active: active)
     auth_id = @user.password_authorization_ids.first
     PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])

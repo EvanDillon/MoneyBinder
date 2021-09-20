@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_20_150013) do
+ActiveRecord::Schema.define(version: 2021_09_20_183927) do
 
   create_table "password_authorizations", force: :cascade do |t|
     t.integer "user_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_150013) do
     t.boolean "active", default: true
     t.string "reset"
     t.integer "loginAttempts", default: 0
-    t.datetime "suspendedTill", default: "2020-09-16 05:00:00"
+    t.datetime "suspendedTill", default: "2021-09-20 18:40:34"
   end
 
   add_foreign_key "password_authorizations", "security_questions"
