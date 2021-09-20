@@ -48,7 +48,7 @@
         <%= select_tag :userType, options_for_select([["Administrator", 1], ["Manager", 2], ["Accountant", 3]], selected: @user.userType) %>
       </div>
       <div class="form-group col-md-6">
-        <%= label_tag :active%>
+        <%= label_tag :activate%>
         <%= check_box_tag :active, true, @user.active %>
       </div> 
     </div>

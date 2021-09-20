@@ -39,7 +39,7 @@ class PasswordController < ApplicationController
         token = SecureRandom.hex(10)
         @user.reset = token
         @user.save
-        ResetMailer.with(user: @user).reset_password.deliver_later
+        ResetMailer.with(user: @user).reset_password.deliver_now
       end
       render plain: "A link has been sent to your email to reset your password \n http://localhost:3000/password/reset?token=#{token}"
     end
