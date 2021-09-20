@@ -8,6 +8,9 @@ Rails.application.routes.draw do
     get 'homepage/', action: 'homepage'
     get 'user_management/', action: 'user_management'
     get 'create/', action: 'create'
+    get 'profile/', action: 'profile'
+    get 'logout/', action: 'destroy'
+    delete 'logout/', action: 'destroy'
   end
 
   get 'user/destroy/:id', to: 'users#destroy'

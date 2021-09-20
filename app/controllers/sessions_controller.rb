@@ -11,12 +11,10 @@ class SessionsController < ApplicationController
     end
   end
 
-
   def welcome
   end
 
   def homepage
-
   end
 
   def create
@@ -25,6 +23,11 @@ class SessionsController < ApplicationController
 
   def user_management
     @all_users = User.all
-    
+  end
+
+  def destroy
+    session.delete(:user_id)
+    @current_user = nil
+    redirect_to root_url
   end
 end
