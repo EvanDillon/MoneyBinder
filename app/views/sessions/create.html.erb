@@ -3,11 +3,11 @@
   <%= form_for @user do |f|%>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <%= f.label 'First Name'%>
+      <%= f.label :first_name, "First Name" %>
       <%= f.text_field :firstName, {required: true, class: 'form-control'}%>
     </div>
     <div class="form-group col-md-6">
-      <%= f.label 'Last Name' %>
+      <%= f.label :last_name, "Last Name" %>
       <%= f.text_field :lastName, {required: true, class: 'form-control'}%>
     </div>
   </div>
@@ -24,12 +24,12 @@
     <%= f.email_field :email, {required: true, class: 'form-control'}%>
   </div>    
   <div class="form-group">
-    <%= f.label :phone_number%>
+    <%= f.label :phone_number, "Phone Number" %>
     <%= f.text_field :phoneNum, {required: true, class: 'form-control'}%>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
-      <%= f.label :date_of_birth%>
+      <%= f.label :date_of_birth, "Date of Birth" %>
       <%= f.date_select :dob, { :order => [:month, :day, :year], :start_year => 1920, :end_year => 2021, required: true}%>
     </div> 
     <div class="form-group col-md-6">
@@ -37,7 +37,7 @@
       <%= select_tag :userType, options_for_select([["Administrator", 1], ["Manager", 2], ["Accountant", 3]], selected: @user.userType) %>
     </div>
   </div>
-    <%= label_tag :security_questions%>
+    <%= label_tag :security_questions, "Security Questions" %>
     <%= collection_select(:security_question_1, :id,  SecurityQuestion.all, :id, :question) %>
     <%= text_field_tag :security_question_answer, nil, required: true, class: 'form-control'%> <br>
   <%= f.submit 'Submit', :class => 'btn btn-primary btn-block' %>
