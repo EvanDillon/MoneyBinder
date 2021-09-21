@@ -13,9 +13,7 @@ class UsersController < ApplicationController
     if pass_check.empty? && !user_name.nil?
       @user = User.new(user_params)
       @user.username = user_name
-      
-       
-       
+
       if @user.save 
         if @user.userType == 1
           initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
@@ -32,7 +30,6 @@ class UsersController < ApplicationController
       else 
         redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
       end
-     
     else
       redirect_to '/users/new', danger: "#{pass_check}"
     end
