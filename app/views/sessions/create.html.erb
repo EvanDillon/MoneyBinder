@@ -1,3 +1,4 @@
+<%= render partial: "shared/navigation_bar"%>
 <div class="container">  
   <h1>Create New User</h1>
   <%= form_for @user do |f|%>
@@ -41,7 +42,6 @@
     <%= collection_select(:security_question_1, :id,  SecurityQuestion.all, :id, :question) %>
     <%= text_field_tag :security_question_answer, nil, required: true, class: 'form-control'%> <br>
   <%= f.submit 'Submit', :class => 'btn btn-primary btn-block' %>
-  <% @user.save %>
   <%end%>
   <a href= "/user_management">Back to User Management</a>
 </div>

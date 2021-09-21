@@ -13,13 +13,18 @@ class UsersController < ApplicationController
     if pass_check.empty? && !user_name.nil?
       @user = User.new(user_params)
       @user.username = user_name
-      
+
       if @user.userType == 1
-        if @user.save 
-          initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
-          session[:user_id] = @user.id
-          redirect_to '/homepage'        
-        else 
+        if @user.save
+          if @user != current_user
+            initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
+            redirect_to '/user_management'
+          else
+            initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
+            session[:user_id] = @user.id
+            redirect_to '/homepage'
+          end
+        else
           redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
         end
       
