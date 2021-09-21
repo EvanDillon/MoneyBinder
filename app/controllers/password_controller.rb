@@ -41,7 +41,8 @@ class PasswordController < ApplicationController
         @user.save
         ResetMailer.with(user: @user).reset_password.deliver_now
       end
-      render plain: "A link has been sent to your email to reset your password \n http://localhost:3000/password/reset?token=#{token}"
+      redirect_to welcome_path, success: "A link has been sent to your email to reset your password"
+      # render plain: "A link has been sent to your email to reset your password \n http://localhost:3000/password/reset?token=#{token}"
     end
   end
 
