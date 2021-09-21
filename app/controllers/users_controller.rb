@@ -14,28 +14,22 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
       @user.username = user_name
 
-      if @user.userType == 1
-        if @user.save
-          if @user != current_user
-            initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
-            redirect_to '/user_management'
-          else
-            initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
-            session[:user_id] = @user.id
-            redirect_to '/homepage'
-          end
+      if @user.save 
+        if @user.userType == 1
+          initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
+          session[:user_id] = @user.id
+          redirect_to '/homepage'
+         # If new user is manager/accountant send an email to admin to approve
         else
-          redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
-        end
-      
-      # If new user is manager/accountant send an email to admin to approve
-      else
-        @user.active = false
-        @user.save
-        initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
-        ResetMailer.with(user: @user).approve_new_account.deliver_now
-        redirect_to welcome_path, success: "A request for your account has been sent to an Administrator to approve"
-      end 
+          @user.active = false
+          @user.save
+          initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
+          ResetMailer.with(user: @user).approve_new_account.deliver_now
+          redirect_to welcome_path, success: "A request for your account has been sent to an Administrator to approve"
+        end      
+      else 
+        redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
+      end
     else
       redirect_to '/users/new', danger: "#{pass_check}"
     end
@@ -60,6 +54,7 @@ class UsersController < ApplicationController
     else
       active = true
     end
+
     User.update(id, username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, active: active)
     auth_id = @user.password_authorization_ids.first
     PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])
