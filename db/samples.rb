@@ -17,6 +17,20 @@ end
 puts "Created Evan Dillon" 
 
 User.create! do |a|
+    a.firstName = 'James'
+    a.lastName = 'Diaz'
+    a.username = 'jdiaz35'
+    a.password = "password#1"
+    a.userType = 3
+    a.dob = '4/06/1997'
+    a.email = 'Cuizonix@gmail.com'
+    a.phoneNum = '5555555555'
+    a.address = '123 Sesame Street'
+    a.active = true
+end
+puts "Created James Diaz" 
+
+User.create! do |a|
     a.firstName = 'A'
     a.lastName = 'dmin'
     a.username = 'Admin'
@@ -41,4 +55,5 @@ puts "Created #{SecurityQuestion.all.count} security questions"
 
 PasswordAuthorization.create(user_id: User.where(username: 'Admin').pluck(:id).first, security_question_id: 1, answer: 'Atlanta')
 PasswordAuthorization.create(user_id: User.where(username: 'EvanD').pluck(:id).first, security_question_id: 2, answer: 'Buddy')
+PasswordAuthorization.create(user_id: User.where(username: 'jdiaz35').pluck(:id).first, security_question_id: 1, answer: 'New York')
 puts "Created #{PasswordAuthorization.all.count} security question relationships"

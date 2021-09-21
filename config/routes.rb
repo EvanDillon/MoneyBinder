@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   post 'user/edit/:id', to: 'users#edit'
   get 'user/update/:id', to: 'users#update'
   post 'user/update', to: 'users#update'
-
+  get 'user/create', to: 'users#create'
+  post 'user/create', to: 'users#create'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'
