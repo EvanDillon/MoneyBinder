@@ -1,0 +1,22 @@
+<%= form_with(model: account) do |f| %>
+  Account name: <%= f.text_field :name %><br>
+  Account number: <%= f.text_field :account_number %><br>
+  Normal Side: <br>  
+                <%= f.radio_button :normal_side, "Debit", checked: true %> Debit
+                <%= f.radio_button :normal_side, "Credit" %> Credit<br>
+  Category: <%= f.text_field :category, required: true %><br>
+  Subcategory: <%= f.text_field :subcategory %><br>
+  Initial Balance: <%= f.text_field :initial_balance %><br>
+  Balance: <%= f.text_field :balance %><br>
+  Description: <%= f.text_area :description%><br>
+  Active: <%= f.check_box :active %><br><br>
+  Debit: <%= f.text_field :debit %><br>
+  Credit: <%= f.text_field :credit %><br>
+  Order: <%= f.text_field :order %><br>
+  Statement: <%= f.text_field :statement %><br>
+  Comment: <%= f.text_field :comment %><br>
+
+  <div class="actions">
+    <%= f.submit class: "btn btn-primary"%>
+  </div>
+<% end %>

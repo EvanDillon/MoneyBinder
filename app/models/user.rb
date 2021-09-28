@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
     has_many :password_authorization, dependent: :destroy
     has_many :security_question, through: :password_authorization
+    has_many :accounts
 
     def self.valid_pass?(pass)
         if pass.length >= 8 

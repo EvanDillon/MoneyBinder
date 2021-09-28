@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_20_183927) do
+ActiveRecord::Schema.define(version: 2021_09_27_201532) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name", null: false
+    t.integer "account_number", null: false
+    t.string "description"
+    t.string "normal_side"
+    t.string "category"
+    t.string "subcategory"
+    t.integer "initial_balance", default: 0
+    t.integer "debit", default: 0
+    t.integer "credit", default: 0
+    t.integer "balance", default: 0
+    t.string "order"
+    t.string "statement"
+    t.text "comment"
+    t.boolean "active", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
 
   create_table "password_authorizations", force: :cascade do |t|
     t.integer "user_id"
@@ -47,6 +68,7 @@ ActiveRecord::Schema.define(version: 2021_09_20_183927) do
     t.datetime "suspendedTill", default: "2021-09-20 18:40:34"
   end
 
+  add_foreign_key "accounts", "users"
   add_foreign_key "password_authorizations", "security_questions"
   add_foreign_key "password_authorizations", "users"
 end
