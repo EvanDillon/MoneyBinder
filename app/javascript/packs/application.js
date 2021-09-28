@@ -4,6 +4,7 @@
 // that code so it'll be compiled.
 
 //= require jquery3
+//= require jquery_ujs
 //= require popper
 //= require bootstrap-sprockets
 //= require bootstrap

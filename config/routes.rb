@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'sessions#welcome'
   resources :users, only: [:new, :create]
+  resources :accounts
 
   scope '', controller: 'sessions' do
     post 'login/', action: 'login'
