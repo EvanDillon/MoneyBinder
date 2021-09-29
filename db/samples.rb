@@ -145,3 +145,19 @@ Account.create! do |a|
     a.active = true
 end
 puts "Created Accounts Payable Account" 
+
+
+
+all_error_messages = [
+                        ["account_updated", "Account has been Updated"],
+                        ["account_deleted", "Account has been Deleted"]
+                    ]
+
+# Creates all error messages
+all_error_messages.each do |error|
+    ErrorMessage.create! do |b|
+        b.error_name = error.first
+        b.body = error.last
+    end
+end
+puts "Created #{ErrorMessage.count} error messages"

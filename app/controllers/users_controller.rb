@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to user_management_path, success: "Account Deleted"
+    redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "account_deleted").body
   end
 
   def edit
@@ -70,7 +70,7 @@ class UsersController < ApplicationController
     if !@user.active && (@user == current_user)
       redirect_to '/logout'
     else
-      redirect_to user_management_path, success: "Account Updated"
+      redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "account_updated").body
     end
   end
 
