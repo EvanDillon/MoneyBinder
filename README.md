@@ -1,8 +1,6 @@
 # README
 
-Testing testing 123
-
-This is my test now
+MoneyBinder is the worst ever
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
