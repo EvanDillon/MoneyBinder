@@ -4,19 +4,10 @@ class SessionsController < ApplicationController
   def login
     @user = User.find_by(username: params[:username])
     if @user && @user.authenticate(params[:password]) && @user.suspendedTill < Time.now && @user.active
-      # Checks to see if the password is close to expiring (30 days)
-      if remaining_days <= 0
-        redirect_to welcome_path, warning: "Your password is expired. Please reset your password now."
-      else
-        session[:user_id] = @user.id
-        @user.loginAttempts = 0
-        @user.save
-        if remaining_days <= 3
-        redirect_to homepage_path, warning: "Your password is going to expire in #{remaining_days} days. You can change your password in Profile Settings."
-        else
-        redirect_to homepage_path
-        end
-      end
+      session[:user_id] = @user.id
+      @user.loginAttempts = 0
+      @user.save
+      redirect_to homepage_path
     elsif @user.nil?
       redirect_to welcome_path, danger: "Username not found"
     elsif @user
