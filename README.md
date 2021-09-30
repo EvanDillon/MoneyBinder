@@ -1,6 +1,6 @@
 # README
 
-MoneyBinder is the best ever
+MoneyBinder is the worst ever
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
