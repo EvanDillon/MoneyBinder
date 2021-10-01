@@ -27,7 +27,7 @@ class UsersController < ApplicationController
           @user.save
           initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
           ResetMailer.with(user: @user).approve_new_account.deliver_now
-          redirect_to welcome_path, success: "A request for your account has been sent to an Administrator to approve"
+          redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "user_create_request").body
         end      
       else 
         redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "account_deleted").body
+    redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_deleted").body
   end
 
   def edit
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     if !@user.active && (@user == current_user)
       redirect_to '/logout'
     else
-      redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "account_updated").body
+      redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_updated").body
     end
   end
 
