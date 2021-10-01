@@ -25,7 +25,7 @@ class PasswordController < ApplicationController
         @user.save
         render plain: "Successfully reset password for #{@user.username}"
       elsif same_pass 
-        redirect_back fallback_location: root_path, danger: "Please choose a password you have not used before"
+        redirect_back fallback_location: root_path, danger: ErrorMessage.find_by(error_name: "user_used_password").body
       elsif !pass_errors.empty?
         redirect_back fallback_location: root_path, danger: "#{pass_errors}"
       end
@@ -41,7 +41,7 @@ class PasswordController < ApplicationController
         @user.save
         ResetMailer.with(user: @user).reset_password.deliver_now
       end
-      redirect_to welcome_path, success: "A link has been sent to your email to reset your password"
+      redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "account_reset_password").body
       # render plain: "A link has been sent to your email to reset your password \n http://localhost:3000/password/reset?token=#{token}"
     end
   end

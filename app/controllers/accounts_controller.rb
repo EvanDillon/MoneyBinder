@@ -7,7 +7,7 @@ class AccountsController < ApplicationController
     if params[:search_accounts]
       @accounts = Account.search(params[:search_accounts])
       if @accounts.empty?
-        flash[:warning] = "No account found"
+        flash[:warning] = ErrorMessage.find_by(error_name: "account_not_found").body
       else
         flash.clear
       end
@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
     @account.user_id = current_user.id
 
     if @account.save
-      redirect_to accounts_path, success: "Account was successfully created."
+      redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_created").body
     else
       flash.now[:danger] = "#{@account.errors.first.full_message}"
       render new_account_path
@@ -43,7 +43,7 @@ class AccountsController < ApplicationController
   # PATCH/PUT /accounts/1 or /accounts/1.json
   def update
     if @account.update(account_params)
-      redirect_to accounts_path, success: "Account was successfully updated."
+      redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_updated").body
     else
       redirect_to edit_account_path(@account), danger: "#{@account.errors.first.full_message}"
     end
@@ -52,7 +52,7 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1 or /accounts/1.json
   def destroy
     @account.destroy
-    redirect_to accounts_path, success: "Account was successfully deleted."
+    redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_deleted").body
   end
 
   
