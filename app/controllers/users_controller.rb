@@ -9,10 +9,12 @@ class UsersController < ApplicationController
   def create
     user_name = create_username(params[:user][:firstName], params[:user][:lastName], Time.zone.now)
     pass_check = User.valid_pass?(params[:user][:password])
+    password_update = Time.now
 
     if pass_check.empty? && !user_name.nil?
       @user = User.new(user_params)
       @user.username = user_name
+      @user.passUpdatedAt = password_update
 
       if @user.save 
         if @user.userType == 1
