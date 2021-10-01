@@ -9,10 +9,12 @@ class UsersController < ApplicationController
   def create
     user_name = create_username(params[:user][:firstName], params[:user][:lastName], Time.zone.now)
     pass_check = User.valid_pass?(params[:user][:password])
+    password_update = Time.now
 
     if pass_check.empty? && !user_name.nil?
       @user = User.new(user_params)
       @user.username = user_name
+      @user.passUpdatedAt = password_update
 
       if @user.save 
         if @user.userType == 1
@@ -38,7 +40,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to user_management_path, success: "Account Deleted"
+    redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "account_deleted").body
   end
 
   def edit
@@ -70,7 +72,7 @@ class UsersController < ApplicationController
     if !@user.active && (@user == current_user)
       redirect_to '/logout'
     else
-      redirect_to user_management_path, success: "Account Updated"
+      redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "account_updated").body
     end
   end
 
