@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def remaining_days
-    ((@user.passUpdatedAt + 30.days).to_date - Date.today).round
+    30 - (Date.today - ((@user.passUpdatedAt).to_date)).round
   end
 end
