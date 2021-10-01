@@ -11,11 +11,11 @@ class SessionsController < ApplicationController
         session[:user_id] = @user.id
         @user.loginAttempts = 0
         @user.save
-        #if remaining_days <= 3
+        if remaining_days <= 3
         redirect_to homepage_path, warning: "Your password is going to expire in #{remaining_days} days. You can change your password in Profile Settings."
-        #else
-        #redirect_to homepage_path
-        #end
+        else
+        redirect_to homepage_path
+        end
       end
     elsif @user.nil?
       redirect_to welcome_path, danger: "Username not found"
