@@ -59,6 +59,10 @@ class SessionsController < ApplicationController
     @all_users = User.all
   end
 
+  def expired_passwords
+    @all_users = User.all
+  end
+
   def destroy
     session.delete(:user_id)
     @current_user = nil
