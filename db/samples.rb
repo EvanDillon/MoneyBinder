@@ -73,6 +73,21 @@ User.create! do |a|
 end
 puts "Created James Diaz" 
 
+User.create! do |a|
+    a.firstName = 'Expired'
+    a.lastName = 'User'
+    a.username = 'ExpiredUser'
+    a.password = "password"
+    a.userType = 2
+    a.dob = '10/01/2021'
+    a.email = 'testExpired@gmail.com'
+    a.phoneNum = '5555555555'
+    a.address = '123 Some Street'
+    a.active = true
+    a.passUpdatedAt = Time.now - 60.days
+end
+puts "Created Expired User" 
+
 # Creating new security questions
 all_questions = ['In what city were you born?', 'What is the name of your first pet?', 'What is your mothers maiden name?']
 all_questions.each do |question|

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'user_management/', action: 'user_management'
     get 'create/', action: 'create'
     get 'profile/', action: 'profile'
+    get 'expired_passwords/', action: 'expired_passwords'
     get 'logout/', action: 'destroy'
     delete 'logout/', action: 'destroy'
   end
