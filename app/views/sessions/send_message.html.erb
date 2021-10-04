@@ -1,0 +1,40 @@
+<%= render partial: "shared/navigation_bar"%>
+<div class="container">
+    <% if current_user.userType == 1 %>
+        <text-align>
+            <center>
+                <h1>Send Message</h1>
+                <h4>Here, the administrator can send a message to any user in the system.</h2>
+            </center>
+        </text-align>
+        <%= form_tag administrator_email_path, :method => :post do %>
+            <div class="form-group col-md-2">
+                <label>Send to:</label>
+                <select class="form-control">
+                <option class="form-text text-muted">Choose a user</option>
+                <% @all_users.each do |user| %>
+                    <% if user.userType != 1%>
+                        <option><%= user.username %></option>
+                    <% end %>
+                <% end %>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Subject">Subject:</label>
+                <input class="form-control" required="true">
+            </div>
+            <div class="form-group col-md">
+                <label for="Body">Body:</label>
+                <textarea class="form-control" required="true" rows="7"></textarea>
+            </div>
+            <%= submit_tag 'Send', :class => 'btn btn-primary btn-block' %>
+        <% end %>
+    <% else %>
+        <text-align>
+            <center>
+                <h1>Forbidden. You do not have access to this page.</h1>
+            </center>
+        </text-align>
+    <% end %>
+    <a href= "/user_management">Back to User Management</a>
+</div>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'create/', action: 'create'
     get 'profile/', action: 'profile'
     get 'expired_passwords/', action: 'expired_passwords'
+    get 'send_message/', action: 'send_message'
     get 'logout/', action: 'destroy'
     delete 'logout/', action: 'destroy'
   end
@@ -22,6 +23,9 @@ Rails.application.routes.draw do
   post 'user/update', to: 'users#update'
   get 'user/create', to: 'users#create'
   post 'user/create', to: 'users#create'
+  # I had to give some type of path in order to get the form to work so I don't know if this will be even used.
+  get 'administrator/email', to: 'administrator#email'
+  post 'administrator/email', to: 'administrator#email'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'
