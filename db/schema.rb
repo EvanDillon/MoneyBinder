@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_01_220548) do
+ActiveRecord::Schema.define(version: 2021_10_04_151955) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(version: 2021_10_01_220548) do
     t.string "normal_side"
     t.string "category"
     t.string "subcategory"
-    t.integer "initial_balance", default: 0
-    t.integer "debit", default: 0
-    t.integer "credit", default: 0
-    t.integer "balance", default: 0
+    t.decimal "initial_balance", default: "0.0"
+    t.decimal "debit", default: "0.0"
+    t.decimal "credit", default: "0.0"
+    t.decimal "balance", default: "0.0"
     t.string "order"
     t.string "statement"
     t.text "comment"
