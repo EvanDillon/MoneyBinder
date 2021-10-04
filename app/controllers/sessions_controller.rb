@@ -6,19 +6,19 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:password]) && @user.suspendedTill < Time.now && @user.active
       # Checks to see if the password is close to expiring (30 days)
       if remaining_days <= 0
-        redirect_to welcome_path, warning: "Your password is expired. Please reset your password now."
+        redirect_to welcome_path, warning: ErrorMessage.find_by(error_name: "user_expired_password").body
       else
         session[:user_id] = @user.id
         @user.loginAttempts = 0
         @user.save
         if remaining_days <= 3
-        redirect_to homepage_path, warning: "Your password is going to expire in #{remaining_days} days. You can change your password in Profile Settings."
+        redirect_to homepage_path, warning: "#{ErrorMessage.find_by(error_name: "user_almost_expired_password_part1").body} #{remaining_days} #{ErrorMessage.find_by(error_name: "user_almost_expired_password_part2").body}"
         else
         redirect_to homepage_path
         end
       end
     elsif @user.nil?
-      redirect_to welcome_path, danger: "Username not found"
+      redirect_to welcome_path, danger: ErrorMessage.find_by(error_name: "user_not_found").body
     elsif @user
       if @user.active 
         # Checks if user is still suspended
@@ -27,20 +27,20 @@ class SessionsController < ApplicationController
           if @user.loginAttempts < 2
             @user.increment(:loginAttempts, 1) 
             @user.save
-            redirect_to welcome_path, danger: "Incorrect Password (Attempts left: #{3 - @user.loginAttempts})"
+            redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_incorrect_password_part1").body} #{3 - @user.loginAttempts} #{ErrorMessage.find_by(error_name: "user_incorrect_password_part2").body}"
           # Account has has 3 attempts so suspend for 1 min
           else
             @user.suspendedTill = Time.now + 1*60 
             @user.loginAttempts = 0
             @user.save
-            redirect_to welcome_path, danger: "This account has been suspended for 1 min"
+            redirect_to welcome_path, danger: ErrorMessage.find_by(error_name: "user_suspended").body
           end
         # Account is still suspended 
         else
-          redirect_to welcome_path, danger: "This account is suspended for: #{(@user.suspendedTill - Time.now).round(0)}  sec"
+          redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_suspended_for_part1").body} #{(@user.suspendedTill - Time.now).round(0)} #{ErrorMessage.find_by(error_name: "user_suspended_for_part2").body}"
         end
       else
-        redirect_to welcome_path, danger: "This account is not active"
+        redirect_to welcome_path, danger: ErrorMessage.find_by(error_name: "user_inactive").body
       end
     end
   end
@@ -56,6 +56,10 @@ class SessionsController < ApplicationController
   end
 
   def user_management
+    @all_users = User.all
+  end
+
+  def expired_passwords
     @all_users = User.all
   end
 

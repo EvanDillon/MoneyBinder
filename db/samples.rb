@@ -70,8 +70,24 @@ User.create! do |a|
     a.phoneNum = '5555555555'
     a.address = '123 Sesame Street'
     a.active = true
+    a.passUpdatedAt = Time.now-28.days
 end
 puts "Created James Diaz" 
+
+User.create! do |a|
+    a.firstName = 'Expired'
+    a.lastName = 'User'
+    a.username = 'ExpiredUser'
+    a.password = "password"
+    a.userType = 2
+    a.dob = '10/01/2021'
+    a.email = 'testExpired@gmail.com'
+    a.phoneNum = '5555555555'
+    a.address = '123 Some Street'
+    a.active = true
+    a.passUpdatedAt = Time.now - 60.days
+end
+puts "Created Expired User" 
 
 # Creating new security questions
 all_questions = ['In what city were you born?', 'What is the name of your first pet?', 'What is your mothers maiden name?']
@@ -150,7 +166,28 @@ puts "Created Accounts Payable Account"
 
 all_error_messages = [
                         ["account_updated", "Account has been Updated"],
-                        ["account_deleted", "Account has been Deleted"]
+                        ["account_deleted", "Account has been Deleted"],
+                        ["account_created", "Account has been Created"],
+
+                        ["account_not_found", "No account found"],
+
+                        ["user_updated", "User has been Updated"],
+                        ["user_reset_password", "A link has been sent to your email to reset your password"],
+                        ["user_create_request", "A request for your account has been sent to an Administrator to approve"],
+
+                        ["user_expired_password", "Your password is expired. Please reset your password now."],
+                        ["user_almost_expired_password_part1", "Your password is going to expire in "],
+                        ["user_almost_expired_password_part2", " days. You can change your password in Profile Settings"],
+
+                        ["user_not_found", "Username not found"],
+
+                        ["user_used_password", "Please choose a password you have not used before"],
+                        ["user_incorrect_password_part1", "Incorrect Password (Attempts left: "],
+                        ["user_incorrect_password_part2", ")"],
+                        ["user_suspended", "This account has been suspended for 1 min"],
+                        ["user_suspended_for_part1", "This account is suspended for: "],
+                        ["user_suspended_for_part2", " sec"],
+                        ["user_inactive", "This account is not active"]
                     ]
 
 # Creates all error messages
