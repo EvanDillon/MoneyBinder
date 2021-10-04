@@ -161,3 +161,36 @@ all_error_messages.each do |error|
     end
 end
 puts "Created #{ErrorMessage.count} error messages"
+
+
+EventLog.create! do |a|
+    a.account_name = "Cash"
+    a.user_name = "Admin"
+    a.event_type = 'Modified'
+    a.account_before = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":123000,\"debit\":0,\"credit\":0,\"balance\":123000,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.account_after = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Credit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":1,\"debit\":0,\"credit\":0,\"balance\":1,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.created_at = Time.now
+    a.updated_at = Time.now
+end
+
+
+EventLog.create! do |a|
+    a.account_name = "Accounts Receivable"
+    a.user_name = "Manager"
+    a.event_type = 'Deactivated'
+    a.account_before = "{\"id\":2,\"user_id\":1,\"name\":\"Accounts Receivable\",\"account_number\":122,\"description\":\"This account is for Accounts Receivable\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Accounts Receivable\",\"initial_balance\":7500,\"debit\":0,\"credit\":0,\"balance\":7500,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T16:49:44.983Z\",\"updated_at\":\"2021-10-02T16:49:44.983Z\"}"
+    a.account_after = ""
+    a.created_at = Time.now
+    a.updated_at = Time.now
+end
+
+EventLog.create! do |a|
+    a.account_name = "Accounts Payable"
+    a.user_name = "EvanD"
+    a.event_type = 'Added'
+    a.account_before = ""
+    a.account_after = "{\"id\":3,\"user_id\":2,\"name\":\"Accounts Payable\",\"account_number\":202,\"description\":\"This account is for Accounts Payable\",\"normal_side\":\"Credit\",\"category\":\"Liability\",\"subcategory\":\"Accounts Payable\",\"initial_balance\":0,\"debit\":0,\"credit\":0,\"balance\":0,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.created_at = Time.now
+    a.updated_at = Time.now
+end
+puts "Created #{EventLog.count} EventLogs"

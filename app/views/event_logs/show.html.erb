@@ -1,0 +1,119 @@
+<%= render partial: "shared/navigation_bar"%>
+<div class="container">
+  <text-align>
+    <center>
+      <h1>Event Logs</h1><br>
+    </center>
+  </text-align>
+
+  <div class="form-row">
+    <div class="col">
+      <p>Event ID: <%= @event_id %></p>
+    </div>
+    <div class="col text-center">
+      <p>Event Type:
+        <% if EventLog.find(@event_id).event_type == "Added" %>
+          <span class="badge badge-pill badge-success"> <%= EventLog.find(@event_id).event_type %>   </span> 
+        <% elsif EventLog.find(@event_id).event_type == "Deactivated"%>
+          <span class="badge badge-pill badge-danger"> <%= EventLog.find(@event_id).event_type %>   </span> 
+        <% else %>
+          <span class="badge badge-pill badge-warning"> <%= EventLog.find(@event_id).event_type%>   </span> 
+        <%end%>  
+      </p>
+    </div>
+    <div class="col">
+      <p class="text-right"><%= link_to 'Back to Event Logs', event_logs_path %></p>
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table-primary">
+        <th scope="col">Fields Changed</th>
+        <th scope="col">Before</th>
+        <th scope="col">After</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+          <th scope="row">Account ID</th>
+          <td><%= @before.id %></td>
+          <td><%= @after.id %></td>
+        </tr>
+        <tr>
+          <th scope="row">User ID</th>
+          <td><%= @before.user_id %></td>
+          <td><%= @after.user_id %></td>
+        </tr>
+        <tr>
+          <th scope="row">Account Name</th>
+          <td><%= @before.name %></td>
+          <td><%= @after.name %></td>
+        </tr>
+        <tr>
+          <th scope="row">Account #</th>
+          <td><%= @before.account_number %></td>
+          <td><%= @after.account_number %></td>
+        </tr>
+        <tr>
+          <th scope="row">Normal Side</th>
+          <td><%= @before.normal_side %></td>
+          <td><%= @after.normal_side %></td>
+        </tr>
+        <tr>
+          <th scope="row">Category</th>
+          <td><%= @before.category %></td>
+          <td><%= @after.category %></td>
+        </tr>
+        <tr>
+          <th scope="row">Subcategory</th>
+          <td><%= @before.subcategory %></td>
+          <td><%= @after.subcategory %></td>
+        </tr>
+        <tr>
+          <th scope="row">Inital Balance</th>
+          <td>$ <%= @before.initial_balance %></td>
+          <td>$ <%= @after.initial_balance %></td>
+        </tr>
+        <tr>
+          <th scope="row">Balance</th>
+          <td>$ <%= @before.balance %></td>
+          <td>$ <%= @after.balance %></td>
+        </tr>
+        <tr>
+          <th scope="row">Statement</th>
+          <td><%= @before.statement %></td>
+          <td><%= @after.statement %></td>
+        </tr>
+        <tr>
+          <th scope="row">Description</th>
+          <td><%= @before.description %></td>
+          <td><%= @after.description %></td>
+        </tr>
+        <tr>
+          <th scope="row">Comment</th>
+          <td><%= @before.comment %></td>
+          <td><%= @after.comment %></td>
+        </tr>
+        <tr>
+          <th scope="row">Active</th>
+
+          <% if @before.id.nil? %>
+            <td>false</td>
+            <td><%= @after.active %></td>
+          <% elsif @after.id.nil? %>
+            <td><%= @before.active %></td>
+            <td>false</td>
+          <%else%>
+            <td><%= @before.active %></td>
+            <td><%= @after.active %></td>
+          <%end%>
+
+
+        </tr>
+      </tbody>
+  </table>
+
+</div>
+

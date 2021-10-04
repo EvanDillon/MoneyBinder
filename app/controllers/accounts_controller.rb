@@ -34,6 +34,8 @@ class AccountsController < ApplicationController
     @account.balance = calculate_balance(@account)
 
     if @account.save
+     create_event_log("", @account, "Added")
+
       redirect_to accounts_path, success: "Account was successfully created."
     else
       flash.now[:danger] = "#{@account.errors.first.full_message}"
@@ -43,9 +45,13 @@ class AccountsController < ApplicationController
 
   # PATCH/PUT /accounts/1 or /accounts/1.json
   def update
+    @account_before = @account.to_json
     if @account.update(account_params)
       @account.balance = calculate_balance(@account)
       @account.save
+      @account_after = @account.to_json
+
+      create_event_log(@account_before, @account_after, "Modified")
       redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_updated").body
     else
       redirect_to edit_account_path(@account), danger: "#{@account.errors.first.full_message}"
@@ -54,6 +60,7 @@ class AccountsController < ApplicationController
 
   # DELETE /accounts/1 or /accounts/1.json
   def destroy
+    create_event_log(@account, "", "Deactivated")
     @account.destroy
     redirect_to accounts_path, success: "Account was successfully deleted."
   end
@@ -72,5 +79,32 @@ class AccountsController < ApplicationController
 
     def calculate_balance(account)
       account.initial_balance + (account.debit - account.credit)
+    end
+
+    def create_event_log(before, after, type)
+      if type == "Added"
+        EventLog.new( account_name: after.name, 
+                      user_name: current_user.username, 
+                      event_type: type, 
+                      account_before: before, 
+                      account_after: after.to_json
+                    ).save
+
+      elsif type == "Deactivated"
+        EventLog.new( account_name: before.name, 
+                      user_name: current_user.username, 
+                      event_type: type, 
+                      account_before: before.to_json, 
+                      account_after: after
+                    ).save
+      
+      elsif type == "Modified"
+        EventLog.new( account_name: JSON.parse(before, object_class: Account).name, 
+                      user_name: current_user.username, 
+                      event_type: type, 
+                      account_before: before, 
+                      account_after: after
+                    ).save
+      end
     end
 end

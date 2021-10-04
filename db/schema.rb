@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_29_144609) do
+ActiveRecord::Schema.define(version: 2021_10_01_220548) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
@@ -36,6 +36,16 @@ ActiveRecord::Schema.define(version: 2021_09_29_144609) do
   create_table "error_messages", force: :cascade do |t|
     t.string "error_name"
     t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "event_logs", force: :cascade do |t|
+    t.string "account_name", null: false
+    t.string "user_name", null: false
+    t.string "event_type", null: false
+    t.string "account_before", null: false
+    t.string "account_after", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
