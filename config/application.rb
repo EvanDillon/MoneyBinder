@@ -18,5 +18,12 @@ module MoneyBinder
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    console do
+      # this block is called only when running console,
+      # so we can safely require pry here
+      require "pry"
+      config.console = Pry
+    end
   end
 end
