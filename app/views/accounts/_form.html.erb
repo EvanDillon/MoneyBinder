@@ -24,15 +24,7 @@
   <div class="form-group row">
     <%= f.label "Category:", class:"col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%= f.label :Category, required: true %>
-     <select name = "Caregory[categoryType]">
-        <option value = 1 selected = "selected">Asset</option>
-        <option value = 2>Expense</option>
-        <option value = 3>Liability</option>
-        <option value = 4>Equity</option>
-        <option value = 5>Revenues</option>
-  </select><br>
-
+      <%= f.select :category, options_for_select([["Asset", "Asset"], ["Expense", "Expense"], ["Liability", "Liability"], ["Equity", "Equity"], ["Revenues", "Revenues"]], selected: account.category), class: 'form-control' %>
     </div>
   </div>
 

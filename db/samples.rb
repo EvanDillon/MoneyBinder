@@ -13,6 +13,7 @@ User.create! do |a|
     a.address = '555 Test Street'
     a.active = true
     a.suspendedTill = Time.now
+    a.passUpdatedAt = Time.now
 end
 puts "Created Admin" 
 
@@ -27,6 +28,7 @@ User.create! do |a|
     a.address = '555 Test Street'
     a.active = true
     a.suspendedTill = Time.now
+    a.passUpdatedAt = Time.now
 end
 puts "Created Manager" 
 
@@ -41,6 +43,7 @@ User.create! do |a|
     a.address = '555 Test Street'
     a.active = true
     a.suspendedTill = Time.now
+    a.passUpdatedAt = Time.now
 end
 puts "Created Accountant" 
 
@@ -98,9 +101,13 @@ all_questions.each do |question|
 end
 puts "Created #{SecurityQuestion.all.count} security questions"
 
-PasswordAuthorization.create(user_id: User.where(username: 'Admin').pluck(:id).first, security_question_id: 1, answer: 'Atlanta')
-PasswordAuthorization.create(user_id: User.where(username: 'EvanD').pluck(:id).first, security_question_id: 2, answer: 'Buddy')
-PasswordAuthorization.create(user_id: User.where(username: 'jdiaz35').pluck(:id).first, security_question_id: 1, answer: 'New York')
+PasswordAuthorization.create(user_id: User.where(username: 'Admin').pluck(:id).first,       security_question_id: 1, answer: 'Atlanta')
+PasswordAuthorization.create(user_id: User.where(username: 'Manager').pluck(:id).first, security_question_id: 1, answer: 'Austin')
+PasswordAuthorization.create(user_id: User.where(username: 'Accountant').pluck(:id).first, security_question_id: 1, answer: 'DC')
+PasswordAuthorization.create(user_id: User.where(username: 'EvanD').pluck(:id).first,       security_question_id: 2, answer: 'Buddy')
+PasswordAuthorization.create(user_id: User.where(username: 'jdiaz35').pluck(:id).first,     security_question_id: 1, answer: 'New York')
+PasswordAuthorization.create(user_id: User.where(username: 'ExpiredUser').pluck(:id).first, security_question_id: 1, answer: 'LA')
+
 puts "Created #{PasswordAuthorization.all.count} security question relationships"
 
 
@@ -132,16 +139,16 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Accounts Receivable'
-    a.initial_balance = 7500
+    a.initial_balance = 7500.01
     a.debit = 0
     a.credit = 0
-    a.balance = 7500
+    a.balance = 7500.01
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.active = true
 end
-puts "Created Cash Accounts Receivable Account" 
+puts "Created Accounts Receivable Account" 
 
 Account.create! do |a|
     a.user_id = 1
@@ -151,10 +158,10 @@ Account.create! do |a|
     a.normal_side = "Credit"
     a.category = 'Liability'
     a.subcategory = 'Accounts Payable'
-    a.initial_balance = 1450000
+    a.initial_balance = 1450000.21
     a.debit = 0
     a.credit = 0
-    a.balance = 1450000
+    a.balance = 1450000.21
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -172,6 +179,8 @@ all_error_messages = [
                         ["account_not_found", "No account found"],
 
                         ["user_updated", "User has been Updated"],
+                        ["user_deleted", "User has been Deleted"],
+                        ["user_created", "User has been Created"],
                         ["user_reset_password", "A link has been sent to your email to reset your password"],
                         ["user_create_request", "A request for your account has been sent to an Administrator to approve"],
 
@@ -204,8 +213,8 @@ EventLog.create! do |a|
     a.account_name = "Cash"
     a.user_name = "Admin"
     a.event_type = 'Modified'
-    a.account_before = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":123000,\"debit\":0,\"credit\":0,\"balance\":123000,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
-    a.account_after = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Credit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":1,\"debit\":0,\"credit\":0,\"balance\":1,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.account_before = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":1,\"debit\":0,\"credit\":0,\"balance\":1,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.account_after = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Credit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":123000,\"debit\":0,\"credit\":0,\"balance\":123000,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
     a.created_at = Time.now
     a.updated_at = Time.now
 end
