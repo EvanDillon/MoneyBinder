@@ -17,8 +17,7 @@
                     <th scope="col">Address</th>
                     <th scope="col">Role</th>
                     <th scope="col">Active</th>
-                    <th scope="col"></th>
-                    <th scope="col">Remove</th>
+                    <th scope="col">Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +37,6 @@
                         <%end%>
                         <td><%= user.active %></td>
                         <td><%= link_to 'Edit', "user/edit/#{user.id}"%></td>
-                        <td><%= link_to 'Delete', "user/destroy/#{user.id}"%></td>
                     </tr>
                 <%end%>
             </tbody>
