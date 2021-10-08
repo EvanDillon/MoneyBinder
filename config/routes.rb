@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'create/', action: 'create'
     get 'profile/', action: 'profile'
     get 'expired_passwords/', action: 'expired_passwords'
+    get 'send_message/', action: 'send_message'
     get 'logout/', action: 'destroy'
     delete 'logout/', action: 'destroy'
   end
@@ -23,6 +24,8 @@ Rails.application.routes.draw do
   post 'user/update', to: 'users#update'
   get 'user/create', to: 'users#create'
   post 'user/create', to: 'users#create'
+  get 'administrator/email', to: 'users#administrator_email'
+  post 'administrator/email', to: 'users#administrator_email'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'

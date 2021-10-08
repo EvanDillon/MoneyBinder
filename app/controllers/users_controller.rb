@@ -74,6 +74,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def administrator_email
+    @this_user = User.find(params[:user][:user_id].to_i)
+    @subject_text = params[:subject]
+    @body_text = params[:body]
+    ResetMailer.with(user: @this_user, subject: @subject_text, body: @body_text).send_this.deliver_now
+    redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "email_sent").body
+  end
+
   private
 
   def user_params
