@@ -19,7 +19,8 @@ class ResetMailer < ApplicationMailer
 
   def send_this
     @user = params[:user]
-    mail(to: @user.email, subject: "", body: "")
-    # See send_this for more details
+    @subject = params[:subject]
+    @body = params[:body]
+    mail(to: @user.email, subject: @subject)
   end
 end

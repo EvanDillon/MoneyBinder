@@ -187,7 +187,8 @@ all_error_messages = [
                         ["user_suspended", "This account has been suspended for 1 min"],
                         ["user_suspended_for_part1", "This account is suspended for: "],
                         ["user_suspended_for_part2", " sec"],
-                        ["user_inactive", "This account is not active"]
+                        ["user_inactive", "This account is not active"],
+                        ["email_sent", "Email was successfully sent."]
                     ]
 
 # Creates all error messages

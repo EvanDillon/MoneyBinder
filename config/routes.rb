@@ -23,9 +23,8 @@ Rails.application.routes.draw do
   post 'user/update', to: 'users#update'
   get 'user/create', to: 'users#create'
   post 'user/create', to: 'users#create'
-  # I had to give some type of path in order to get the form to work so I don't know if this will be even used.
-  get 'administrator/email', to: 'administrator#email'
-  post 'administrator/email', to: 'administrator#email'
+  get 'administrator/email', to: 'users#administrator_email'
+  post 'administrator/email', to: 'users#administrator_email'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'

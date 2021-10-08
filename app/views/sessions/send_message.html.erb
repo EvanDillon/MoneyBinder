@@ -8,25 +8,12 @@
             </center>
         </text-align>
         <%= form_tag administrator_email_path, :method => :post do %>
-            <div class="form-group col-md-2">
-                <label>Send to:</label>
-                <select class="form-control">
-                <option class="form-text text-muted">Choose a user</option>
-                <% @all_users.each do |user| %>
-                    <% if user.userType != 1%>
-                        <option><%= user.username %></option>
-                    <% end %>
-                <% end %>
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="Subject">Subject:</label>
-                <input class="form-control" required="true">
-            </div>
-            <div class="form-group col-md">
-                <label for="Body">Body:</label>
-                <textarea class="form-control" required="true" rows="7"></textarea>
-            </div>
+            <label>Send to:</label><br>
+            <%= collection_select(:user, :user_id, User.all, :id, :username)  %><br><br>
+            <label>Subject:</label><br>
+            <%= text_field_tag :subject, nil, required: true, class: 'col-md-6 form-control'%><br>
+            <label>Body:</label><br>
+            <%= text_area_tag :body, nil, required: true, class: 'col-md-12 form-control', rows: '7'%><br>
             <%= submit_tag 'Send', :class => 'btn btn-primary btn-block' %>
         <% end %>
     <% else %>
