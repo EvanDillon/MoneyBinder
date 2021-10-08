@@ -1,76 +1,74 @@
+
 <%= form_with(model: account) do |f| %>
-  <div class="form-group row ">
-    <%= f.label "Account name:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :name %>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label "Account Name:" %>
+      <%= f.text_field :name, required: true, class: 'form-control'%>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.label "Account Number:" %>
+      <%= f.text_field :account_number, required: true, class: 'form-control' %>
     </div>
   </div>
 
-  <div class="form-group row">
-    <%= f.label "Account number:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :account_number %>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label "Category:" %><br>
+      <%= f.select :category, [["Asset", "Asset"], ["Expense", "Expense"], ["Liability", "Liability"], ["Equity", "Equity"], ["Revenues", "Revenues"]], {selected: account.category}, {class: "form-control"} %>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.label "Subcategory:" %>
+      <%= f.text_field :subcategory, class: 'form-control' %>
     </div>
   </div>
 
-  <div class="form-group row">
-    <%= f.label "Normal Side:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
+  <div class="form-group">
+    <%= f.label "Initial Balance:" %>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">$</span>
+      </div>
+      <%= f.text_field :initial_balance, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label "Description:" %>
+      <%= f.text_area :description, class: 'form-control'%>
+    </div>
+    <div class="form-group col-md-6">
+      <%= f.label "Comment:" %>
+      <%= f.text_area :comment, class: 'form-control' %>
+    </div>
+  </div>
+
+
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label "Normal Side:" %> <br>
       <%= f.radio_button :normal_side, "Debit", checked: true %> Debit <br>
       <%= f.radio_button :normal_side, "Credit" %> Credit
     </div>
-  </div>
-  
-  <div class="form-group row">
-    <%= f.label "Category:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.select :category, options_for_select([["Asset", "Asset"], ["Expense", "Expense"], ["Liability", "Liability"], ["Equity", "Equity"], ["Revenues", "Revenues"]], selected: account.category), class: 'form-control' %>
-    </div>
+    <div class="form-group col-md-6">
+      <%= f.label "Statement:" %>
+      <%= f.select :statement, [["Income Statement", "IS"], ["Balance Sheet", "BS"], ["Retained Earnings", "RE"]], {selected: account.statement}, {class: "form-control"} %>
+    </div> 
   </div>
 
-  <div class="form-group row">
-    <%= f.label "Subcategory:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :subcategory %>
-    </div>
-  </div>
-  
-  <div class="form-group row">
-    <%= f.label "Initial Balance:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">$
-      <%= f.text_field :initial_balance %>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <%= f.label "Statement:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.select :statement, options_for_select([["Income Statement", "IS"], ["Balance Sheet", "BS"], ["Retained Earnings", "RE"]], selected: account.statement), class: 'form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <%= f.label "Description:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_area :description%>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <%= f.label "Comment:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :comment %>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <%= f.label "Active:", class:"col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <%= f.label "Active:" %>
       <%= f.check_box :active %>    
     </div>
+    <div class="form-group col-md-6">
+    
+    </div> 
   </div>
 
   <div class="actions">
-    <%= f.submit class: "btn btn-primary"%>
+    <%= f.submit class: "btn btn-primary btn-block"%>
   </div>
-<% end %>
+<%end%>
