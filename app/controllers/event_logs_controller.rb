@@ -19,9 +19,8 @@ class EventLogsController < ApplicationController
 
       elsif event.event_type == "Deactivated"
         before_model = convert_json_to_model(event.account_before)
-        after_model = nil
+        after_model = convert_json_to_model(event.account_after)
         @event_logs << [event, before_model, after_model]
-
       end
     end
   end

@@ -55,7 +55,17 @@ class UsersController < ApplicationController
       active = true
     end
 
-    User.update(id, username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, active: active)
+    # Manages user suspention time
+    suspend_time = Time.now.to_date
+    if params[:reset_suspension] != "true" && !params[:suspend_time].nil?
+      date_params = params[:suspend_time]
+      date = DateTime.new(date_params["(1i)"].to_i, date_params["(2i)"].to_i, date_params["(3i)"].to_i, date_params["(4i)"].to_i, date_params["(5i)"].to_i)
+      if date > Time.now.to_date
+        suspend_time = date
+      end
+    end
+
+    User.update(id, username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
     auth_id = @user.password_authorization_ids.first
     PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])
     past_user_status = @user.active

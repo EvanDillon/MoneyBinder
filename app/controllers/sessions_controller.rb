@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
           end
         # Account is still suspended 
         else
-          redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_suspended_for_part1").body} #{(@user.suspendedTill - Time.now).round(0)} #{ErrorMessage.find_by(error_name: "user_suspended_for_part2").body}"
+          redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_suspended_until").body} #{@user.suspendedTill.strftime("%B%e, %Y %I:%M %p")} "
         end
       else
         redirect_to welcome_path, danger: ErrorMessage.find_by(error_name: "user_inactive").body

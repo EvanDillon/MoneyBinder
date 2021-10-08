@@ -194,8 +194,7 @@ all_error_messages = [
                         ["user_incorrect_password_part1", "Incorrect Password (Attempts left: "],
                         ["user_incorrect_password_part2", ")"],
                         ["user_suspended", "This account has been suspended for 1 min"],
-                        ["user_suspended_for_part1", "This account is suspended for: "],
-                        ["user_suspended_for_part2", " sec"],
+                        ["user_suspended_until", "This account is suspended until: "],
                         ["user_inactive", "This account is not active"],
                         ["email_sent", "Email was successfully sent."]
                     ]
@@ -226,7 +225,7 @@ EventLog.create! do |a|
     a.user_name = "Manager"
     a.event_type = 'Deactivated'
     a.account_before = "{\"id\":2,\"user_id\":1,\"name\":\"Accounts Receivable\",\"account_number\":122,\"description\":\"This account is for Accounts Receivable\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Accounts Receivable\",\"initial_balance\":7500,\"debit\":0,\"credit\":0,\"balance\":7500,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T16:49:44.983Z\",\"updated_at\":\"2021-10-02T16:49:44.983Z\"}"
-    a.account_after = ""
+    a.account_after = "{\"id\":2,\"user_id\":1,\"name\":\"Accounts Receivable\",\"account_number\":122,\"description\":\"This account is for Accounts Receivable\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Accounts Receivable\",\"initial_balance\":7500,\"debit\":0,\"credit\":0,\"balance\":7500,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":false,\"created_at\":\"2021-10-02T16:49:44.983Z\",\"updated_at\":\"2021-10-02T16:49:44.983Z\"}"
     a.created_at = Time.now
     a.updated_at = Time.now
 end

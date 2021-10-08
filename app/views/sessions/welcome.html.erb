@@ -1,36 +1,23 @@
-<%= image_tag("logo.png", width: '200px', :class => "mx-auto d-block")%>
-
-<h2>
-  <text-align>
-  <center>
-  Sign In
-  </center>
-  </text-align>
-</h2>
+<%= image_tag("logo.png", width: '200px', :class => "mx-auto d-block")%><br>
 <div class="container">
-    <%= form_tag login_path do %>
-    <div class="form-group">
-      <h2>
-      <text-align>
-      <center>
-      <%= label_tag 'Username' %>
-      </center>
-      </text-align>
-      <%= text_field_tag :username, nil, placeholder: 'Enter Username', class: 'form-control' %>
-      </h2>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center border">
+      <%= form_tag login_path do %>
+        <div class="form-group">
+          <h2>Sign In</h2>
+          <h4><%= label_tag 'Username' %></h4>
+          <%= text_field_tag :username, nil, placeholder: 'Enter Username', class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <h4><%= label_tag 'Password' %></h4>
+          <%= password_field_tag :password, nil, placeholder: 'Enter Password', class: 'form-control' %>
+          <%= link_to 'Forgot/Reset Password', "/password/forgot", class: 'form-text text-muted', data: {icon: 'info', mini: 'true', role: 'button'} %>
+        </div>
+        <%= submit_tag "Log In", class: "btn btn-primary btn-block"%>
+        <%= button_to "Create New User", '/users/new', method: :get, class: "btn btn-light"%><br>
+      <%end%>
     </div>
-    <div class="form-group">
-      <h2>
-      <text-align>
-      <center>
-      <%= label_tag 'Password' %>
-      </center>
-      </text-align>
-      <%= password_field_tag :password, nil, placeholder: 'Enter Password', class: 'form-control' %>
-      </h2>
-      <%= link_to 'Forgot/Reset Password', "/password/forgot", class: 'form-text text-muted', data: {icon: 'info', mini: 'true', role: 'button'} %>
-    </div>
-      <%= submit_tag "Log In", class: "btn btn-primary"%>
-    <%end%>
-    <%= button_to "Create new User", '/users/new', method: :get, class: "btn btn-light"%>
+    <div class="col-md-4"></div>
+  </div>
 </div>
