@@ -1,6 +1,7 @@
 <h1>Forgot Password</h1>
 
 <%= form_tag('/password/forgot', method: 'post') do %>
+<%= render 'flash_messages' %>
   <%= label_tag 'Email Address'%><br>
   <%= email_field :email, nil, placeholder: 'Enter your email', required: true%><br>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
