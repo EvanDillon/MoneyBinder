@@ -41,12 +41,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_deleted").body
-  end
-
   def edit
     @user = User.find(params[:id])
   end
