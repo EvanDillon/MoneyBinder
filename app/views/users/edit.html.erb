@@ -9,44 +9,7 @@
           <%= label_tag 'Username'%>
           <%= text_field_tag :username, "#{@user.username}", required: true, class: 'form-control'%>
         </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <%= label_tag 'First Name'%>
-            <%= text_field_tag :firstName, "#{@user.firstName}", required: true, class: 'form-control'%>
-          </div>
-          <div class="form-group col-md-6">
-            <%= label_tag 'Last Name' %>
-            <%= text_field_tag :lastName, "#{@user.lastName}", required: true, class: 'form-control'%>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <%= label_tag :email%>
-            <%= email_field_tag :email, "#{@user.email}", required: true, class: 'form-control'%>
-          </div>
-          <div class="form-group col-md-6">
-            <%= label_tag :phone_number%>
-            <%= text_field_tag :phoneNum, "#{@user.phoneNum}", required: true, class: 'form-control'%>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <%= label_tag :address%>
-          <%= text_field_tag :address, "#{@user.address}", required: true, class: 'form-control'%>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <%= label_tag :Role%>
-            <%= select_tag :userType, options_for_select([["Administrator", 1], ["Manager", 2], ["Accountant", 3]], selected: @user.userType) %>
-          </div>
-          <div class="form-group col-md-6">
-            <%= label_tag :activate%>
-            <%= check_box_tag :active, true, @user.active %>
-          </div> 
-        </div>
-
+        <%= render 'form', user: @user %>
         <%= label_tag @user.security_question.first.question%>
         <%= text_field_tag :security_question_answer, "#{@user.password_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
         <%= hidden_field_tag "user_id", @user.id %>
@@ -60,6 +23,7 @@
         <%end%>
         <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block' %>
       <%end%>
+      <%= link_to 'Back to User Management', user_management_path %>
     </div>
     <div class="col"></div>
   </div>
