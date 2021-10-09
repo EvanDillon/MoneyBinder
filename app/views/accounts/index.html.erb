@@ -45,7 +45,7 @@
       <tbody>
         <% @accounts.each do |account| %>
           <tr>
-            <th scope="row"><%= account.account_number %></th>
+            <th scope="row"><a href="/ledger"><%= account.account_number %></a></th>
             <td><%= account.name %></td>
             <td><%= account.category %></td>
             <td><%= account.subcategory %></td>
