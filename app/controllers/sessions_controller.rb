@@ -78,17 +78,13 @@ class SessionsController < ApplicationController
           @user.save
           initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
           ResetMailer.with(user: @user).approve_new_account.deliver_now
-          if current_user.nil?
-            redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "user_create_request").body
-          else
-            redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_created").body
-          end
+          redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "user_create_request").body
         end      
       else 
-        redirect_to '/users/new', danger: "#{@user.errors.full_messages.first}"
+        redirect_to sign_up_path, danger: "#{@user.errors.full_messages.first}"
       end
     else
-      redirect_to '/users/new', danger: "#{pass_check}"
+      redirect_to sign_up_path, danger: "#{pass_check}"
     end
   end
 
