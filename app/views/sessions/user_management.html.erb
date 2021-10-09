@@ -1,5 +1,6 @@
 
 <%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
 <div class="container">
   <% if current_user.userType == 1 %>
     <h1 class="text-center">User Management</h1>
