@@ -21,4 +21,14 @@ class User < ApplicationRecord
           return "Password needs to be at least 8 characters. \n"
         end   
     end
+
+    # Creates username for new user
+  def self.create_username(fname, lname, accountCreated)
+    if fname && lname && accountCreated
+      user_name = "#{fname.first}#{lname}#{accountCreated.strftime("%m")}#{accountCreated.strftime("%y")}"
+      return user_name
+    else 
+      return nil
+    end 
+  end
 end
