@@ -73,9 +73,6 @@ class AccountsController < ApplicationController
     redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_deleted").body
   end
 
-  def ledger
-    @number = @account.account_number
-  end
   
   private
     # Use callbacks to share common setup or constraints between actions.

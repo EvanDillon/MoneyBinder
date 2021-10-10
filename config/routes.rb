@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     get 'profile/', action: 'profile'
     get 'expired_passwords/', action: 'expired_passwords'
     get 'send_message/', action: 'send_message'
-    get 'ledger/', action: 'ledger'
     get 'logout/', action: 'destroy'
     delete 'logout/', action: 'destroy'
   end
