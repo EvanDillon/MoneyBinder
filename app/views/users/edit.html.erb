@@ -10,7 +10,7 @@
           <%= label_tag 'Username'%>
           <%= text_field_tag :username, "#{@user.username}", required: true, class: 'form-control'%>
         </div>
-        <%= render 'form', user: @user %>
+        <%= render 'form', user: @user, type: "edit" %>
         <%= label_tag @user.security_question.first.question%>
         <%= text_field_tag :security_question_answer, "#{@user.password_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
         <%= hidden_field_tag "user_id", @user.id %>
