@@ -60,7 +60,7 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <%= f.label "Active:" %>
-      <%= f.check_box :active %>    
+      <%= f.check_box :active, disabled: @account.balance > 0 %>    
     </div>
     <div class="form-group col-md-6">
     
