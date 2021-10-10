@@ -5,7 +5,7 @@
     <div class="col-6">
       <h1 class="text-center">Create New User</h1>
       <%= form_tag user_create_path do %>
-        <%= render 'form', user: @user %>
+        <%= render 'form', user: @user, type: "new" %>
         <%= label_tag :security_questions, "Security Questions" %>
         <%= collection_select(:security_question_1, :id,  SecurityQuestion.all, :id, :question) %>
         <%= text_field_tag :security_question_answer, nil, required: true, class: 'form-control' %><br>

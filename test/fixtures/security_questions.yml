@@ -4,8 +4,11 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  question: In what city were you born?
+
+two:
+  question: What is the name of your first pet?
+
+three:
+  question: What is your mothers maiden name?

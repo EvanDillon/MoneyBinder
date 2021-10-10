@@ -32,16 +32,17 @@ class UsersController < ApplicationController
   end
 
   def update
-    id = params[:user_id].to_i
-    @user = User.find(id)
+    binding.pry
+    @user = User.find(params[:user_id].to_i)
     userType = params[:userType].to_i
+
     if params[:active].nil?
       active = false
     else
       active = true
     end
 
-    # Manages user suspention time
+    # Manages users suspention time
     suspend_time = Time.now.to_date
     if params[:reset_suspension] != "true" && !params[:suspend_time].nil?
       date_params = params[:suspend_time]
@@ -51,30 +52,33 @@ class UsersController < ApplicationController
       end
     end
 
-    User.update(id, username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
-    auth_id = @user.password_authorization_ids.first
-    PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])
-    past_user_status = @user.active
-    @user.reload
+    if @user.update(username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
+      auth_id = @user.password_authorization_ids.first
+      PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])
+      past_user_status = @user.active
+      @user.reload
+      
+      # If Admin activates a new users account it sents email to that user
+      if @user.active != past_user_status && @user.active
+        ResetMailer.with(user: @user).account_activated.deliver_now
+      end
 
-    # If Admin activates a new users account it sents email to that user
-    if @user.active != past_user_status && @user.active
-      ResetMailer.with(user: @user).account_activated.deliver_now
-    end
-
-    # If user makes own account deactiviated system kicks user out 
-    if !@user.active && (@user == current_user)
-      redirect_to '/logout'
+      # If user deactiviats own account, system kicks user out 
+      if (!@user.active && (@user == current_user)) || @user.suspendedTill > Time.now
+        redirect_to '/logout'
+      else
+        redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_updated").body
+      end
     else
-      redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_updated").body
+      redirect_to edit_user_path(@user), danger: "#{@user.errors.full_messages.first}"
     end
   end
 
   def administrator_email
-    @this_user = User.find(params[:user][:user_id].to_i)
+    @selected_user = User.find(params[:user][:user_id].to_i)
     @subject_text = params[:subject]
     @body_text = params[:body]
-    ResetMailer.with(user: @this_user, subject: @subject_text, body: @body_text).send_this.deliver_now
+    ResetMailer.with(user: @selected_user, subject: @subject_text, body: @body_text).send_this.deliver_now
     redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "email_sent").body
   end
 
