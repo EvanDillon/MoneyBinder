@@ -1,13 +1,17 @@
 <%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
 <div class="container">
   <text-align>
     <center>
       <h1>Chart of Accounts</h1>
     </center>
   </text-align>
+
   <div class = 'row'>
     <div class="col py-3 px-lg-2">
-      <%= button_to "Create New Account", new_account_path, method: :get, class: "btn btn-primary"%>
+      <% if current_user.userType == 1 %>
+        <%= button_to "Create New Account", new_account_path, method: :get, class: "btn btn-primary"%>
+      <% end %>
     </div>
 
     <div class="float-right">
@@ -34,20 +38,25 @@
           <th scope="col">Balance</th>
           <th scope="col">Active</th>
           <th scope="col">Created By</th>
-          <th scope="col"></th> 
+          <% if current_user.userType == 1 %>
+            <th scope="col"></th> 
+          <% end %>
         </tr>
       </thead>
       <tbody>
         <% @accounts.each do |account| %>
           <tr>
-            <th scope="row"><%= account.account_number %></th>
+            <th scope="row"><a href="/ledger"><%= account.account_number %></a></th>
             <td><%= account.name %></td>
             <td><%= account.category %></td>
             <td><%= account.subcategory %></td>
             <td>$ <%= number_with_precision(account.balance, precision: 2, delimiter: ',')%></td>
             <td><%= account.active %></td>
-            <td><%= User.find(account.user_id).username %></td>            
-            <td><%= button_to "Edit", edit_account_path(account), method: :get, class: "btn btn-primary btn-sm float-right"%></td>
+            <td><%= User.find(account.user_id).username %></td>
+            
+            <% if current_user.userType == 1 %>
+              <td><%= button_to "Edit", edit_account_path(account), method: :get, class: "btn btn-primary btn-sm float-right"%></td>
+            <% end %>
           </tr>
         <%end%>
       </tbody>

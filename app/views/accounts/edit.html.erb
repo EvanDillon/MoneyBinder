@@ -1,7 +1,14 @@
 <%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
 <div class="container">
-    <h1>Editing Account</h1>
-    <%= render 'form', account: @account %>
-    <%= button_to "Delete", @account, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %>
-    <%= link_to 'Back', accounts_path %>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6 ">
+      <h1 class="text-center">Editing Account</h1><br>
+      <%= render 'form', account: @account %>
+      <%= link_to 'Back to Chart of Accounts', accounts_path %>
+      <!-- <%= button_to "Delete", @account, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %> -->
+    </div>
+    <div class="col"></div>
+  </div>
 </div>

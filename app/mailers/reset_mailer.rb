@@ -16,4 +16,11 @@ class ResetMailer < ApplicationMailer
     @url = "http://localhost:3000/welcome"
     mail(to: @user.email, subject: "Your account has been approved")
   end
+
+  def send_this
+    @user = params[:user]
+    @subject = params[:subject]
+    @body = params[:body]
+    mail(to: @user.email, subject: @subject)
+  end
 end

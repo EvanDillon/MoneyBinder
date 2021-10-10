@@ -45,12 +45,21 @@ class AccountsController < ApplicationController
   # PATCH/PUT /accounts/1 or /accounts/1.json
   def update
     @account_before = @account.to_json
+    before_active_status = @account.active
+
     if @account.update(account_params)
+      changed_active = @account.active_changed?
       @account.balance = calculate_balance(@account)
       @account.save
       @account_after = @account.to_json
 
-      create_event_log(@account_before, @account_after, "Modified")
+      # Checks if user deactivated account and creates a log
+      after_active_status = @account.active
+      if before_active_status && !after_active_status
+        create_event_log(@account_before, @account_after, "Deactivated")
+      else
+        create_event_log(@account_before, @account_after, "Modified")
+      end
       redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_updated").body
     else
       redirect_to edit_account_path(@account), danger: "#{@account.errors.first.full_message}"
@@ -64,6 +73,9 @@ class AccountsController < ApplicationController
     redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_deleted").body
   end
 
+  def ledger
+    @number = @account.account_number
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -90,10 +102,10 @@ class AccountsController < ApplicationController
                     ).save
 
       elsif type == "Deactivated"
-        EventLog.new( account_name: before.name, 
+        EventLog.new( account_name: JSON.parse(before, object_class: Account).name, 
                       user_name: current_user.username, 
                       event_type: type, 
-                      account_before: before.to_json, 
+                      account_before: before, 
                       account_after: after
                     ).save
       

@@ -1,18 +1,19 @@
-<%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %>
 <div class="container">  
   <div class="row">
     <div class="col"></div>
     <div class="col-6">
-      <h1 class="text-center">Create New User</h1>
-      <%= form_tag user_create_path do %>
-        <%= render 'form', user: @user %>
+      <h1 class="text-center">Create New User Account</h1>
+      <%= form_tag process_new_sign_up_path, method: 'post' do %>
+
+        <%= render 'users/form', user: @user %>
+
         <%= label_tag :security_questions, "Security Questions" %>
         <%= collection_select(:security_question_1, :id,  SecurityQuestion.all, :id, :question) %>
         <%= text_field_tag :security_question_answer, nil, required: true, class: 'form-control' %><br>
         <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block' %>
       <%end%>
-      <%= link_to 'Back to User Management', user_management_path %>
+      <%= link_to 'Back to Sign Up', welcome_path %>
     </div>
     <div class="col"></div>
   </div>

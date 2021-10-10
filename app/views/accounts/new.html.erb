@@ -1,6 +1,13 @@
 <%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
 <div class="container">  
-  <h1>New Account</h1>
-  <%= render 'form', account: @account %>
-  <%= link_to 'Back', accounts_path %>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6 ">
+      <h1 class="text-center">New Account</h1><br>
+      <%= render 'form', account: @account %>
+      <%= link_to 'Back to Chart of Accounts', accounts_path %>
+    </div>
+    <div class="col"></div>
+  </div>
 </div>
