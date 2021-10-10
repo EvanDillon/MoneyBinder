@@ -65,7 +65,7 @@ class AccountsController < ApplicationController
   end
 
   def ledger
-    @number = @account.account_number
+    @acc_num = params[:account_number]
   end
   
   private
