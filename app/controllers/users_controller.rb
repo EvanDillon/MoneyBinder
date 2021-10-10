@@ -32,7 +32,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    binding.pry
     @user = User.find(params[:user_id].to_i)
     userType = params[:userType].to_i
 
