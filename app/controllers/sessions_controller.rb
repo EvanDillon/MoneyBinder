@@ -92,6 +92,9 @@ class SessionsController < ApplicationController
     @all_users = User.all
   end
 
+  def journal
+  end
+
   def expired_passwords
     @all_users = User.all
   end

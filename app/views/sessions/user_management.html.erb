@@ -3,7 +3,7 @@
 <%= render 'flash_messages' %>
 <div class="container">
   <% if current_user.userType == 1 %>
-    <h1 class="text-center">User Management</h1>
+    <h1 class="text-center">User Management</h1><br>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -39,10 +39,18 @@
       </tbody>
     </table>
     <div class="row">
-      <%= button_to "Create New User", new_user_path, method: :get, class: "btn btn-primary" %>
-      <%= button_to "View Expired Passwords Report", expired_passwords_path, method: :get, class: "btn btn-primary" %>
-      <%= button_to "Send Email", send_message_path, method: :get, class: "btn btn-primary" %>
-    </div>
+      <div class="col-sm-auto">      
+        <%= button_to "Create New User", new_user_path, method: :get, class: "btn btn-primary" %>
+      </div>
+      <div class="col-sm-auto">      
+        <%= button_to "View Expired Passwords Report", expired_passwords_path, method: :get, class: "btn btn-primary" %>
+      </div>
+
+      <div class="col-sm-auto">
+        <%= button_to "Send Email", send_message_path, method: :get, class: "btn btn-primary" %>
+      </div>
+
+    </div><br>
   <% else %>
     <h1 class= "text-center">Forbidden. You do not have access to this page.</h1>
   <% end %>
