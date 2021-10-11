@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     get 'send_message/', action: 'send_message'
     get 'logout/', action: 'destroy'
     delete 'logout/', action: 'destroy'
+    get 'journal/', action: 'journal'
   end
 
   get 'user/destroy/:id', to: 'users#destroy'
