@@ -120,10 +120,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Cash'
-    a.initial_balance = 123000
+    a.initial_balance = 1000
     a.debit = 0
     a.credit = 0
-    a.balance = 123000
+    a.balance = 1000
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -139,10 +139,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Accounts Receivable'
-    a.initial_balance = 7500.01
+    a.initial_balance = 100.01
     a.debit = 0
     a.credit = 0
-    a.balance = 7500.01
+    a.balance = 100.01
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -158,16 +158,35 @@ Account.create! do |a|
     a.normal_side = "Credit"
     a.category = 'Liability'
     a.subcategory = 'Accounts Payable'
-    a.initial_balance = 1450000.21
+    a.initial_balance = 1500000.55
     a.debit = 0
     a.credit = 0
-    a.balance = 1450000.21
+    a.balance = 1500000.55
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.active = true
 end
-puts "Created Accounts Payable Account" 
+puts "Created Accounts Payable Account"
+
+Account.create! do |a|
+    a.user_id = 2
+    a.name = 'Account with debit'
+    a.account_number = '999'
+    a.description = "This account has more money than just the inital balance"
+    a.normal_side = "Debit"
+    a.category = 'Asset'
+    a.subcategory = 'Example'
+    a.initial_balance = 0
+    a.debit = 5000
+    a.credit = 0
+    a.balance = 5000
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.active = true
+end
+puts "Created High Debit Account" 
 
 
 
@@ -196,7 +215,8 @@ all_error_messages = [
                         ["user_suspended", "This account has been suspended for 1 min"],
                         ["user_suspended_until", "This account is suspended until: "],
                         ["user_inactive", "This account is not active"],
-                        ["email_sent", "Email was successfully sent."]
+                        ["email_sent", "Email was successfully sent."],
+                        ["can_not_deactivate_account", "You can not deactivate an account with a balance greater than 0"]
                     ]
 
 # Creates all error messages
