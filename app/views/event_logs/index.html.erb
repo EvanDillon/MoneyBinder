@@ -34,7 +34,7 @@
               <% elsif event_log.first.event_type == "Deactivated"%>
                 <span class="badge badge-pill badge-danger"> <%= event_log.first.event_type %>   </span> 
               <% else %>
-                <span class="badge badge-pill badge-warning" style="color:white"> <%= event_log.first.event_type %>   </span> 
+                <span class="badge badge-pill badge-warning"> <%= event_log.first.event_type %>   </span> 
               <%end%>
             </td>
 
