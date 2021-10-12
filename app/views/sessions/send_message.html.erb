@@ -2,12 +2,8 @@
 <%= render 'flash_messages' %><br>
 <div class="container">
     <% if current_user.userType == 1 %>
-        <text-align>
-            <center>
-                <h1>Send Message</h1>
-                <h4>Here, the administrator can send a message to any user in the system.</h2>
-            </center>
-        </text-align>
+        <h1 class="text-center">Send Message</h1>
+        <h4 class="text-center">Here, the administrator can send a message to any user in the system.</h2>
         <%= form_tag administrator_email_path, :method => :post do %>
             <label>Send to:</label><br>
             <%= collection_select(:user, :user_id, User.all, :id, :username)  %><br><br>
@@ -18,11 +14,7 @@
             <%= submit_tag 'Send', :class => 'btn btn-primary btn-block' %>
         <% end %>
     <% else %>
-        <text-align>
-            <center>
-                <h1>Forbidden. You do not have access to this page.</h1>
-            </center>
-        </text-align>
+        <h1 class="text-center">Forbidden. You do not have access to this page.</h1>
     <% end %>
     <a href= "/user_management">Back to User Management</a>
 </div>
