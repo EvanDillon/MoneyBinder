@@ -28,13 +28,17 @@
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link"></a>
+              <%= link_to 'Help', user_management_path, class: "nav-link"%>
+            </li>
             <a href="/profile" class="nav-link">
               <%= image_tag("profile.jpeg", width: '50px', :class => "ml-auto d-block")%>
             </a>
             <li class="nav-item">
               <p style="line-height:10%">
                 <a class="nav-link"></a>
-                <a class="nav-link" style="color: white;"><%= current_user.username %></a>
+                <a class="nav-link" href="/profile" style="color: white;"><%= current_user.username %></a>
                 <a class="nav-link" href="/logout"><font size="-1">Logout</font></a>
               </p>
             </li>

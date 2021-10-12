@@ -6,14 +6,14 @@
   <h1 class="text-center">Event Logs</h1>
 
   <div class="row">
-    <table class="table table-hover table-sm border">
+    <table class="table table-hover table-sm", id="table-layout">
       <thead>
-        <tr class="table-primary">
+        <tr class="table">
           <th scope="col">#</th>
           <th scope="col">Changed By</th>
           <th scope="col">Account</th>
-          <th scope="col">Event Type</th>
-          <th scope="col">Fields Changed</th>
+          <th scope="col">Action</th>
+          <th scope="col">Changed</th>
           <th scope="col">Before</th>
           <th scope="col">After</th>
           <th scope="col">Date</th>
@@ -34,7 +34,7 @@
               <% elsif event_log.first.event_type == "Deactivated"%>
                 <span class="badge badge-pill badge-danger"> <%= event_log.first.event_type %>   </span> 
               <% else %>
-                <span class="badge badge-pill badge-warning"> <%= event_log.first.event_type %>   </span> 
+                <span class="badge badge-pill badge-warning" style="color:white"> <%= event_log.first.event_type %>   </span> 
               <%end%>
             </td>
 
@@ -103,3 +103,9 @@
   <!-- <%= link_to 'New Event Log', new_event_log_path %> -->
 
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#table-layout').dataTable();
+  });
+</script>
