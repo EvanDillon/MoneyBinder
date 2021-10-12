@@ -18,11 +18,11 @@
             <%= link_to 'Chart of Accounts', accounts_path, class: "nav-link"%>
           </li>
           <li class="nav-item <%= active_class(event_logs_path) %>">
-            <%= link_to 'Event Log', event_logs_path, class: "nav-link"%>
+            <%= link_to 'Event Logs', event_logs_path, class: "nav-link"%>
           </li>
           <% if current_user.userType == 1 %>
             <li class="nav-item <%= active_class(user_management_path) %>">
-              <%= link_to 'User Managment', user_management_path, class: "nav-link"%>
+              <%= link_to 'User Management', user_management_path, class: "nav-link"%>
             </li>
           <%end%>
         </ul>
@@ -34,7 +34,7 @@
             <li class="nav-item">
               <p style="line-height:10%">
                 <a class="nav-link"></a>
-                <a class="nav-link" href="/profile" style="color: white;"><%= current_user.username %></a>
+                <a class="nav-link" style="color: white;"><%= current_user.username %></a>
                 <a class="nav-link" href="/logout"><font size="-1">Logout</font></a>
               </p>
             </li>

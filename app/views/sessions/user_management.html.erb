@@ -4,7 +4,7 @@
 <div class="container">
   <% if current_user.userType == 1 %>
     <h1 class="text-center">User Management</h1><br>
-    <table class="table table-striped">
+    <table class="table table-striped" id="table-layout">
       <thead>
         <tr>
           <th scope="col">ID</th>
@@ -55,3 +55,9 @@
     <h1 class= "text-center">Forbidden. You do not have access to this page.</h1>
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#table-layout').dataTable();
+  });
+</script>

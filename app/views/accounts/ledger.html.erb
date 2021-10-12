@@ -1,9 +1,5 @@
 <%= render partial: "shared/navigation_bar"%>
 <div class="container">
-    <text-align>
-        <center>
-            <h1>This is a page containing the ledger for account <%= @acc_num %>.</h1>
-            <%= link_to 'Back to Chart of Accounts', accounts_path %>
-        </center>
-    </text-align>
+    <h1 class="text-center">This is a page containing the ledger for account <%= @acc_num %>.</h1>
+    <body class="text-center"><%= link_to 'Back to Chart of Accounts', accounts_path %></body>
 </div>
