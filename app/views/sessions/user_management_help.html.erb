@@ -1,0 +1,78 @@
+<%= render partial: "shared/navigation_bar"%>
+<div class="container border"><br>
+    <h1>User Management Help </h1>
+    <%= link_to "< Back to Help Index", "/help_index", class: "float-right"%>
+
+
+    <p>The User Management page allows an administrator to create new users, modify existing users, view expired or soon to be expired passwords, and send emails to users. <strong>Only</strong> administrators can access this page.</p>
+
+    <ul>
+        <li><a href="#user_types">Types Of Users</a></li>
+        <li><a href="#create_user">Creating A New User</a></li>
+        <li><a href="#editing_accounts">Editing Existing User Accounts</a></li>
+        <li><a href="#view_expired_passwords">View Expired Passwords</a></li>
+        <li><a href="#send_email">Sending An Email To A User</a></li>
+    </ul>
+    <%= image_tag("documentation/user_managemant/user_management.png", width: '1000px') %>
+
+    <h1 id="user_types">Types Of Users</h1>
+
+    <h2 id="accountants">Accountants</h2>
+
+    <p>Accountants can view accounts in the Chart of Accounts.</p>
+
+    <h2 id="managers">Managers</h2>
+
+    Managers can view accounts in the Chart of Accounts, add new accounts, and modify existing accounts, including deactivating accounts.
+
+    <h2 id="administrators">Administrators</h2>
+
+    Administrators can do everything managers can do. Administrators can also create users, modify user settings, send emails to users, and suspend user accounts.
+
+    <h1 id="create_user">Creating A New User</h1>
+
+    <p>To create a new user, click on the <i>Create New User</i> button.</p>
+    <%= image_tag("documentation/user_managemant/user_management_create_new_user_highlighted.png", width: '1000px') %>
+
+
+    <p>This will take you to the Create New User Page.</p>
+    <%= image_tag("documentation/user_managemant/create_new_user.png", width: '1000px') %>
+
+    <p>Fill out each field with the requested information.</p>
+
+    <p>Passwords must be at least eight characters long and contain a letter, a number, and a special character.</p>
+    <%= image_tag("documentation/user_managemant/create_new_user_fields_filled.png", width: '1000px') %>
+
+    <p>Click on the <i>Submit</i>> button to create the user, or the <i>Back to User Management</i> button to discard the data entered and return to the User Management page.</p>
+
+    <h1 id="editing_accounts">Editing Existing User Accounts</h1>
+
+    <p>To edit the account of an existing user, click on the <i>edit</i> button in the row of the user you wish to modify.</p>
+    <%= image_tag("documentation/user_managemant/user_management_edit_highlighted.png", width: '1000px') %>
+    <%= image_tag("documentation/user_managemant/edit_user.png", width: '1000px') %>
+
+    <p>Modify the fields as necessary. To suspend a user, uncheck the <i>Active</i> checkbox and select the end date of the suspension. The user will be suspended from now until the selected date and time.</p>
+    <%= image_tag("documentation/user_managemant/edit_user_about_to_be_suspended_highlighted.png", width: '1000px') %>
+
+    <p>Click the <i>Submit</i> button to save changes, or the <i>Back to User Management</i> button to discard the changes and return to the User Management page.</p>
+    <%= image_tag("documentation/user_managemant/user_edited.png", width: '1000px') %>
+
+    <h1 id="view_expired_passwords">View Expired Passwords</h1>
+
+    <p>To view expired or soon to be expired passwords, click on the <i>View Expired Passwords</i> button.</p>
+    <%= image_tag("documentation/user_managemant/user_management_view_passwords_highlighted.png", width: '1000px') %>
+    <%= image_tag("documentation/user_managemant/expired_password_list.png", width: '1000px') %>
+
+    <p>Click <i>Back to User Management</i> to leave this view and return to the User Management page.</p>
+
+    <h1 id="send_email">Sending An Email To A User</h1>
+
+    <p>To send an email to a user, click on the <i>Send Email</i> button.</p>
+    <%= image_tag("documentation/user_managemant/user_management_send_email_highlighted.png", width: '1000px') %>
+    <%= image_tag("documentation/user_managemant/send_email.png", width: '1000px') %>
+
+    <p>Select the user you wish to email from the pick list, and fill out the subject and body fields with the information you wish to send the user.</p>
+    <%= image_tag("documentation/user_managemant/send_email_fields_filled.png", width: '1000px') %>
+
+    <p>Either click <i>Send</i> to send the email, or click <i>Back to User Management</i> to discard the email and return to the User Management page.</p>
+</div>

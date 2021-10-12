@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     get 'logout/', action: 'destroy'
     delete 'logout/', action: 'destroy'
     get 'journal/', action: 'journal'
+    get '/help_index', action: 'help_index'
+    get '/sign_in_help', action: 'sign_in_help'
+    get '/user_management_help', action: 'user_management_help'
+    get '/event_logs_help', action: 'event_logs_help'
   end
 
   get 'user/destroy/:id', to: 'users#destroy'
@@ -29,6 +33,7 @@ Rails.application.routes.draw do
   get 'administrator/email', to: 'users#administrator_email'
   post 'administrator/email', to: 'users#administrator_email'
   get 'ledger/:account_number', to: 'accounts#ledger'
+
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'

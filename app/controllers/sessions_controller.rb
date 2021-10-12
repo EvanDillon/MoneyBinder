@@ -95,6 +95,18 @@ class SessionsController < ApplicationController
   def journal
   end
 
+  def help_index
+  end
+
+  def user_management_help
+  end
+
+  def sign_in_help
+  end
+
+  def event_logs_help
+  end
+
   def expired_passwords
     @all_users = User.all
   end

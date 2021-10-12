@@ -1,0 +1,27 @@
+<%= render partial: "shared/navigation_bar"%>
+<div class="container border"><br>
+
+    <h1>Event Logs Help</h1>
+    <%= link_to "< Back to Help Index", "/help_index", class: "float-right" %>
+
+    <p>The event logs page shows a history of changes made to the database in Money Binder. Information includes:</p>
+    <ul>
+        <li>The ID of the user that made the change.</li>
+        <li>The username of the user that made the change.</li>
+        <li>The name of the account that was changed. An account can be added, deactivated, or modified.</li>
+        <li>The fields of the account that were changed.</li>
+        <li>What the values in the fields were before the change. <i>None</i> will be displayed if there were no values in the fields before. This will occur when an account is added.</li>
+        <li>What the values in the fields are after the change.</li>
+        <li>The date the change was made.</li>
+    </ul>
+    <%= image_tag("documentation/event_logs/event_logs.png", width: '1000px') %>
+
+
+    <p>Clicking on the <i>View</i> button will take the user to the log entry where additional details can be seen.</p>
+    <%= image_tag("documentation/event_logs/event_log_details.png", width: '1000px') %>
+
+
+    <p>To go back to the event logs, click on the <i>Back to Event Logs</i> button.</p>
+    <%= image_tag("documentation/event_logs/back_to_event_logs.png", width: '1000px') %>
+
+</div>
