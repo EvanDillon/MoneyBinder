@@ -21,7 +21,7 @@
           <%= check_box_tag "reset_suspension", true, false %><br>
         <% else %>
           <%= label_tag 'Suspend User Until: '%>
-          <%= datetime_select 'suspend_time', "", {ampm: true, default: Time.now, disabled: @user.suspendedTill > Time.now}%><br><br>
+          <%= datetime_select 'suspend_time', "", {ampm: true, default: Time.now, disabled: @user.suspendedTill > Time.now, start_year: Date.current.year}%><br><br>
         <%end%>
         <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block' %>
       <%end%>
