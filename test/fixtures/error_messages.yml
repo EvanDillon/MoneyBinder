@@ -4,8 +4,82 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  error_name: account_updated
+  body: Account has been Updated
+
+two:
+  error_name: account_deleted
+  body: Account has been Deleted
+
+three:
+  error_name: account_created
+  body: Account has been Created
+
+four:
+  error_name: account_not_found
+  body: No account found
+
+five:
+  error_name: user_updated
+  body: User has been Updated
+
+six:
+  error_name: user_deleted
+  body: User has been Deleted
+
+seven:
+  error_name: user_created
+  body: User has been Created
+
+eight:
+  error_name: user_reset_password
+  body: A link has been sent to your email to reset your password
+
+nine:
+  error_name: user_create_request
+  body: A request for your account has been sent to an Administrator to approve
+
+ten:
+  error_name: user_expired_password
+  body: User has been Created
+
+eleven:
+  error_name: user_almost_expired_password_part1
+  body: Your password is going to expire in
+
+twelve:
+  error_name: user_almost_expired_password_part2
+  body: days. You can change your password in Profile Settings
+
+thirteen:
+  error_name: user_not_found
+  body: Username not found
+
+fourteen:
+  error_name: user_used_password
+  body: Please choose a password you have not used before
+
+fifteen:
+  error_name: user_incorrect_password_part1
+  body: "Incorrect Password (Attempts left: "
+
+sixteen:
+  error_name: user_incorrect_password_part2
+  body: ")"
+
+seventeen:
+  error_name: user_suspended
+  body: "Incorrect Password (Attempts left: "
+
+eighteen:
+  error_name: user_suspended_until
+  body: "This account is suspended until: "
+
+nineteen:
+  error_name: user_inactive
+  body: This account is not active
+
+twenty:
+  error_name: email_sent
+  body: Email was successfully sent.

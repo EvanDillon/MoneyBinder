@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
           if @user.loginAttempts < 2
             @user.increment(:loginAttempts, 1) 
             @user.save
-            redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_incorrect_password_part1").body} #{3 - @user.loginAttempts} #{ErrorMessage.find_by(error_name: "user_incorrect_password_part2").body}"
+            redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_incorrect_password_part1").body} #{3 - @user.loginAttempts}#{ErrorMessage.find_by(error_name: "user_incorrect_password_part2").body}"
           # Account has has 3 attempts so suspend for 1 min
           else
             @user.suspendedTill = Time.now + 1*60 
@@ -90,6 +90,9 @@ class SessionsController < ApplicationController
 
   def user_management
     @all_users = User.all
+  end
+
+  def journal
   end
 
   def expired_passwords

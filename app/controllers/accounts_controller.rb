@@ -32,37 +32,46 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
     @account.user_id = current_user.id
     @account.balance = calculate_balance(@account)
-
-    if @account.save
-      create_event_log("", @account, "Added")
-      redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_created").body
-    else
-      flash.now[:danger] = "#{@account.errors.first.full_message}"
+    if @account.initial_balance > 0 && params[:account][:active] == "0"
+      flash.now[:danger] = ErrorMessage.find_by(error_name: "can_not_deactivate_account").body
       render new_account_path
+    else
+      if @account.save
+        create_event_log("", @account, "Added")
+        redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_created").body
+      else
+        flash.now[:danger] = "#{@account.errors.first.full_message}"
+        render new_account_path
+      end
     end
   end
 
   # PATCH/PUT /accounts/1 or /accounts/1.json
-  def update
+  def update      
     @account_before = @account.to_json
     before_active_status = @account.active
 
-    if @account.update(account_params)
-      changed_active = @account.active_changed?
-      @account.balance = calculate_balance(@account)
-      @account.save
-      @account_after = @account.to_json
-
-      # Checks if user deactivated account and creates a log
-      after_active_status = @account.active
-      if before_active_status && !after_active_status
-        create_event_log(@account_before, @account_after, "Deactivated")
-      else
-        create_event_log(@account_before, @account_after, "Modified")
-      end
-      redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_updated").body
+    # Checks if account has money and if active is false
+    if account_empty?(@account, params[:account][:initial_balance]) && params[:account][:active] == "0"
+      redirect_to edit_account_path(@account), danger: ErrorMessage.find_by(error_name: "can_not_deactivate_account").body
     else
-      redirect_to edit_account_path(@account), danger: "#{@account.errors.first.full_message}"
+      if @account.update(account_params)
+        changed_active = @account.active_changed?
+        @account.balance = calculate_balance(@account)
+        @account.save
+        @account_after = @account.to_json
+
+        # Checks if user deactivated account and creates a log
+        after_active_status = @account.active
+        if before_active_status && !after_active_status
+          create_event_log(@account_before, @account_after, "Deactivated")
+        else
+          create_event_log(@account_before, @account_after, "Modified")
+        end
+        redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_updated").body
+      else
+        redirect_to edit_account_path(@account), danger: "#{@account.errors.first.full_message}"
+      end
     end
   end
 
@@ -73,6 +82,9 @@ class AccountsController < ApplicationController
     redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_deleted").body
   end
 
+  def ledger
+    @acc_num = params[:account_number]
+  end
   
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -87,6 +99,11 @@ class AccountsController < ApplicationController
 
     def calculate_balance(account)
       account.initial_balance + (account.debit - account.credit)
+    end
+
+    def account_empty?(account, new_initial_balance)
+      account.initial_balance = new_initial_balance   
+      return calculate_balance(account) > 0
     end
 
     def create_event_log(before, after, type)

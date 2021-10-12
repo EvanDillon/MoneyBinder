@@ -1,11 +1,7 @@
 <%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %><br>
 <div class="container">
-  <text-align>
-    <center>
-      <h1>Event Log Details</h1><br>
-    </center>
-  </text-align>
-
+      <h1 class="text-center">Event Log Details</h1><br>
   <div class="form-row">
     <div class="col">
       <p>Event ID: <%= @event_id %></p>
@@ -28,7 +24,7 @@
 
   <table class="table table-bordered">
     <thead>
-      <tr class="table-primary">
+      <tr class="table">
         <th scope="col">Fields Changed</th>
         <th scope="col">Before</th>
         <th scope="col">After</th>

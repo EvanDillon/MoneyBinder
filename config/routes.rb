@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :event_logs
   root to: 'sessions#welcome'
-  resources :users, only: [:new, :create]
+  resources :users
   resources :accounts
 
   scope '', controller: 'sessions' do
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     get 'send_message/', action: 'send_message'
     get 'logout/', action: 'destroy'
     delete 'logout/', action: 'destroy'
+    get 'journal/', action: 'journal'
   end
 
   get 'user/destroy/:id', to: 'users#destroy'
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
   post 'user/create', to: 'users#create'
   get 'administrator/email', to: 'users#administrator_email'
   post 'administrator/email', to: 'users#administrator_email'
+  get 'ledger/:account_number', to: 'accounts#ledger'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'

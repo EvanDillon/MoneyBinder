@@ -1,16 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <%= render partial: "shared/navigation_bar"%>
-    <body>
-        <div class="container">
-        <%= yield %>
-        <text-align>
-        <center>
-        <h2>This is just a homepage for now, it will be a working dashboard at a later date.</h2>
-        <a href = '/accounts'>Chart of Accounts</a><br>
-        <a href = '/event_logs'>Event Log</a>
-        </center>
-        </text-align>
-        </div>
-    </body>
-</html>
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
+<div class="container">
+    <h2 class="text-center">Dashboard will be added in a future iteration.</h2>
+</div>
