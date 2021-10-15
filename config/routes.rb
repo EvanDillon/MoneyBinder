@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :journal_entries
   resources :event_logs
   root to: 'sessions#welcome'
   resources :users
