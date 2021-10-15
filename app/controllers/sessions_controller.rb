@@ -1,5 +1,9 @@
 class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:login, :welcome, :sign_up, :process_new_sign_up]
+  
+  rescue_from Pundit::NotAuthorizedError do 
+    redirect_to homepage_path, danger: "You are not authorized to preform this action."
+  end
 
   def login
     @user = User.find_by(username: params[:username])
@@ -89,6 +93,7 @@ class SessionsController < ApplicationController
   end
 
   def user_management
+    authorize current_user, :user_admin?
     @all_users = User.all
   end
 
@@ -108,6 +113,7 @@ class SessionsController < ApplicationController
   end
 
   def expired_passwords
+    authorize current_user, :user_admin?
     @all_users = User.all
   end
 

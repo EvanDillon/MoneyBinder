@@ -2,11 +2,17 @@ class UsersController < ApplicationController
   # will bypass :authorized which will allow the user login/signup
   skip_before_action :authorized, only: [:new, :create]
 
+  rescue_from Pundit::NotAuthorizedError do 
+    redirect_to homepage_path, danger: "You are not authorized to preform this action."
+  end
+
   def new
+    authorize current_user, :user_admin?
     @user = User.new
   end
 
   def create
+    authorize current_user, :user_admin?
     user_name = User.create_username(params[:firstName], params[:lastName], Time.zone.now)
     pass_check = User.valid_pass?(params[:password])
     password_update = Time.now
@@ -28,10 +34,12 @@ class UsersController < ApplicationController
   end
 
   def edit
+    authorize current_user, :user_admin?
     @user = User.find(params[:id])
   end
 
   def update
+    authorize current_user, :user_admin?
     @user = User.find(params[:user_id].to_i)
     userType = params[:userType].to_i
 

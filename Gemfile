@@ -27,6 +27,8 @@ gem 'bootstrap', '~> 4.2.1'
 # Needed for bootstrap
 gem 'jquery-rails'
 
+gem 'pundit'
+
 
 
 # Use Active Storage variant
