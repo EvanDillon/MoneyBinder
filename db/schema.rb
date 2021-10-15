@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_09_170245) do
+ActiveRecord::Schema.define(version: 2021_10_15_152622) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(version: 2021_10_09_170245) do
     t.string "account_after"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "journal_entries", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "debit_account"
+    t.integer "credit_account"
+    t.decimal "debit_total"
+    t.decimal "credit_total"
+    t.string "entry_type"
+    t.string "status"
+    t.text "description"
+    t.date "date_added", default: "2021-10-15"
   end
 
   create_table "password_authorizations", force: :cascade do |t|
