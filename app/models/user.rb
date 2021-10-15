@@ -6,6 +6,18 @@ class User < ApplicationRecord
     has_many :security_question, through: :password_authorization
     has_many :accounts
 
+    def admin?
+      self.userType == 1
+    end
+
+    def manager?
+      self.userType == 2
+    end
+    
+    def accountant?
+      self.userType == 3
+    end
+
     def self.valid_pass?(pass)
         if pass.length >= 8 
           if pass.first.match?(/[[:alpha:]]/)
