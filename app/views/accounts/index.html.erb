@@ -4,6 +4,17 @@
 <div class="container">
   <h1 class="text-center">Chart of Accounts</h1>
 
+  <table border="0" cellspacing="5" cellpadding="5">
+        <tbody><tr>
+            <td>Minimum balance:</td>
+            <td><input type="text" id="min" name="min"></td>
+        </tr>
+        <tr>
+            <td>Maximum balance:</td>
+            <td><input type="text" id="max" name="max"></td>
+        </tr>
+    </tbody></table>
+    
   <table class="table" id="table-layout">
     <thead>
     <tr>
@@ -48,7 +59,28 @@
 </div>
 
 <script>
-  $(document).ready(function() {
-    $('#table-layout').dataTable();
-  });
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = parseInt( $('#min').val(), 10 );
+        var max = parseInt( $('#max').val(), 10 );
+        var balance = parseFloat(data[4].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
+        
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && balance <= max ) ||
+             ( min <= balance && isNaN( max ) ) ||
+             ( min <= balance && balance <= max ) )
+        {
+            return true;
+        }
+        return false;
+    }
+);
+ 
+$(document).ready(function() {
+    var table = $('#table-layout').DataTable();
+
+    $('#min, #max').keyup( function() {
+      table.draw();
+    } );
+} );
 </script>
