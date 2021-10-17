@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_15_152622) do
+ActiveRecord::Schema.define(version: 2021_10_17_011213) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
@@ -52,10 +52,10 @@ ActiveRecord::Schema.define(version: 2021_10_15_152622) do
 
   create_table "journal_entries", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "debit_account"
-    t.integer "credit_account"
-    t.decimal "debit_total"
-    t.decimal "credit_total"
+    t.text "debit_account"
+    t.text "credit_account"
+    t.text "debit_total"
+    t.text "credit_total"
     t.string "entry_type"
     t.string "status"
     t.text "description"

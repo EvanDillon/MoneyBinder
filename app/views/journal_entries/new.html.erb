@@ -1,5 +1,145 @@
-<h1>New Journal Entry</h1>
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %><br>
+<div class="container">  
+  <div class="row">
+    <div class="col"></div>
+      <div class="col-8 ">
+        <h1 class="text-center">New Journal Entry</h1>
+        <%= form_with(model: @journal_entry) do |f| %>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <%= f.label "Entry Type:" %><br>
+              <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"], ["Reversing", "Reversing"], ["Closing", "Closing"]], {selected: nil}, {class: "form-control"} %>
+            </div>
+            <div class="form-group col-md-6">
+              <%= f.label "Entry Date:" %><br>
+              <%= f.date_select :date_added, default: Time.now%>
+            </div>
+          </div>
+        
+          <div class="form-row">
+            <div class="form-group col">
+              <%= f.label "Description:" %>
+              <%= f.text_area :description, class: 'form-control'%>
+            </div>
+          </div>
 
-<%= render 'form', journal_entry: @journal_entry %>
+          <table class="table table-borderless" id="main_entry_table">
+            <thead>
+              <tr>
+                <th scope="col">Debit Account:</th>
+                <th scope="col">Debit:</th>
+                <th scope="col">Credit:</th>
+                <th></th>
+              </tr>
+            </thead>  
+            <tbody id="debit_entry_table"
+              <tr>
+                <td class="debit_account_selector">
+                  <%= f.select(:debit_account, Account.all.where(active: true).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[debit_account][]', required: true}) %>
+                </td>
+                <td>
+                  <div class="debit_field">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                        <%= f.text_field :debit_total, class: 'form-control', name: "journal_entry[debit_total][]", required: true %>
+                    </div>  
+                  </div>
+                </td>
+                <td></td>
+                <td>
+                  <a href="javascript:void(0);" class="add_debit">
+                    <%= image_tag('icons/add.png', width:'20px') %>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
 
-<%= link_to 'Back', journal_entries_path %>
+            <tbody id="credit_entry_table"
+              <tr>
+                <th scope="col">Credit Account:</th>
+              </tr>
+              <tr>
+                <td class="credit_account_selector">
+                  <%= f.select(:credit_account, Account.all.where(active: true).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[credit_account][]', required: true}) %>
+                </td>
+                <td></td>
+                <td>
+                  <div class="credit_field">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                      <%= f.text_field :credit_total, class: 'form-control', name: "journal_entry[credit_total][]", required: true %>
+                    </div>
+                  </div>    
+                </td>
+                <td>
+                  <a href="javascript:void(0);" class="add_credit">
+                    <%= image_tag('icons/add.png', width:'20px') %>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="actions">
+            <div class="form-row">
+              <div class="col-6">
+                <%= f.submit class: "btn btn-primary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit'%>
+              </div>
+              <div class="col-6">
+                <%= link_to "Cancel", journal_entries_path, class: "btn btn-secondary btn-block" %>
+              </div>
+            </div>
+          </div>
+        <%end%>
+      </div>
+    <div class="col"></div>
+  </div>
+</div>
+
+
+<style>
+  .table-borderless > tbody > tr > td,
+  .table-borderless > tbody > tr > th,
+  .table-borderless > tfoot > tr > td,
+  .table-borderless > tfoot > tr > th,
+  .table-borderless > thead > tr > td,
+  .table-borderless > thead > tr > th {
+      border: none;
+  }
+</style>
+
+
+<script>
+  $(document).ready(function(){
+    $(".add_debit").click(function(){
+      var account_select = $(".debit_account_selector").html();
+      var text_box = $(".debit_field").html();
+      var remove_row_button = "<a href='javascript:void(0);' class='remove_debit'><img width='20px' src='/assets/icons/minus-6430b402fa06620735037bae2a8e7ff032304ece1ff16995c5408d3830bd4eb3.png'></a>"
+      $("#debit_entry_table").append('<tr><td>' + account_select + '</td><td>' + text_box + '</td><td></td><td>' + remove_row_button + '</td></tr>');
+    });
+
+    $("#debit_entry_table").on('click','.remove_debit',function(){
+        $(this).parent().parent().remove();
+    });
+
+    $(".add_credit").click(function(){
+      var account_select = $(".credit_account_selector").html();
+      var text_box = $(".credit_field").html();
+      var remove_row_button = "<a href='javascript:void(0);' class='remove_credit'><img width='20px' src='/assets/icons/minus-6430b402fa06620735037bae2a8e7ff032304ece1ff16995c5408d3830bd4eb3.png'></a>"
+      $("#credit_entry_table").append('<tr><td>' + account_select + '</td><td></td><td>' + text_box + '</td><td>' + remove_row_button + '</td></tr>');
+    });
+
+    $("#credit_entry_table").on('click','.remove_credit',function(){
+        $(this).parent().parent().remove();
+    });
+  });
+</script>
+
+
+
+
+
