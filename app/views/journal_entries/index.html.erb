@@ -1,25 +1,35 @@
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
 <p id="notice"><%= notice %></p>
-
-<h1>Journal Entries</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @journal_entries.each do |journal_entry| %>
-      <tr>
-        <td><%= link_to 'Show', journal_entry %></td>
-        <td><%= link_to 'Edit', edit_journal_entry_path(journal_entry) %></td>
-        <td><%= link_to 'Destroy', journal_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<h1 class="text-center">Journal Entries</h1>
 <br>
-
-<%= link_to 'New Journal Entry', new_journal_entry_path %>
+<div class="container text-center">
+  <div class="col-sm-auto">
+    <div class="row">
+        <% @journal_entries.each do |journal_entry| %>
+          <tr>
+             <div class="col text-center">
+              <td>
+              </td>
+            </div>
+            <div class="col text-center">
+              <td>
+                <%= button_to "Edit Entry", edit_journal_entry_path(journal_entry), method: :get, class: "btn btn-secondary" %>
+              </td>
+            </div>
+            <div class="col text-center">
+              <td> 
+              <%= button_to "Delete Entry", journal_entry, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+              </td>
+            </div>
+            <div class="col text-center">
+              <td>
+              </td>
+            </div>
+          </tr>
+        <% end %>
+      </div>
+  </div>
+  <br><br>
+  <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %>
+</div>
