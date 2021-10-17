@@ -3,33 +3,47 @@
 <p id="notice"><%= notice %></p>
 <h1 class="text-center">Journal Entries</h1>
 <br>
-<div class="container text-center">
-  <div class="col-sm-auto">
-    <div class="row">
-        <% @journal_entries.each do |journal_entry| %>
-          <tr>
-             <div class="col text-center">
-              <td>
-              </td>
-            </div>
-            <div class="col text-center">
-              <td>
-                <%= button_to "Edit Entry", edit_journal_entry_path(journal_entry), method: :get, class: "btn btn-secondary" %>
-              </td>
-            </div>
-            <div class="col text-center">
-              <td> 
-              <%= button_to "Delete Entry", journal_entry, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-              </td>
-            </div>
-            <div class="col text-center">
-              <td>
-              </td>
-            </div>
-          </tr>
-        <% end %>
-      </div>
-  </div>
+<div class="container">
+  <table class="table" id="table-layout">
+    <thead>
+      <tr>
+        <th scope="col">Date Added</th>
+        <th scope="col">Entry Type</th>
+        <th scope="col">User ID</th>
+        <th scope="col">Debit</th>
+        <th scope="col"></th>
+        <th scope="col">Credit</th>
+        <th scope="col"></th>
+        <th scope="col">Approve</th>
+        <th scope="col">Decline</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @journal_entries.each do |journal_entry| %>
+      <tr>
+        <td><%= journal_entry.date_added %></td>
+        <td><%= journal_entry.entry_type %></td>
+        <td><%= journal_entry.user_id %>
+        <td><%= Account.where(id: journal_entry.debit_account).pluck(:account_number).join(", ") %></td>
+        <td><%= Account.where(id: journal_entry.debit_account).pluck(:name).join(", ") %></td>
+        <td><%= Account.where(id: journal_entry.credit_account).pluck(:account_number).join(", ") %></td>
+        <td><%= Account.where(id: journal_entry.credit_account).pluck(:name).join(", ") %></td>
+        <td>
+        <%= button_to "Approve", edit_journal_entry_path(journal_entry), method: :get, class: "btn btn-secondary" %>
+        </td>
+        <td> 
+        <%= button_to "Decline", journal_entry, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
   <br><br>
   <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#table-layout').dataTable();
+  });
+</script>

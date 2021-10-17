@@ -171,7 +171,7 @@ puts "Created Accounts Payable Account"
 
 Account.create! do |a|
     a.user_id = 2
-    a.name = 'Account with debit'
+    a.name = 'Account with Debit'
     a.account_number = '999'
     a.description = "This account has more money than just the inital balance"
     a.normal_side = "Debit"
