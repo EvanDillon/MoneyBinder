@@ -10,12 +10,12 @@
         <th scope="col">Date Added</th>
         <th scope="col">Entry Type</th>
         <th scope="col">User ID</th>
+        <th scope="col">Accounts</th>
+        <th scope="col"></th>
         <th scope="col">Debit</th>
-        <th scope="col"></th>
         <th scope="col">Credit</th>
+        <th scope="col">Status</th>
         <th scope="col"></th>
-        <th scope="col">Approve</th>
-        <th scope="col">Decline</th>
       </tr>
     </thead>
     <tbody>
@@ -24,15 +24,36 @@
         <td><%= journal_entry.date_added %></td>
         <td><%= journal_entry.entry_type %></td>
         <td><%= journal_entry.user_id %>
-        <td><%= Account.where(id: journal_entry.debit_account).pluck(:account_number).join(", ") %></td>
-        <td><%= Account.where(id: journal_entry.debit_account).pluck(:name).join(", ") %></td>
-        <td><%= Account.where(id: journal_entry.credit_account).pluck(:account_number).join(", ") %></td>
-        <td><%= Account.where(id: journal_entry.credit_account).pluck(:name).join(", ") %></td>
         <td>
-        <%= button_to "Approve", edit_journal_entry_path(journal_entry), method: :get, class: "btn btn-secondary" %>
+        <%= Account.where(id: journal_entry.debit_account).pluck(:account_number).join(", ") %>
+        <%= Account.where(id: journal_entry.debit_account).pluck(:name).join(", ") %>
         </td>
-        <td> 
-        <%= button_to "Decline", journal_entry, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <td>
+        <br>
+        <%= Account.where(id: journal_entry.credit_account).pluck(:account_number).join(", ") %>
+        <%= Account.where(id: journal_entry.credit_account).pluck(:name).join(", ") %>
+        </td>
+        <td>
+        <%= journal_entry.debit_total.join(", ") %>
+        </td>
+        <td>
+        <br>
+        <%= journal_entry.credit_total.join(", ") %>
+        </td>
+        <td>
+          <% if journal_entry.status == "Approved" %>
+            <span class="badge badge-pill badge-success"> <%= journal_entry.status %> </span> 
+          <% elsif journal_entry.status == "Declined"%>
+            <span class="badge badge-pill badge-danger"> <%= journal_entry.status %> </span> 
+          <% else %>
+            <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span> 
+          <% end %>
+        </td>
+        <td>
+          <% if journal_entry.status == "Pending" %>
+            <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm" %>
+            <%= button_to "Decline", decline_path(entry: journal_entry), method: :post, class: "btn btn-danger btn-sm" %>
+          <% end %>
         </td>
       </tr>
       <% end %>

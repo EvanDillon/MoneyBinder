@@ -53,6 +53,20 @@ class JournalEntriesController < ApplicationController
     end
   end
 
+  def approve
+    @entry = JournalEntry.find(params[:entry].to_i)
+    @entry.status = "Approved"
+    @entry.save
+    redirect_to journal_entries_path, success: "Approved"
+  end
+
+  def decline
+    @entry = JournalEntry.find(params[:entry].to_i)
+    @entry.status = "Declined"
+    @entry.save
+    redirect_to journal_entries_path, success: "Declined"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_journal_entry
