@@ -21,26 +21,23 @@ class JournalEntriesController < ApplicationController
     debit_amounts = journal_entry_params[:debit_total]
     credit_amounts = journal_entry_params[:credit_total]
 
-    error_list = valid?(debit_account_ids, credit_account_ids, debit_amounts, credit_amounts)
-    error_list = balanced?(debit_amounts, credit_amounts)
+    @journal_entry = JournalEntry.new(  user_id: current_user.id,
+                                        debit_account: debit_account_ids,
+                                        credit_account: credit_account_ids,
+                                        debit_total: debit_amounts,
+                                        credit_total: credit_amounts,
+                                        entry_type: journal_entry_params[:entry_type],  
+                                        status: "Pending",
+                                        description: params[:description]
+                                      )
 
-    if debit_account_ids.count > 1 || credit_account_ids.count > 1
-      date = DateTime.new(journal_entry_params["date_added(1i)"].to_i, journal_entry_params["date_added(2i)"].to_i, journal_entry_params["date_added(3i)"].to_i)
-    else 
-      date = DateTime.new(params["date_added(1i)"].to_i, params["date_added(2i)"].to_i, params["date_added(3i)"].to_i)
-    end
+    error_list = valid?(debit_account_ids, credit_account_ids, debit_amounts, credit_amounts)
+    error_list = balanced?(debit_amounts, credit_amounts) if !balanced?(debit_amounts, credit_amounts).nil?
 
     if error_list.nil?
-      @journal_entry = JournalEntry.new(  user_id: current_user.id,
-                                          debit_account: debit_account_ids,
-                                          credit_account: credit_account_ids,
-                                          debit_total: debit_amounts,
-                                          credit_total: credit_amounts,
-                                          entry_type: params[:entry_type],  
-                                          status: "Pending",
-                                          description: params[:description],
-                                          date_added: date
-                                        )
+      date = DateTime.new(journal_entry_params["date(1i)"].to_i, journal_entry_params["date(2i)"].to_i, journal_entry_params["date(3i)"].to_i)
+      @journal_entry.date_added = date
+      
       if @journal_entry.save
         redirect_to journal_entries_path, success: "Created Entry"
       else
@@ -48,6 +45,9 @@ class JournalEntriesController < ApplicationController
         render new_journal_entry_path
       end
     else
+      @journal_entry.debit_total = [debit_amounts.first]
+      @journal_entry.credit_total = [credit_amounts.first]
+
       flash.now[:danger] = "#{error_list}"
       render new_journal_entry_path
     end
@@ -69,18 +69,30 @@ class JournalEntriesController < ApplicationController
       if debit_accounts.uniq.length == debit_accounts.length
         # Checks if credit accounts are all dif
         if credit_accounts.uniq.length == credit_accounts.length
-          # Checks if debit/credit is a number/decimal
+          # Checks if debit and credit accounts have same account
+          if (debit_accounts - credit_accounts).count == debit_accounts.count
 
-            # Check if debit has only 2 decimals
+            # Check if debit has only 2 decimals and is not negative
             debit.each do |num|
-              ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
+              if num.to_f > 0
+                ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
+              else
+                return "Debit amount can not be 0"
+              end
             end
 
             # Check if credit has only 2 decimals and converts it to currency
             credit.each do |num|
-              ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
+              if num.to_f > 0
+                ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
+              else
+                return "Credit amount can not be 0"
+              end
             end
             return nil
+          else
+            return "You can not debit and credit from the same account"
+          end
         else
           return "You can not credit from the same account twice"
         end
