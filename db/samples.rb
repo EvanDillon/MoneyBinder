@@ -1315,7 +1315,7 @@ Account.create! do |a|
     a.name = 'Income Summary'
     a.account_number = '313'
     a.description = ""
-    a.normal_side = "Debit"
+    a.normal_side = "Credit"
     a.category = 'Revenue'
     a.subcategory = ''
     a.initial_balance = 0
