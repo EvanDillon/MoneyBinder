@@ -28,9 +28,9 @@
       <div class="input-group-prepend">
         <span class="input-group-text">$</span>
       </div>
-      <% if !@account.name.nil? %>
+      <% if type == 'edit' %>
         <%= f.text_field :initial_balance, required: true, readonly: true, class: 'form-control' %>
-      <% else %>
+      <% elsif type == 'new' %>
         <%= f.text_field :initial_balance, required: true, class: 'form-control' %>
       <% end %>
     </div>
