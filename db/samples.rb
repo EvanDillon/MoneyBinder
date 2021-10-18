@@ -111,88 +111,6 @@ PasswordAuthorization.create(user_id: User.where(username: 'ExpiredUser').pluck(
 puts "Created #{PasswordAuthorization.all.count} security question relationships"
 
 
-# Create new accounts
-Account.create! do |a|
-    a.user_id = 1
-    a.name = 'Cash'
-    a.account_number = '101'
-    a.description = "This account is for Cash"
-    a.normal_side = "Debit"
-    a.category = 'Asset'
-    a.subcategory = 'Cash'
-    a.initial_balance = 1000
-    a.debit = 0
-    a.credit = 0
-    a.balance = 1000
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created Cash Account"
-
-Account.create! do |a|
-    a.user_id = 1
-    a.name = 'Accounts Receivable'
-    a.account_number = '122'
-    a.description = "This account is for Accounts Receivable"
-    a.normal_side = "Debit"
-    a.category = 'Asset'
-    a.subcategory = 'Accounts Receivable'
-    a.initial_balance = 100.01
-    a.debit = 0
-    a.credit = 0
-    a.balance = 100.01
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created Accounts Receivable Account" 
-
-Account.create! do |a|
-    a.user_id = 1
-    a.name = 'Accounts Payable'
-    a.account_number = '202'
-    a.description = "This account is for Accounts Payable"
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Accounts Payable'
-    a.initial_balance = 1500000.55
-    a.debit = 0
-    a.credit = 0
-    a.balance = 1500000.55
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created Accounts Payable Account"
-
-Account.create! do |a|
-    a.user_id = 2
-    a.name = 'Account with debit'
-    a.account_number = '999'
-    a.description = "This account has more money than just the inital balance"
-    a.normal_side = "Debit"
-    a.category = 'Asset'
-    a.subcategory = 'Example'
-    a.initial_balance = 0
-    a.debit = 5000
-    a.credit = 0
-    a.balance = 5000
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created High Debit Account"
-
-
 # The following accounts are from the Chart of Accounts document.
 # Accounts that used the same number multiple times in the document are collapsed into one account with a description
 # acknowledging everything that it contains.
@@ -207,17 +125,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Short Term'
-    a.initial_balance = 0
+    a.initial_balance = 1000
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 1000
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -227,17 +145,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Short Term'
-    a.initial_balance = 0
+    a.initial_balance = 7000
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 7000
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 120s Receivables
 
@@ -249,37 +167,37 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 0
+    a.initial_balance = 99000
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 99000
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Accounts Receivable'
-    a.account_number = '121'
+    a.account_number = '122'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 0
+    a.initial_balance = 123400
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 123400
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
@@ -290,17 +208,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 0
+    a.initial_balance = 1500.89
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 1500.89
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -310,17 +228,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 0
+    a.initial_balance = 560.50
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 560.50
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = true
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -330,17 +248,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 0
+    a.initial_balance = 85783
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 85783
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # Inventories
 
@@ -352,17 +270,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 0
+    a.initial_balance = 100000
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 100000
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -372,17 +290,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 0
+    a.initial_balance = 300000
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 300000
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -392,17 +310,17 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 0
+    a.initial_balance = 4000000
     a.debit = 0
     a.credit = 0
-    a.balance = 0
+    a.balance = 400000
     a.order = 0
     a.statement = 0
     a.comment = 0
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -422,7 +340,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 140s - Prepaid Items
 
@@ -444,7 +362,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -464,7 +382,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -484,7 +402,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -504,7 +422,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 150s - Long-Term Investments
 
@@ -526,7 +444,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 160s Land
 
@@ -548,7 +466,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -568,7 +486,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 170s - Buildings
 
@@ -590,7 +508,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 180s - Equipment
 
@@ -612,7 +530,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -632,7 +550,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -652,7 +570,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -672,12 +590,12 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Delivery Equipment'
-    a.account_number = 'Also Medical, Van'
+    a.account_number = '185'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
@@ -692,7 +610,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -712,7 +630,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
@@ -732,7 +650,7 @@ Account.create! do |a|
     a.comment = 0
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 190s - Intangibles
 
@@ -754,7 +672,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
@@ -775,7 +693,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -795,7 +713,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # Liabilities (200-299)
 
@@ -817,7 +735,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -837,7 +755,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -857,7 +775,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -877,7 +795,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -897,7 +815,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -917,7 +835,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -937,7 +855,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 2010s - Employee Payroll Related Payables
 
@@ -959,7 +877,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -979,7 +897,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -999,7 +917,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1019,7 +937,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Health Insurance Premiums Payable'
@@ -1038,7 +956,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1058,7 +976,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1078,7 +996,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1098,7 +1016,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 220s - Employer Payroll Related Payables
 
@@ -1120,7 +1038,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1139,13 +1057,13 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
     a.user_id = 1
     a.name = "Worker\'s Compensation Insurance Payable"
-    a.account_number = ''
+    a.account_number = '223'
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Liability'
@@ -1160,7 +1078,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 230s - Sales Tax
 
@@ -1182,7 +1100,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 240s - Deferred Revenues and Current Portion of Long-Term Debt
 
@@ -1204,7 +1122,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1224,7 +1142,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 250s - Long-Term Liabilities
 
@@ -1246,7 +1164,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1266,7 +1184,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # Owner's Equity (300-399)
 
@@ -1288,7 +1206,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1308,7 +1226,7 @@ Account.create! do |a|
     a.contra = true
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1328,12 +1246,12 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Common Stock'
-    a.account_number = '221'
+    a.account_number = '321'
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Equity'
@@ -1348,7 +1266,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1368,7 +1286,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1388,7 +1306,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
@@ -1409,7 +1327,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1429,7 +1347,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # Account 326 is named "Retained Earnings Appropriated for..."
 # Based on this text, I believe that it is referring to 327-329. For example, 327 is named "Common Stock Subscribed",
@@ -1453,7 +1371,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1473,7 +1391,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1493,7 +1411,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # Revenues (400-499)
 
@@ -1517,7 +1435,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1537,12 +1455,12 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Subscriptions Revenue - Main line of business'
-    a.account_number = ''
+    a.account_number = '403'
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Revenue'
@@ -1557,7 +1475,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 
 
@@ -1566,7 +1484,7 @@ puts "Created account: #{a.name}"
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Interest Revenue'
-    a.account_number = '311'
+    a.account_number = '411'
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Revenue'
@@ -1581,7 +1499,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1601,7 +1519,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1621,7 +1539,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1641,7 +1559,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1661,7 +1579,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1681,7 +1599,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1701,7 +1619,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # Operating Expenses (500-599)
 
@@ -1725,7 +1643,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1745,7 +1663,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1765,7 +1683,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1785,7 +1703,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 510s - Selling Expenses
 
@@ -1807,7 +1725,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1827,12 +1745,12 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
-    a.name = 'Blank Credit Card Expense'
-    a.account_number = '512'
+    a.name = 'Bank Credit Card Expense'
+    a.account_number = '513'
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Expense'
@@ -1847,7 +1765,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1866,7 +1784,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1886,7 +1804,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1906,12 +1824,12 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Depreciation Expense - Store Equipment and Fixtures'
-    a.account_number = ''
+    a.account_number = '519'
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Expense'
@@ -1926,7 +1844,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 520s-40s 0 General and Administrative Expenses
 
@@ -1948,7 +1866,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -1968,12 +1886,12 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Office Supplies Expense'
-    a.account_number = ''
+    a.account_number = '523'
     a.description = "Also Medical"
     a.normal_side = "Credit"
     a.category = 'Expense'
@@ -1988,7 +1906,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2008,7 +1926,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2028,7 +1946,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2048,7 +1966,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2068,7 +1986,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2088,7 +2006,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2108,7 +2026,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2128,7 +2046,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2148,7 +2066,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2168,7 +2086,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2188,7 +2106,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2208,7 +2126,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2228,7 +2146,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2248,7 +2166,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2268,7 +2186,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2288,7 +2206,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2308,7 +2226,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2328,7 +2246,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2348,7 +2266,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2368,7 +2286,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2388,7 +2306,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2408,12 +2326,12 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Miscellaneous Expense'
-    a.account_number = ''
+    a.account_number = '549'
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Expense'
@@ -2428,7 +2346,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 # 550s - Other Expenses
 
@@ -2450,7 +2368,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2469,7 +2387,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2489,7 +2407,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2509,7 +2427,7 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
@@ -2529,7 +2447,9 @@ Account.create! do |a|
     a.contra = false
     a.active = true
 end
-puts "Created account: #{a.name}"
+puts "Created account: #{Account.last.name}"
+
+puts "Created a total of #{Account.all.count} new accounts------------------------" 
 
 
 

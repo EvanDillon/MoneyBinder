@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_17_011213) do
+ActiveRecord::Schema.define(version: 2021_10_18_144449) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_10_17_011213) do
     t.boolean "active", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "contra", default: false
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
