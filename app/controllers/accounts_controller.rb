@@ -8,14 +8,6 @@ class AccountsController < ApplicationController
   # GET /accounts or /accounts.json
   def index
     @accounts = Account.all
-    if params[:search_accounts]
-      @accounts = Account.search(params[:search_accounts])
-      if @accounts.empty?
-        flash[:warning] = ErrorMessage.find_by(error_name: "account_not_found").body
-      else
-        flash.clear
-      end
-    end
   end
 
   # GET /accounts/1 or /accounts/1.json
@@ -36,7 +28,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     @account.user_id = current_user.id
-    @account.balance = calculate_balance(@account)
+    @account.balance = Account.calculate_balance(@account)
     if @account.initial_balance > 0 && params[:account][:active] == "0"
       flash.now[:danger] = ErrorMessage.find_by(error_name: "can_not_deactivate_account").body
       render new_account_path
@@ -62,7 +54,7 @@ class AccountsController < ApplicationController
     else
       if @account.update(account_params)
         changed_active = @account.active_changed?
-        @account.balance = calculate_balance(@account)
+        @account.balance = Account.calculate_balance(@account)
         @account.save
         @account_after = @account.to_json
 
@@ -102,13 +94,9 @@ class AccountsController < ApplicationController
       params.fetch(:account, {}).permit!
     end
 
-    def calculate_balance(account)
-      account.initial_balance + (account.debit - account.credit)
-    end
-
     def account_empty?(account, new_initial_balance)
       account.initial_balance = new_initial_balance   
-      return calculate_balance(account) > 0
+      return Account.calculate_balance(account) > 0
     end
 
     def create_event_log(before, after, type)

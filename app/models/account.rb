@@ -6,4 +6,7 @@ class Account < ApplicationRecord
   # , :initial_balance, :debit, :credit, :balance,
   has_one :user
 
+  def self.calculate_balance(account)
+    account.initial_balance + (account.debit - account.credit)
+  end
 end

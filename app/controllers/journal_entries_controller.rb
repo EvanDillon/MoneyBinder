@@ -39,7 +39,7 @@ class JournalEntriesController < ApplicationController
       @journal_entry.date_added = date
       
       if @journal_entry.save
-        redirect_to journal_entries_path, success: "Created Entry"
+        redirect_to journal_entries_path, success: "Journal Entry Created"
       else
         flash.now[:danger] = "#{@account.errors.first.full_message}"
         render new_journal_entry_path
@@ -57,14 +57,15 @@ class JournalEntriesController < ApplicationController
     @entry = JournalEntry.find(params[:entry].to_i)
     @entry.status = "Approved"
     @entry.save
-    redirect_to journal_entries_path, success: "Approved"
+    change_accounts_balance(@entry)
+    redirect_to journal_entries_path, success: "Approved journal entry"
   end
 
   def decline
     @entry = JournalEntry.find(params[:entry].to_i)
     @entry.status = "Declined"
     @entry.save
-    redirect_to journal_entries_path, success: "Declined"
+    redirect_to journal_entries_path, danger: "Declined journal entry"
   end
 
   private
@@ -103,6 +104,15 @@ class JournalEntriesController < ApplicationController
                 return "Credit amount can not be 0"
               end
             end
+
+            # # Checks if credit amount is larger than the balance of account selected
+            # credit_accounts.each do |da|
+            #   account = Account.find_by(id: da)
+            #   if account.balance < @credit_copy.pop.to_f
+            #     return "Credit amount is larger than the balance of the selected account"
+            #   end
+            # end
+
             return nil
           else
             return "You can not debit and credit from the same account"
@@ -136,5 +146,20 @@ class JournalEntriesController < ApplicationController
     def invalid_num_error
       flash.now[:danger] = "Debit/Credit value is not a correct number"
       render new_journal_entry_path
+    end
+
+    def change_accounts_balance(entry)
+      entry.debit_account.each do |da|
+        @account = Account.find_by(id: da)
+        @account.debit = entry.debit_total.pop.to_f 
+        @account.balance = Account.calculate_balance(@account)
+        @account.save
+      end
+      entry.credit_account.each do |da|
+        @account = Account.find_by(id: da)
+        @account.credit = entry.credit_total.pop.to_f 
+        @account.balance = Account.calculate_balance(@account)
+        @account.save
+      end
     end
 end
