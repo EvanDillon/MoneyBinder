@@ -12,7 +12,7 @@
               <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"], ["Reversing", "Reversing"], ["Closing", "Closing"]], {selected: nil}, {class: "form-control"} %>
             </div>
             <div class="form-group col-md-6">
-              <%= f.label "Entry Date:" %><br>
+              <%= f.label "Entry Date:" %>
               <%= f.date_select :date, default: Time.now%>
             </div>
           </div>
