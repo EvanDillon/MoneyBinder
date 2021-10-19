@@ -21,7 +21,10 @@
           <%= check_box_tag "reset_suspension", true, false %><br>
         <% else %>
           <%= label_tag 'Suspend User Until: '%>
-          <%= datetime_select 'suspend_time', "", {ampm: true, default: Time.now, disabled: @user.suspendedTill > Time.now, start_year: Date.current.year}%><br><br>
+          <div class="form-group">
+              <label for="inputDate">Date:</label> <input type="text" class="form-control-md" id="inputDate">
+              <label for="inputTime">Time:</label> <input type="text" class="form-control-md" id="inputTime">
+          </div>
         <%end%>
         <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block' %>
       <%end%>
@@ -30,3 +33,23 @@
     <div class="col"></div>
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    new DateTime($('#inputDate'), {
+        format: 'MMMM Do YYYY'
+    });
+    new DateTime($('#inputTime'), {
+        format: 'h:mm a'
+    });
+ 
+    $('#appointment').on('submit', function (e) {
+        e.preventDefault();
+ 
+        alert(
+            $('#inputDate').val() + ' at ' +
+            $('#inputTime').val()
+        );
+    });
+});
+</script>
