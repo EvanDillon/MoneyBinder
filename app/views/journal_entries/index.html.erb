@@ -9,13 +9,12 @@
       <tr>
         <th scope="col">Date Added</th>
         <th scope="col">Entry Type</th>
-        <th scope="col">User ID</th>
+        <th scope="col">User</th>
         <th scope="col">Accounts</th>
         <th scope="col"></th>
         <th scope="col">Debit</th>
         <th scope="col">Credit</th>
         <th scope="col">Status</th>
-        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -23,22 +22,38 @@
       <tr>
         <td><%= journal_entry.date_added %></td>
         <td><%= journal_entry.entry_type %></td>
-        <td><%= journal_entry.user_id %>
+        <td><%= User.find_by(id: journal_entry.user_id).username %>
         <td>
-        <%= Account.where(id: journal_entry.debit_account).pluck(:account_number).join(", ") %>
-        <%= Account.where(id: journal_entry.debit_account).pluck(:name).join(", ") %>
+          <% journal_entry.debit_account.each do |a|%>
+            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{Account.find_by(id: a).account_number}"%>
+            - <%= Account.find_by(id: a).name.truncate(20) %>
+            <br>
+          <%end%>
         </td>
         <td>
-        <br>
-        <%= Account.where(id: journal_entry.credit_account).pluck(:account_number).join(", ") %>
-        <%= Account.where(id: journal_entry.credit_account).pluck(:name).join(", ") %>
+          <% journal_entry.debit_account.each do |a|%>
+            <br>
+          <%end%>
+          <% journal_entry.credit_account.each do |a|%>
+            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{Account.find_by(id: a).account_number}"%>
+            - <%= Account.find_by(id: a).name.truncate(20) %>
+            <br>
+          <%end%>
         </td>
-        <td>
-        <%= journal_entry.debit_total.join(", ") %>
+        <td class="text-right">
+          <% journal_entry.debit_total.each do |num|%>
+            <%= number_to_currency(num, precision: 2) %>
+            <br>
+          <%end%>
         </td>
-        <td>
-        <br>
-        <%= journal_entry.credit_total.join(", ") %>
+        <td class="text-right">
+          <% journal_entry.debit_total.each do |num|%>
+            <br>
+          <%end%>
+          <% journal_entry.credit_total.each do |num|%>
+            <%= number_to_currency(num, precision: 2) %>
+            <br>
+          <%end%>
         </td>
         <td>
           <% if journal_entry.status == "Approved" %>
@@ -46,13 +61,9 @@
           <% elsif journal_entry.status == "Declined"%>
             <span class="badge badge-pill badge-danger"> <%= journal_entry.status %> </span> 
           <% else %>
-            <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span> 
-          <% end %>
-        </td>
-        <td>
-          <% if journal_entry.status == "Pending" %>
-            <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm" %>
-            <%= button_to "Decline", decline_path(entry: journal_entry), method: :post, class: "btn btn-danger btn-sm" %>
+            <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br><br>
+            <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block" %>
+            <%= button_to "Decline", decline_path(entry: journal_entry), method: :post, class: "btn btn-danger btn-sm btn-block" %>
           <% end %>
         </td>
       </tr>
