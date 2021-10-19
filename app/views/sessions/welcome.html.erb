@@ -15,9 +15,9 @@
           <%= password_field_tag :password, nil, placeholder: 'Enter Password', class: 'form-control' %>
           <%= link_to 'Forgot/Reset Password', "/password/forgot", class: 'form-text text-muted', data: {icon: 'info', mini: 'true', role: 'button'} %>
         </div>
-        <%= submit_tag "Log In", class: "btn btn-primary btn-block"%>
+        <%= submit_tag "Log In", class: "btn btn-primary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Login to an existing account'%>
       <%end%>
-      <%= button_to "Create New User", sign_up_path, method: :get, class: "btn btn-light"%><br>
+      <%= button_to "Create New User", sign_up_path, method: :get, class: "btn btn-light", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Create New User'%><br>
     </div>
     <div class="col-md-4"></div>
   </div>

@@ -10,7 +10,7 @@
         <%= label_tag :security_questions, "Security Questions" %>
         <%= collection_select(:security_question_1, :id,  SecurityQuestion.all, :id, :question) %>
         <%= text_field_tag :security_question_answer, nil, required: true, class: 'form-control' %><br>
-        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block' %>
+        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block''btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Create New User' %>
       <%end%>
       <%= link_to 'Back to User Management', user_management_path %>
     </div>

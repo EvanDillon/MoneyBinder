@@ -23,7 +23,7 @@
           <%= label_tag 'Suspend User Until: '%>
           <%= datetime_select 'suspend_time', "", {ampm: true, default: Time.now, disabled: @user.suspendedTill > Time.now, start_year: Date.current.year}%><br><br>
         <%end%>
-        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block' %>
+        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block''btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit' %>
       <%end%>
       <%= link_to 'Back to User Management', user_management_path %>
     </div>

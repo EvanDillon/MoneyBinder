@@ -11,7 +11,7 @@
             <%= text_field_tag :subject, nil, required: true, class: 'col-md-6 form-control'%><br>
             <label>Body:</label><br>
             <%= text_area_tag :body, nil, required: true, class: 'col-md-12 form-control', rows: '7'%><br>
-            <%= submit_tag 'Send', :class => 'btn btn-primary btn-block' %>
+            <%= submit_tag 'Send', :class => 'btn btn-primary btn-block''btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Send email' %>
         <% end %>
     <% else %>
         <h1 class="text-center">Forbidden. You do not have access to this page.</h1>
