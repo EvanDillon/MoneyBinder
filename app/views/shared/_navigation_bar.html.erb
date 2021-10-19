@@ -20,6 +20,15 @@
           <li class="nav-item <%= active_class(event_logs_path) %>">
             <%= link_to 'Event Logs', event_logs_path, class: "nav-link"%>
           </li>
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Income Statement</a>
+          <a class="dropdown-item" href="#">Balance Sheet</a>
+          <a class="dropdown-item" href="#">Trial Balance</a>
+          <a class="dropdown-item" href="#">Retained Earnings</a>
+        </div>
+      </li>
           <% if current_user.userType == 1 %>
             <li class="nav-item <%= active_class(user_management_path) %>">
               <%= link_to 'User Management', user_management_path, class: "nav-link"%>
@@ -58,3 +67,7 @@
     text-decoration:underline
   }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
