@@ -4,18 +4,6 @@
 <h1 class="text-center">Journal Entries</h1>
 <br>
 <div class="container">
-  <table cellspacing="5" cellpadding="5" border="0">
-    <tbody>
-      <tr>
-        <td>Minimum date:</td>
-        <td><input type="text" id="min" name="min"></td>
-      </tr>
-      <tr>
-        <td>Maximum date:</td>
-        <td><input type="text" id="max" name="max"></td>
-      </tr>
-    </tbody>
-  </table>
   <table class="table" id="table-layout">
     <thead>
       <tr>
@@ -23,6 +11,7 @@
         <th scope="col">Entry Type</th>
         <th scope="col">User</th>
         <th scope="col">Accounts</th>
+        <th scope="col"></th>
         <th scope="col">Debit</th>
         <th scope="col">Credit</th>
         <th scope="col">Status</th>
@@ -38,15 +27,18 @@
           <% journal_entry.debit_account.each do |a|%>
             <%= link_to Account.find_by(id: a).account_number, "/ledger/#{Account.find_by(id: a).account_number}"%>
             - <%= Account.find_by(id: a).name.truncate(20) %>
+            <br>
           <%end%>
+        </td>
+        <td>
           <% journal_entry.debit_account.each do |a|%>
+            <br>
           <%end%>
           <% journal_entry.credit_account.each do |a|%>
-          <div style="text-indent: 40px">
             <%= link_to Account.find_by(id: a).account_number, "/ledger/#{Account.find_by(id: a).account_number}"%>
             - <%= Account.find_by(id: a).name.truncate(20) %>
-          </div>
-          <%end%>          
+            <br>
+          <%end%>
         </td>
         <td class="text-right">
           <% journal_entry.debit_total.each do |num|%>
@@ -83,42 +75,7 @@
 </div>
 
 <script>
-var minDate, maxDate;
- 
-
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = minDate.val();
-        var max = maxDate.val();
-        var date = new Date( data[4] );
- 
-        if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
-        ) {
-            return true;
-        }
-        return false;
-    }
-);
- 
-$(document).ready(function() {
-
-    minDate = new DateTime($('#min'), {
-        format: 'MMMM Do YYYY'
-    });
-    maxDate = new DateTime($('#max'), {
-        format: 'MMMM Do YYYY'
-    });
- 
-
-    var table = $('#table-layout').DataTable();
- 
-
-    $('#min, #max').on('change', function () {
-        table.draw();
-    });
-});
+  $(document).ready(function() {
+    $('#table-layout').dataTable();
+  });
 </script>
