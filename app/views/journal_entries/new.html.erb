@@ -13,7 +13,7 @@
             </div>
             <div class="form-group col-md-6">
               <%= f.label "Entry Date:" %>
-              <label for="inputDate"></label> <input type="text" class="form-control" id="inputDate">
+              <%= f.date_select :date, default: Time.now%>
             </div>
           </div>
         
@@ -142,23 +142,4 @@
       this.value = this.value.match(/^\d+\.?\d{0,2}/);
     });
   });
-</script>
-<script>
-$(document).ready(function() {
-    new DateTime($('#inputDate'), {
-        format: 'MMMM Do YYYY'
-    });
-    new DateTime($('#inputTime'), {
-        format: 'h:mm a'
-    });
- 
-    $('#appointment').on('submit', function (e) {
-        e.preventDefault();
- 
-        alert(
-            $('#inputDate').val() + ' at ' +
-            $('#inputTime').val()
-        );
-    });
-});
 </script>
