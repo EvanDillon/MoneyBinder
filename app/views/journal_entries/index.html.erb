@@ -1,25 +1,81 @@
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
 <p id="notice"><%= notice %></p>
-
-<h1>Journal Entries</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @journal_entries.each do |journal_entry| %>
-      <tr>
-        <td><%= link_to 'Show', journal_entry %></td>
-        <td><%= link_to 'Edit', edit_journal_entry_path(journal_entry) %></td>
-        <td><%= link_to 'Destroy', journal_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<h1 class="text-center">Journal Entries</h1>
 <br>
+<div class="container">
+  <table class="table" id="table-layout">
+    <thead>
+      <tr>
+        <th scope="col">Date Added</th>
+        <th scope="col">Entry Type</th>
+        <th scope="col">User</th>
+        <th scope="col">Accounts</th>
+        <th scope="col"></th>
+        <th scope="col">Debit</th>
+        <th scope="col">Credit</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @journal_entries.each do |journal_entry| %>
+      <tr>
+        <td><%= journal_entry.date_added %></td>
+        <td><%= journal_entry.entry_type %></td>
+        <td><%= User.find_by(id: journal_entry.user_id).username %>
+        <td>
+          <% journal_entry.debit_account.each do |a|%>
+            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{Account.find_by(id: a).account_number}"%>
+            - <%= Account.find_by(id: a).name.truncate(20) %>
+            <br>
+          <%end%>
+        </td>
+        <td>
+          <% journal_entry.debit_account.each do |a|%>
+            <br>
+          <%end%>
+          <% journal_entry.credit_account.each do |a|%>
+            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{Account.find_by(id: a).account_number}"%>
+            - <%= Account.find_by(id: a).name.truncate(20) %>
+            <br>
+          <%end%>
+        </td>
+        <td class="text-right">
+          <% journal_entry.debit_total.each do |num|%>
+            <%= number_to_currency(num, precision: 2) %>
+            <br>
+          <%end%>
+        </td>
+        <td class="text-right">
+          <% journal_entry.debit_total.each do |num|%>
+            <br>
+          <%end%>
+          <% journal_entry.credit_total.each do |num|%>
+            <%= number_to_currency(num, precision: 2) %>
+            <br>
+          <%end%>
+        </td>
+        <td>
+          <% if journal_entry.status == "Approved" %>
+            <span class="badge badge-pill badge-success"> <%= journal_entry.status %> </span> 
+          <% elsif journal_entry.status == "Declined"%>
+            <span class="badge badge-pill badge-danger"> <%= journal_entry.status %> </span> 
+          <% else %>
+            <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br><br>
+            <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block" %>
+            <%= button_to "Decline", decline_path(entry: journal_entry), method: :post, class: "btn btn-danger btn-sm btn-block" %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br><br>
+  <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %>
+</div>
 
-<%= link_to 'New Journal Entry', new_journal_entry_path %>
+<script>
+  $(document).ready(function() {
+    $('#table-layout').dataTable();
+  });
+</script>

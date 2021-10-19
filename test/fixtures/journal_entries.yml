@@ -4,8 +4,16 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
+one: 
+ user_id: 1
+ debit_account: [1]
+ credit_account: [2]
+ debit_total: ["1000"]
+ credit_total: ["1000"]
+ entry_type: "Regular"
+ status: "Pending"
+ description: nil
+ date_added: Fri, 15 Oct 2021
 #
 two: {}
 # column: value

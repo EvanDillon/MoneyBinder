@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_15_152622) do
+ActiveRecord::Schema.define(version: 2021_10_18_144449) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_10_15_152622) do
     t.boolean "active", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "contra", default: false
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
@@ -52,10 +53,10 @@ ActiveRecord::Schema.define(version: 2021_10_15_152622) do
 
   create_table "journal_entries", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "debit_account"
-    t.integer "credit_account"
-    t.decimal "debit_total"
-    t.decimal "credit_total"
+    t.text "debit_account"
+    t.text "credit_account"
+    t.text "debit_total"
+    t.text "credit_total"
     t.string "entry_type"
     t.string "status"
     t.text "description"

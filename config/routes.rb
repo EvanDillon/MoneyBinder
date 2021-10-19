@@ -34,7 +34,8 @@ Rails.application.routes.draw do
   get 'administrator/email', to: 'users#administrator_email'
   post 'administrator/email', to: 'users#administrator_email'
   get 'ledger/:account_number', to: 'accounts#ledger'
-
+  post '/approve', to: 'journal_entries#approve'
+  post '/decline', to: 'journal_entries#decline'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'

@@ -18,3 +18,13 @@ two:
   email: emailthatexists@gmail.com
   phoneNum: 7701234567
   active: true
+
+admin:
+  firstName: Admin
+  lastName: User
+  username: Admin
+  userType: 1
+  password_digest: password#1
+  email: test12345@gmail.com
+  phoneNum: 7701234567
+  active: true

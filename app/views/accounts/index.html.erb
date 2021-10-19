@@ -2,8 +2,27 @@
 <%= render 'flash_messages' %>
 <br>
 <div class="container">
-  <h1 class="text-center">Chart of Accounts</h1>
+  <h1 class="text-center">Chart of Accounts</h1><br>
 
+  <div class="row justify-content-md-start">
+    <div class="col col-lg-2">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <%= text_field_tag :min, "", placeholder: "Min", class: "form-control", id: "min"  %>
+      </div>
+    </div>
+    <div class="col col-lg-2">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <%= text_field_tag :max, "", placeholder: "Max", class: "form-control", id: "max" %>
+      </div>
+    </div>
+  </div>
+    
   <table class="table" id="table-layout">
     <thead>
     <tr>
@@ -48,7 +67,28 @@
 </div>
 
 <script>
-  $(document).ready(function() {
-    $('#table-layout').dataTable();
-  });
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = parseInt( $('#min').val(), 10 );
+        var max = parseInt( $('#max').val(), 10 );
+        var balance = parseFloat(data[4].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
+        
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && balance <= max ) ||
+             ( min <= balance && isNaN( max ) ) ||
+             ( min <= balance && balance <= max ) )
+        {
+            return true;
+        }
+        return false;
+    }
+);
+ 
+$(document).ready(function() {
+    var table = $('#table-layout').DataTable();
+
+    $('#min, #max').keyup( function() {
+      table.draw();
+    } );
+} );
 </script>
