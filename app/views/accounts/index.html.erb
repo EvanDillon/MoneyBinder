@@ -41,8 +41,8 @@
     <tbody>
       <% @accounts.each do |account| %>
         <tr>
-          <th scope="row"><%= link_to account.account_number, "/ledger/#{account.account_number}"%></th>
-          <td><%= account.name %></td>
+          <th scope="row"><%= link_to account.account_number, "/ledger/#{account.id}", method: :get%></th>
+          <td><%= account.name.truncate(40) %></td>
           <td><%= account.category %></td>
           <td><%= account.subcategory %></td>
           <td class = "text-right">$<%= number_with_precision(account.balance, precision: 2, delimiter: ',')%></td>

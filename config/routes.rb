@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # resources :ledger_entries
   resources :journal_entries
   resources :event_logs
   root to: 'sessions#welcome'
@@ -33,7 +34,6 @@ Rails.application.routes.draw do
   post 'user/create', to: 'users#create'
   get 'administrator/email', to: 'users#administrator_email'
   post 'administrator/email', to: 'users#administrator_email'
-  get 'ledger/:account_number', to: 'accounts#ledger'
   post '/approve', to: 'journal_entries#approve'
   post '/decline', to: 'journal_entries#decline'
 
@@ -43,4 +43,6 @@ Rails.application.routes.draw do
     get 'forgot/', action: 'forgot'
     post 'forgot/', action: 'forgot'
   end
+
+  get 'ledger/:account_id', to: 'ledger_entries#show'
 end
