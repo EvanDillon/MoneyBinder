@@ -1,0 +1,38 @@
+
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
+<br>
+<div class="container">
+  <h1 class="text-center"><%= @account.account_number %> - <%= @account.name %></h1><br>
+  <table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Post-Ref</th>
+        <th scope="col">Description</th>
+        <th scope="col">Debit</th>
+        <th scope="col">Credit</th>
+        <th scope="col">Balance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><%= number_to_currency(@account.initial_balance, precision: 2) %></td>
+      </tr>
+      <% @ledger_entries.each do |entry| %>
+        <tr>
+          <td><%= entry.created_at.to_date %></td>
+          <td><%= link_to entry.postReference, "/journal_entry/#{entry.postReference}", method: :get %></td>
+          <td><%= entry.description %></td>
+          <td><%= number_to_currency(entry.debit, precision: 2) %></td>
+          <td><%= number_to_currency(entry.credit, precision: 2) %></td>
+          <td><%= number_to_currency(entry.balance, precision: 2) %></td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
