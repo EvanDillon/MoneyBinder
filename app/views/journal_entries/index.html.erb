@@ -83,14 +83,12 @@
         <td><%= User.find_by(id: journal_entry.user_id).username %>
         <td>
           <% journal_entry.debit_account.each do |a|%>
-            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
-            <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
-            <%end%>
+            <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%>
+          <%end%>
 
           <% journal_entry.credit_account.each do |a|%>
             <div style="text-indent: 40px">
-              <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
-              <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
+              <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%>
             </div>
           <%end%>          
         </td>
