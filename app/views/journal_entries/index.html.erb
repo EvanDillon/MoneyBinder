@@ -4,14 +4,14 @@
 <h1 class="text-center">Journal Entries</h1>
 <br>
 <div class="container">
-
-  <div class="row justify-content-md-start">
+  <div class="row justify-content-md-center">
+    <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %>
     <div class="col col-lg-2">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">$</span>
         </div>
-        <%= text_field_tag :min, "", placeholder: "Min date", class: "form-control", id: "min"  %>
+        <%= text_field_tag :min, "", placeholder: "Min", class: "form-control", id: "min"  %>
       </div>
     </div>
     <div class="col col-lg-2">
@@ -19,7 +19,18 @@
         <div class="input-group-prepend">
           <span class="input-group-text">$</span>
         </div>
-        <%= text_field_tag :max, "", placeholder: "Max date", class: "form-control", id: "max" %>
+        <%= text_field_tag :max, "", placeholder: "Max", class: "form-control", id: "max" %>
+      </div>
+    </div>
+
+    <div class="col col-lg-2">
+      <div class="input-group mb-3">
+        <%= text_field_tag :mind, "", placeholder: "Start Date", class: "form-control", id: "mindate"  %>
+      </div>
+    </div>
+    <div class="col col-lg-2">
+      <div class="input-group mb-3">
+        <%= text_field_tag :maxd, "", placeholder: "End Date", class: "form-control", id: "maxdate" %>
       </div>
     </div>
   </div>
@@ -27,31 +38,59 @@
   <table class="table" id="table-layout">
     <thead>
       <tr>
-        <th scope="col">Date Added</th>
-        <th scope="col">Entry Type</th>
+        <th scope="col" class="text-center">Date Added</th>
+        <th scope="col" class="text-center">Entry Type</th>
         <th scope="col">User</th>
         <th scope="col">Accounts</th>
-        <th scope="col">Debit</th>
-        <th scope="col">Credit</th>
-        <th scope="col">Status</th>
+        <th scope="col" class="text-right">Debit</th>
+        <th scope="col" class="text-right">Credit</th>
+        <th scope="col" class="text-center">Status</th>
       </tr>
     </thead>
     <tbody>
       <% @journal_entries.each do |journal_entry| %>
       <tr>
-        <td><%= journal_entry.date_added %></td>
-        <td><%= journal_entry.entry_type %></td>
+        <td class="text-center"><%= journal_entry.date_added %>
+        <% if journal_entry.status == "Pending" %>
+          <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block" %>
+          <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#exampleModal">Decline</button>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Please add why the entry is being declined:</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <%= form_tag decline_path(entry: journal_entry), :method => :post do %>
+                  <div class="container">
+                    <br>
+                    <%= text_area_tag :reason, nil, required: true, class: 'col-md-12 form-control', rows: '7'%>
+                    <br>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <%= submit_tag 'Confirm', :class => 'btn btn-primary' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        </td>
+        <td class="text-center"><%= journal_entry.entry_type %></td>
         <td><%= User.find_by(id: journal_entry.user_id).username %>
         <td>
           <% journal_entry.debit_account.each do |a|%>
-            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%>
-              - <%= Account.find_by(id: a).name.truncate(20) %><br>
+            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
+            <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
             <%end%>
 
           <% journal_entry.credit_account.each do |a|%>
             <div style="text-indent: 40px">
-              <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%>
-              - <%= Account.find_by(id: a).name.truncate(20) %><br>
+              <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
+              <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
             </div>
           <%end%>          
         </td>
@@ -70,41 +109,33 @@
             <br>
           <%end%>
         </td>
-        <td>
+        <td class="text-center">
           <% if journal_entry.status == "Approved" %>
             <span class="badge badge-pill badge-success"> <%= journal_entry.status %> </span> 
           <% elsif journal_entry.status == "Declined"%>
             <span class="badge badge-pill badge-danger"> <%= journal_entry.status %> </span> 
           <% else %>
-            <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br><br>
-            <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block" %>
-            <%= button_to "Decline", decline_path(entry: journal_entry), method: :post, class: "btn btn-danger btn-sm btn-block" %>
+            <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br>
           <% end %>
         </td>
       </tr>
       <% end %>
     </tbody>
   </table>
-  <br><br>
-  <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %>
 </div>
 
 <script>
-var minDate, maxDate;
- 
-
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = minDate.val();
-        var max = maxDate.val();
-        var date = new Date( data[4] );
- 
-        if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
-        ) {
+        var min = parseInt( $('#min').val(), 10 );
+        var max = parseInt( $('#max').val(), 10 );
+        var balance = parseFloat(data[4].replace('$','').replace(/,|_/g, '')).toFixed(2) && data[5].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
+        
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && balance <= max ) ||
+             ( min <= balance && isNaN( max ) ) ||
+             ( min <= balance && balance <= max ) )
+        {
             return true;
         }
         return false;
@@ -112,19 +143,46 @@ $.fn.dataTable.ext.search.push(
 );
  
 $(document).ready(function() {
-
-    minDate = new DateTime($('#min'), {
-        format: 'MMMM Do YYYY'
-    });
-    maxDate = new DateTime($('#max'), {
-        format: 'MMMM Do YYYY'
-    });
- 
-
     var table = $('#table-layout').DataTable();
- 
 
-    $('#min, #max').on('change', function () {
+    $('#min, #max').keyup( function() {
+      table.draw();
+    } );
+} );
+</script>
+
+<script>
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var mind = minDate.val();
+        var maxd = maxDate.val();
+        var date = new Date(data[0]);
+        if (
+            ( mind === null && maxd === null ) ||
+            ( mind === null && date <= max ) ||
+            ( mind <= date   && maxd === null ) ||
+            ( mind <= date   && date <= maxd )
+        ) {
+            return true;
+        }
+        return false;
+    }
+);
+$(document).ready(function() {
+    minDate = new DateTime($('#mindate'), {
+        buttons: {
+            today: true,
+            clear: true
+        }
+    });
+    maxDate = new DateTime($('#maxdate'), {
+        buttons: {
+            today: true,
+            clear: true
+        }
+    });
+    var table = $('#table-layout').DataTable();
+    $('#mindate, #maxdate').on('change', function () {
         table.draw();
     });
 });

@@ -41,11 +41,11 @@
     <tbody>
       <% @accounts.each do |account| %>
         <tr>
-          <th scope="row"><%= link_to account.account_number, "/ledger/#{account.id}", method: :get%></th>
-          <td><%= account.name.truncate(40) %></td>
+          <th scope="row"><%= link_to account.account_number, "/ledger/#{account.id}", method: :get %></th>
+          <td><%= link_to account.name.truncate(40), "/ledger/#{account.id}", method: :get %></td>
           <td><%= account.category %></td>
           <td><%= account.subcategory %></td>
-          <td class = "text-right">$<%= number_with_precision(account.balance, precision: 2, delimiter: ',')%></td>
+          <td class = "text-right">$<%= number_with_precision(account.balance, precision: 2, delimiter: ',') %></td>
           <td><%= account.active %></td>
           <td><%= User.find(account.user_id).username %></td>
           

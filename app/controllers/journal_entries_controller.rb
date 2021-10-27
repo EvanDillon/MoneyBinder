@@ -59,14 +59,15 @@ class JournalEntriesController < ApplicationController
     @entry.save
 
     LedgerEntry.create_new_entry(@entry)
-    redirect_to journal_entries_path, success: "Approved journal entry"
+    redirect_to journal_entries_path, success: "Journal entry approved"
   end
 
   def decline
     @entry = JournalEntry.find(params[:entry].to_i)
     @entry.status = "Declined"
+    @entry.description = params[:reason]
     @entry.save
-    redirect_to journal_entries_path, danger: "Declined journal entry"
+    redirect_to journal_entries_path, danger: "Journal entry declined"
   end
 
   private
