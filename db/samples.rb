@@ -90,7 +90,7 @@ User.create! do |a|
     a.active = true
     a.passUpdatedAt = Time.now
 end
-puts "Created James Diaz" 
+puts "Created Andrew Shein" 
 
 User.create! do |a|
     a.firstName = 'Expired'
