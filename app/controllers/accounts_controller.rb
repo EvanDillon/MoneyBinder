@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_action :set_account, only: %i[ show edit update destroy ]
   
   rescue_from Pundit::NotAuthorizedError do 
-    redirect_to homepage_path, danger: "You are not authorized to preform this action."
+    redirect_to error_path
   end
 
   # GET /accounts or /accounts.json
