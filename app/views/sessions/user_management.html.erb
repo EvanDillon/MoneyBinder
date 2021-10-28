@@ -13,6 +13,7 @@
           <th scope="col">Address</th>
           <th scope="col">Role</th>
           <th scope="col">Active</th>
+          <th scope="col">Send Email</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
@@ -31,6 +32,7 @@
                 <td><%= 'Accountant' %></td>
             <%end%>
             <td><%= user.active %></td>
+            <td><%= button_to "Email", "mailto:#{user.email}", method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Send this user an email' %></td>
             <td><%= button_to "Edit", "user/edit/#{user.id}", method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Edit this user' %></td>
           </tr>
         <%end%>
@@ -42,10 +44,6 @@
       </div>
       <div class="col-sm-auto">      
         <%= button_to "View Expired Passwords Report", expired_passwords_path, method: :get, class: "btn btn-primary", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View Expired Passwords Report' %>
-      </div>
-
-      <div class="col-sm-auto">
-        <%= button_to "Send Email", send_message_path, method: :get, class: "btn btn-primary", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Send an email' %>
       </div>
 
     </div><br>
