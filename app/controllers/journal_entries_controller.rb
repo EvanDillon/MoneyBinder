@@ -65,7 +65,7 @@ class JournalEntriesController < ApplicationController
   def decline
     @entry = JournalEntry.find(params[:entry].to_i)
     @entry.status = "Declined"
-    @entry.description = params[:reason]
+    @entry.description += "\n #{current_user.username} has declined this entry because: '#{params[:reason]}'"
     @entry.save
     redirect_to journal_entries_path, danger: "Journal entry declined"
   end
