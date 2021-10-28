@@ -5,7 +5,9 @@
 <br>
 <div class="container">
   <div class="row justify-content-md-center">
-    <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %>
+    <div class="col col-lg-2">
+      <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary btn-block" %>
+    </div>
     <div class="col col-lg-2">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -36,8 +38,8 @@
 
     <div class="col col-lg-2">
 			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="DropDownStatus" data-toggle="dropdown">
-					Status
+				<button class="btn btn-outline-secondary btn-block dropdown-toggle" type="button" id="DropDownStatus" data-toggle="dropdown">
+					Filter Status
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					 <button class="dropdown-item" type = "button" id = "statusAll" disabled>All</button>
@@ -47,8 +49,9 @@
 				</div>
 			</div>
 		</div>
-
   </div>
+  
+  <br>
 
   <table class="table" id="table-layout">
     <thead>
