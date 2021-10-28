@@ -41,7 +41,7 @@
     <tbody>
       <% @accounts.each do |account| %>
         <tr>
-          <th scope="row"><%= link_to account.account_number, "/ledger/#{account.id}", method: :get %></th>
+          <td><%= link_to account.account_number, "/ledger/#{account.id}", method: :get %></td>
           <td><%= link_to account.name.truncate(40), "/ledger/#{account.id}", method: :get %></td>
           <td><%= account.category %></td>
           <td><%= account.subcategory %></td>
