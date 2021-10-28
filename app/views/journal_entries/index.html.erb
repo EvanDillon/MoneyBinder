@@ -51,7 +51,7 @@
       <% @journal_entries.each do |journal_entry| %>
       <tr>
         <td class="text-center"><%= journal_entry.date_added %>
-        <% if journal_entry.status == "Pending" %>
+        <% if journal_entry.status == "Pending" && current_user.userType == 2 %>
           <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block" %>
           <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#exampleModal">Decline</button>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
