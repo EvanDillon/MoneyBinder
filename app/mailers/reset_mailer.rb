@@ -23,4 +23,10 @@ class ResetMailer < ApplicationMailer
     @body = params[:body]
     mail(to: @user.email, subject: @subject)
   end
+
+  def pending_journal_entry
+    @user = params[:user]
+    @url = "http://localhost:3000/journal_entries"
+    mail(to: 'kathrynhighers@gmail.com', subject: "New journal entry for approval")
+  end
 end

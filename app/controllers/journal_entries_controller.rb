@@ -39,7 +39,8 @@ class JournalEntriesController < ApplicationController
       @journal_entry.date_added = date
       
       if @journal_entry.save
-        redirect_to journal_entries_path, success: "Journal Entry Created"
+        redirect_to journal_entries_path, success: "Journal Entry Pending"
+        ResetMailer.with(user: @user).pending_journal_entry.deliver_now
       else
         flash.now[:danger] = "#{@account.errors.first.full_message}"
         render new_journal_entry_path
