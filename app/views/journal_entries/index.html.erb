@@ -33,6 +33,21 @@
         <%= text_field_tag :maxd, "", placeholder: "End Date", class: "form-control", id: "maxdate" %>
       </div>
     </div>
+
+    <div class="col col-lg-2">
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button" id="DropDownStatus" data-toggle="dropdown">
+					Status
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					 <button class="dropdown-item" type = "button" id = "statusAll" disabled>All</button>
+           <button class="dropdown-item" type = "button" id = "statusPending">Pending</button>
+           <button class="dropdown-item" type = "button" id = "statusApproved">Approved</button>
+           <button class="dropdown-item" type = "button" id = "statusDeclined">Declined</button>
+				</div>
+			</div>
+		</div>
+
   </div>
 
   <table class="table" id="table-layout">
@@ -186,4 +201,72 @@ $(document).ready(function() {
         table.draw();
     });
 });
+</script>
+
+<script>
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+      var status = data[6];
+
+      if (document.getElementById("statusAll").disabled)
+      {
+        return true;
+      }
+      if (document.getElementById("statusPending").disabled && status.includes("Pending"))
+      {
+        return true;
+      }
+      if (document.getElementById("statusApproved").disabled && status.includes("Approved"))
+      {
+        return true;
+      }
+      if (document.getElementById("statusDeclined").disabled && status.includes("Declined"))
+      {
+        return true;
+      }
+
+      return false;
+    }
+);
+
+$(document).ready(function() {
+    var table = $('#table-layout').DataTable();
+
+    $('#statusAll').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+
+      document.getElementById("statusAll").disabled = true;
+      table.draw();
+    } );
+    $('#statusPending').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+
+      document.getElementById("statusPending").disabled = true;
+      table.draw();
+    } );
+    $('#statusApproved').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+
+      document.getElementById("statusApproved").disabled = true;
+      table.draw();
+    } );
+    $('#statusDeclined').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+      
+      document.getElementById("statusDeclined").disabled = true;
+      table.draw();
+    } );
+} );
 </script>
