@@ -2,19 +2,25 @@ class JournalEntriesController < ApplicationController
   before_action :set_journal_entry, only: %i[ show edit update destroy invalid_num_error ]
   rescue_from ActionView::Helpers::NumberHelper::InvalidNumberError, :with => :invalid_num_error
 
+  rescue_from Pundit::NotAuthorizedError do 
+    redirect_to error_path
+  end
 
   # GET /journal_entries or /journal_entries.json
   def index
+    authorize current_user, :user_not_admin?
     @journal_entries = JournalEntry.all
   end
 
   # GET /journal_entries/new
   def new
+    authorize current_user, :user_not_admin?
     @journal_entry = JournalEntry.new
   end
 
   # POST /journal_entries or /journal_entries.json
   def create
+    authorize current_user, :user_not_admin?
     debit_account_ids = journal_entry_params[:debit_account].map(&:to_i)
     credit_account_ids = journal_entry_params[:credit_account].map(&:to_i)
 
@@ -57,6 +63,7 @@ class JournalEntriesController < ApplicationController
   end
 
   def approve
+    authorize current_user, :user_manager?
     @entry = JournalEntry.find(params[:entry].to_i)
     @entry.status = "Approved"
     @entry.save
@@ -66,9 +73,10 @@ class JournalEntriesController < ApplicationController
   end
 
   def decline
+    authorize current_user, :user_manager?
     @entry = JournalEntry.find(params[:entry].to_i)
     @entry.status = "Declined"
-    @entry.description = params[:reason]
+    @entry.description += "\n #{current_user.username} has declined this entry because: '#{params[:reason]}'"
     @entry.save
     redirect_to journal_entries_path, danger: "Journal entry declined"
   end

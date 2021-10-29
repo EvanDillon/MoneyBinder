@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   skip_before_action :authorized, only: [:new, :create]
 
   rescue_from Pundit::NotAuthorizedError do 
-    redirect_to homepage_path, danger: "You are not authorized to preform this action."
+    redirect_to error_path
   end
 
   def new

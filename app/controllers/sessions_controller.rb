@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:login, :welcome, :sign_up, :process_new_sign_up]
   
   rescue_from Pundit::NotAuthorizedError do 
-    redirect_to homepage_path, danger: "You are not authorized to preform this action."
+    redirect_to error_path
   end
 
   def login
@@ -125,6 +125,9 @@ class SessionsController < ApplicationController
     session.delete(:user_id)
     @current_user = nil
     redirect_to root_url
+  end
+
+  def error
   end
 
   private

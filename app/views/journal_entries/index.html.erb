@@ -5,7 +5,9 @@
 <br>
 <div class="container">
   <div class="row justify-content-md-center">
-    <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %>
+    <div class="col col-lg-2">
+      <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary btn-block" %>
+    </div>
     <div class="col col-lg-2">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -33,7 +35,23 @@
         <%= text_field_tag :maxd, "", placeholder: "End Date", class: "form-control", id: "maxdate" %>
       </div>
     </div>
+
+    <div class="col col-lg-2">
+			<div class="dropdown">
+				<button class="btn btn-outline-secondary btn-block dropdown-toggle" type="button" id="DropDownStatus" data-toggle="dropdown">
+					Filter Status
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					 <button class="dropdown-item" type = "button" id = "statusAll" disabled>All</button>
+           <button class="dropdown-item" type = "button" id = "statusPending">Pending</button>
+           <button class="dropdown-item" type = "button" id = "statusApproved">Approved</button>
+           <button class="dropdown-item" type = "button" id = "statusDeclined">Declined</button>
+				</div>
+			</div>
+		</div>
   </div>
+  
+  <br>
 
   <table class="table" id="table-layout">
     <thead>
@@ -51,7 +69,7 @@
       <% @journal_entries.each do |journal_entry| %>
       <tr>
         <td class="text-center"><%= journal_entry.date_added %>
-        <% if journal_entry.status == "Pending" %>
+        <% if journal_entry.status == "Pending" && current_user.userType == 2 %>
           <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block" %>
           <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#exampleModal">Decline</button>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -83,14 +101,12 @@
         <td><%= User.find_by(id: journal_entry.user_id).username %>
         <td>
           <% journal_entry.debit_account.each do |a|%>
-            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
-            <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
-            <%end%>
+            <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%>
+          <%end%>
 
           <% journal_entry.credit_account.each do |a|%>
             <div style="text-indent: 40px">
-              <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
-              <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
+              <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%>
             </div>
           <%end%>          
         </td>
@@ -186,4 +202,72 @@ $(document).ready(function() {
         table.draw();
     });
 });
+</script>
+
+<script>
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+      var status = data[6];
+
+      if (document.getElementById("statusAll").disabled)
+      {
+        return true;
+      }
+      if (document.getElementById("statusPending").disabled && status.includes("Pending"))
+      {
+        return true;
+      }
+      if (document.getElementById("statusApproved").disabled && status.includes("Approved"))
+      {
+        return true;
+      }
+      if (document.getElementById("statusDeclined").disabled && status.includes("Declined"))
+      {
+        return true;
+      }
+
+      return false;
+    }
+);
+
+$(document).ready(function() {
+    var table = $('#table-layout').DataTable();
+
+    $('#statusAll').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+
+      document.getElementById("statusAll").disabled = true;
+      table.draw();
+    } );
+    $('#statusPending').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+
+      document.getElementById("statusPending").disabled = true;
+      table.draw();
+    } );
+    $('#statusApproved').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+
+      document.getElementById("statusApproved").disabled = true;
+      table.draw();
+    } );
+    $('#statusDeclined').click(function() {
+      document.getElementById("statusAll").disabled = false;
+      document.getElementById("statusPending").disabled = false;
+      document.getElementById("statusApproved").disabled = false;
+      document.getElementById("statusDeclined").disabled = false;
+      
+      document.getElementById("statusDeclined").disabled = true;
+      table.draw();
+    } );
+} );
 </script>

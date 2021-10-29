@@ -47,6 +47,10 @@ class ApplicationPolicy
     user.accountant?
   end
 
+  def user_not_admin?
+    user.accountant? || user.manager?
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

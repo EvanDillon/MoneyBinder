@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     get '/sign_in_help', action: 'sign_in_help'
     get '/user_management_help', action: 'user_management_help'
     get '/event_logs_help', action: 'event_logs_help'
+    get '/error', action: 'error'
   end
 
   get 'user/destroy/:id', to: 'users#destroy'
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
     get 'forgot/', action: 'forgot'
     post 'forgot/', action: 'forgot'
   end
+
 
   get 'ledger/:account_id', to: 'ledger_entries#show'
 end
