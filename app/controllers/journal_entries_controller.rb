@@ -40,7 +40,9 @@ class JournalEntriesController < ApplicationController
       
       if @journal_entry.save
         redirect_to journal_entries_path, success: "Journal Entry Pending"
-        ResetMailer.with(user: @user).pending_journal_entry.deliver_now
+        User.where(userType: 2).pluck(:email).each do |email|
+          ResetMailer.with(user_email: email).pending_journal_entry.deliver_now
+        end
       else
         flash.now[:danger] = "#{@account.errors.first.full_message}"
         render new_journal_entry_path
