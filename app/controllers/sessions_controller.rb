@@ -121,6 +121,10 @@ class SessionsController < ApplicationController
     @all_users = User.all
   end
 
+  def trial_balance
+    @accounts = Account.all
+  end
+
   def destroy
     session.delete(:user_id)
     @current_user = nil
