@@ -45,6 +45,10 @@
             <li class="nav-item <%= active_class(user_management_path) %>">
               <%= link_to 'User Management', user_management_path, class: "nav-link"%>
             </li>
+          <%else%>
+            <li class="nav-item <%= active_class(user_management_path) %>">
+              <%= link_to 'Email', send_message_path, class: "nav-link"%>
+            </li>
           <%end%>
         </ul>
         <form class="form-inline my-2 my-lg-0">
