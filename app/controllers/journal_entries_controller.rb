@@ -81,6 +81,10 @@ class JournalEntriesController < ApplicationController
     redirect_to journal_entries_path, danger: "Journal entry declined"
   end
 
+  def show
+    @journal_entry = JournalEntry.find_by(id: params[:id])
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_journal_entry

@@ -98,7 +98,7 @@
         <% end %>
         </td>
         <td class="text-center"><%= journal_entry.entry_type %></td>
-        <td><%= User.find_by(id: journal_entry.user_id).username %>
+        <td><%= User.find_by(id: journal_entry.user_id).username %></td>
         <td>
           <% journal_entry.debit_account.each do |a|%>
             <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%>

@@ -27,7 +27,7 @@
       <% @ledger_entries.each do |entry| %>
         <tr>
           <td><%= entry.created_at.to_date %></td>
-          <td><%= link_to entry.postReference, "/journal_entry/#{entry.postReference}", method: :get %></td>
+          <td><%= link_to entry.postReference, journal_entry_path(entry.postReference), method: :get %></td>
           <td><%= entry.description %></td>
           <td><%= number_to_currency(entry.debit, precision: 2) %></td>
           <td><%= number_to_currency(entry.credit, precision: 2) %></td>
