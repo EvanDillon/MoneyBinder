@@ -1,0 +1,63 @@
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %><br>
+<div class="container">
+    <table class="table" id="table-layout">
+    <thead>
+      <tr>
+        <th scope="col" class="text-center">Date Added</th>
+        <th scope="col" class="text-center">Entry Type</th>
+        <th scope="col" class="text-center">User</th>
+        <th scope="col">Accounts</th>
+        <th scope="col" class="text-right">Debit</th>
+        <th scope="col" class="text-right">Credit</th>
+        <th scope="col" class="text-center">Status</th>
+        <th scope="col" class="text-center">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-center"><%= @journal_entry.date_added %></td>
+        <td class="text-center"><%= @journal_entry.entry_type %></td>
+        <td class="text-center"><%= User.find_by(id: @journal_entry.user_id).username %></td>
+        <td>
+        <% @journal_entry.debit_account.each do |a|%>
+            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
+            <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
+        <%end%>
+
+        <% @journal_entry.credit_account.each do |a|%>
+            <div style="text-indent: 40px">
+            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
+            <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
+            </div>
+        <%end%>     
+        </td>
+        <td class="text-right">
+          <% @journal_entry.debit_total.each do |num|%>
+            <%= number_to_currency(num, precision: 2) %>
+            <br>
+          <%end%>
+        </td>
+        <td class="text-right">
+          <% @journal_entry.debit_total.each do |num|%>
+            <br>
+          <%end%>
+          <% @journal_entry.credit_total.each do |num|%>
+            <%= number_to_currency(num, precision: 2) %>
+            <br>
+          <%end%>
+        </td>
+        <td class="text-center">
+            <% if @journal_entry.status == "Approved" %>
+              <span class="badge badge-pill badge-success"> <%= @journal_entry.status %> </span> 
+            <% elsif @journal_entry.status == "Declined"%>
+              <span class="badge badge-pill badge-danger"> <%= @journal_entry.status %> </span> 
+            <% else %>
+              <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br>
+            <% end %>
+        </td>
+        <td class="text-center"><%= @journal_entry.description %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
