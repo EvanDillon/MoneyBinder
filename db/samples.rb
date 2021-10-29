@@ -78,6 +78,21 @@ end
 puts "Created James Diaz" 
 
 User.create! do |a|
+
+    a.firstName = 'Katy'
+    a.lastName = 'Highers'
+    a.username = 'khighers1021'
+    a.password = "password1!"
+    a.userType = 2
+    a.dob = '2/19/2000'
+    a.email = 'kathrynhighers@gmail.com'
+    a.phoneNum = '5555555555'
+    a.address = '123 Sesame Street'
+    a.active = true
+    a.passUpdatedAt = Time.now-28.days
+end
+puts "Created Katy Highers"
+
     a.firstName = 'Andrew'
     a.lastName = 'Shein'
     a.username = 'ashein1021'

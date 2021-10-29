@@ -4,7 +4,7 @@
 <br>
 <div class="container">
   <h1 class="text-center"><%= @account.account_number %> - <%= @account.name %></h1><br>
-  <table class="table">
+  <table class="table" id="table-layout">
     <thead>
     <tr>
         <th scope="col">Date</th>
@@ -36,3 +36,9 @@
       <%end%>
     </tbody>
   </table>
+
+  <script>
+  $(document).ready(function() {
+    $('#table-layout').dataTable();
+  });
+</script>
