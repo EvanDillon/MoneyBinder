@@ -93,6 +93,7 @@ User.create! do |a|
 end
 puts "Created Katy Highers"
 
+User.create! do|a|
     a.firstName = 'Andrew'
     a.lastName = 'Shein'
     a.username = 'ashein1021'
