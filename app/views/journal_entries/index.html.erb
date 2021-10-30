@@ -101,7 +101,7 @@
         <td><%= User.find_by(id: journal_entry.user_id).username %></td>
         <td>
           <% journal_entry.debit_account.each do |a|%>
-            <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%>
+            <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%><br>
           <%end%>
 
           <% journal_entry.credit_account.each do |a|%>
@@ -127,11 +127,18 @@
         </td>
         <td class="text-center">
           <% if journal_entry.status == "Approved" %>
-            <span class="badge badge-pill badge-success"> <%= journal_entry.status %> </span> 
+            <a href= <%= journal_entry_path(journal_entry.id) %> > 
+              <span class="badge badge-pill badge-success"> <%= journal_entry.status %> </span> 
+            </a>
+
           <% elsif journal_entry.status == "Declined"%>
-            <span class="badge badge-pill badge-danger"> <%= journal_entry.status %> </span> 
+            <a href= <%= journal_entry_path(journal_entry.id) %> > 
+              <span class="badge badge-pill badge-danger"> <%= journal_entry.status %> </span> 
+            </a>
           <% else %>
-            <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br>
+            <a href= <%= journal_entry_path(journal_entry.id) %> > 
+              <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br>
+            </a>
           <% end %>
         </td>
       </tr>
@@ -142,20 +149,20 @@
 
 <script>
 $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseInt( $('#min').val(), 10 );
-        var max = parseInt( $('#max').val(), 10 );
-        var balance = parseFloat(data[4].replace('$','').replace(/,|_/g, '')).toFixed(2) && data[5].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
-        
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && balance <= max ) ||
-             ( min <= balance && isNaN( max ) ) ||
-             ( min <= balance && balance <= max ) )
-        {
-            return true;
-        }
-        return false;
+  function( settings, data, dataIndex ) {
+    var min = parseInt( $('#min').val(), 10 );
+    var max = parseInt( $('#max').val(), 10 );
+    var balance = parseFloat(data[4].replace('$','').replace(/,|_/g, '')).toFixed(2) && data[5].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
+    
+    if ( ( isNaN( min ) && isNaN( max ) ) ||
+          ( isNaN( min ) && balance <= max ) ||
+          ( min <= balance && isNaN( max ) ) ||
+          ( min <= balance && balance <= max ) )
+    {
+      return true;
     }
+    return false;
+  }
 );
  
 $(document).ready(function() {

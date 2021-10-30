@@ -11,7 +11,6 @@
         <th scope="col" class="text-right">Debit</th>
         <th scope="col" class="text-right">Credit</th>
         <th scope="col" class="text-center">Status</th>
-        <th scope="col" class="text-center">Description</th>
       </tr>
     </thead>
     <tbody>
@@ -21,14 +20,12 @@
         <td class="text-center"><%= User.find_by(id: @journal_entry.user_id).username %></td>
         <td>
         <% @journal_entry.debit_account.each do |a|%>
-            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
-            <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
+          <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%><br>
         <%end%>
 
         <% @journal_entry.credit_account.each do |a|%>
             <div style="text-indent: 40px">
-            <%= link_to Account.find_by(id: a).account_number, "/ledger/#{a}"%> -
-            <%= link_to Account.find_by(id: a).name.truncate(20), "/ledger/#{a}" %><br>
+              <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(20)}", "/ledger/#{a}"%>
             </div>
         <%end%>     
         </td>
@@ -53,11 +50,30 @@
             <% elsif @journal_entry.status == "Declined"%>
               <span class="badge badge-pill badge-danger"> <%= @journal_entry.status %> </span> 
             <% else %>
-              <span class="badge badge-pill badge-warning"> <%= journal_entry.status %> </span><br>
+              <span class="badge badge-pill badge-warning"> <%= @journal_entry.status %> </span><br>
             <% end %>
         </td>
-        <td class="text-center"><%= @journal_entry.description %></td>
       </tr>
     </tbody>
   </table>
+
+  <div class="row">
+    <div class="col">
+      <strong>Description:</strong><br>
+      <div class="border" style="width:500px; height:300px; padding: 10px">
+        <%= @journal_entry.description %>
+      </div>
+        
+    </div>
+    <div class="col">
+      <strong>Source Document:</strong><br>
+      <% if @journal_entry.source_document.attached? %>
+        <iframe src="<%= rails_blob_path(@journal_entry.source_document, disposition: :inline) %>" width="500" height="300" style="border: none;" class="border"> </iframe>
+      <% else %>
+        <div class="border text-center" style="width:500px; height:300px;">
+          <p class="font-weight-light">(No documents found)</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
