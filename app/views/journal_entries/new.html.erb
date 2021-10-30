@@ -13,7 +13,7 @@
                 <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"], ["Reversing", "Reversing"], ["Closing", "Closing"]], {selected: nil}, {class: "form-control"} %>
               <% end %>
               <% if current_user.userType == 3 %>
-                <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"]], {selected: nil}, {class: "form-control"} %>
+                <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"], ["Reversing", "Reversing"]], {selected: nil}, {class: "form-control"} %>
               <% end %>
             </div>
             <div class="form-group col-md-6">
