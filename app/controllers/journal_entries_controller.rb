@@ -36,6 +36,8 @@ class JournalEntriesController < ApplicationController
                                         status: "Pending",
                                         description: params[:journal_entry][:description]
                                       )
+                                      
+    @journal_entry.source_document.attach(params[:journal_entry][:source_document])
 
     error_list = valid?(debit_account_ids, credit_account_ids, debit_amounts, credit_amounts)
     error_list = balanced?(debit_amounts, credit_amounts) if !balanced?(debit_amounts, credit_amounts).nil?

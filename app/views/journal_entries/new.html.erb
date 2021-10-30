@@ -89,6 +89,12 @@
               </tr>
             </tbody>
           </table>
+
+          <div class="custom-file">
+            <%= f.file_field :source_document, required: false, multiple: false, class: "custom-file-input", id: "customFile" %><br><br>
+            <%= f.label :source_document, class: "custom-file-label form-control-file", for: "customFile" %>
+          </div>
+          
           <div class="actions">
             <div class="form-row">
               <div class="col-6">
@@ -146,5 +152,17 @@
       this.value = this.value.replace(/[^0-9\.]/g,'');
       this.value = this.value.match(/^\d+\.?\d{0,2}/);
     });
+
+    $(".your_button").fileupload({
+      dataType: "json",
+      done: function(e, data) {
+          $(".place_for_your_text").text("File uploaded.");
+      }
+    });
+  });
+
+  $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
   });
 </script>
