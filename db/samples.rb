@@ -156,10 +156,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Short Term'
-    a.initial_balance = 1000
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
-    a.balance = 1000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -218,10 +218,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 123400
+    a.initial_balance = 0  # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
-    a.balance = 123400
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -383,7 +383,7 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 0
+    a.initial_balance = 0 #  # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -443,7 +443,28 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# In solved problem, but not Chart of Accounts
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Prepaid Rent'
+    a.account_number = '146'
+    a.description = ""
+    a.normal_side = "Debit"
+    a.category = 'Asset'
+    a.subcategory = 'Current'
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -551,7 +572,7 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 0
+    a.initial_balance = 0 #  # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -663,7 +684,6 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-
 Account.create! do |a|
     a.user_id = 1
     a.name = 'Computer Equipment'
@@ -679,6 +699,26 @@ Account.create! do |a|
     a.order = 0
     a.statement = 0
     a.comment = 0
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Accumulated Depreciation'
+    a.account_number = '188'
+    a.description = ""
+    a.normal_side = "Debit"
+    a.category = 'Asset'
+    a.subcategory = 'Current'
+    a.initial_balance = 0
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = true
     a.active = true
 end
 puts "Created account: #{Account.last.name}"
@@ -1175,6 +1215,29 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# No generic Unearned Revenue in Chart of Accounts, but one is used in the solved problem.
+# The solved problem journalizes Unearned Revenue, and not Unearned Subscription Revenue.
+# Creating this account just in case it's needed.
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Unearned Revenue'
+    a.account_number = '243'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Liability'
+    a.subcategory = 'Current'
+    a.initial_balance = 0 # This must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
 # 250s - Long-Term Liabilities
 
 Account.create! do |a|
@@ -1444,6 +1507,27 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# This account was made for the solved problem. It did not exist in the Chart of Accounts file.
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Contributed Capital'
+    a.account_number = '330'
+    a.description = ""
+    a.normal_side = ""
+    a.category = 'Credit'
+    a.subcategory = 'Revenue'
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
 # Revenues (400-499)
 
 # 400s - Operating Revenues
@@ -1508,6 +1592,27 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# Not in Chart of Accounts, but is in solved problem
+
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Service Revenue'
+    a.account_number = '404'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
+    a.initial_balance = 0 # Needs to start at 0 for testing with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
 
 
 # 410s - Other Revenues
@@ -1766,7 +1871,7 @@ Account.create! do |a|
     a.normal_side = "Credit"
     a.category = 'Expense'
     a.subcategory = ''
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -1877,7 +1982,29 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-# 520s-40s 0 General and Administrative Expenses
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Depreciation Expense'
+    a.account_number = '520'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# 520s-40s - General and Administrative Expenses
+
+# Not in Chart of Accounts, but is in solved problem
 
 Account.create! do |a|
     a.user_id = 1
@@ -1887,7 +2014,7 @@ Account.create! do |a|
     a.normal_side = "Credit"
     a.category = 'Expense'
     a.subcategory = ''
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -1967,7 +2094,7 @@ Account.create! do |a|
     a.normal_side = "Credit"
     a.category = 'Expense'
     a.subcategory = ''
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -2167,7 +2294,7 @@ Account.create! do |a|
     a.normal_side = "Credit"
     a.category = 'Expense'
     a.subcategory = ''
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -2383,6 +2510,26 @@ puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 1
+    a.name = 'Salaries Expense'
+    a.account_number = '550'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+Account.create! do |a|
+    a.user_id = 1
     a.name = 'Interest Expense'
     a.account_number = '551'
     a.description = "Also Bond Interest Expense"
@@ -2480,9 +2627,424 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# Not in Chart of Accounts document, but is in solved problem document
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Utilities Expense'
+    a.account_number = '556'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 to test with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# Not in Chart of Accounts document, but is in solved problem document
+
+# This account appears on the income statement
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Supplies Expense'
+    a.account_number = '557'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 to test with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# Not in Chart of Accounts document, but is in solved problem document
+# Appears on Income Statement
+Account.create! do |a|
+    a.user_id = 1
+    a.name = 'Salaries Payable'
+    a.account_number = '558'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 to test with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+
 puts "Created a total of #{Account.all.count} new accounts------------------------" 
 
+# Sample journal entries. These entries are from the solved problem document.
 
+# JournalEntry.create! do |a|
+#     a.user_id = 3
+#     a.debit_account = [Account.find_by(name: "Cash").id]
+#     a.credit_account = [Account.find_by(name: "Notes Receivable").id]
+#     a.debit_total = ["100"]
+#     a.credit_total = ["100"]
+#     a.entry_type = "Regular"
+#     a.status = "Pending"
+#     a.description = ""
+#     a.date_added = Time.now
+# end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id, Account.find_by(name: "Accounts Receivable").id, Account.find_by(name: "Supplies").id, Account.find_by(name: "Office Equipment")]
+    a.credit_account = [Account.find_by(name: "Contributed Capital").id]
+    a.debit_total = ["10000", "1500", "1250", "7500"]
+    a.credit_total = ["20250"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Assets received from John Addams on April 4."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Prepaid Rent").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["4500"]
+    a.credit_total = ["4500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Paid three month\'s rent on a lease rental contract on April 4."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Prepaid Rent").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["4500"]
+    a.credit_total = ["4500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Paid premium on property and casualty insurance policies for the year. Paid on April 4."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Unearned Revenue").id]
+    a.debit_total = ["3000"]
+    a.credit_total = ["3000"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Received cash from clients as an advance payment for services to be provided. Advance received on April 6."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Office Equipment").id]
+    a.credit_account = [Account.find_by(name: "Accounts Payable").id]
+    a.debit_total = ["1800"]
+    a.credit_total = ["1800"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Purchased additional office furniture on account from Morrilton Company on April 7."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.debit_total = ["800"]
+    a.credit_total = ["800"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Received cash from clients on account. Received April 8."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Advertising Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["120"]
+    a.credit_total = ["120"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Prepaid cash for newspaper advertisement on April 11"
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Payable").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["800"]
+    a.credit_total = ["800"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Paid Morrilton Company $800 for debt incurred on April 7. Payment given on April 12."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["2250"]
+    a.credit_total = ["2250"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 15 - Recorded Services provided on account for April 18-22, $1,100."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["400"]
+    a.credit_total = ["400"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 15 - Paid part-time receptionist for two weeks salary, $400."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["3175"]
+    a.credit_total = ["3175"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 15 - Recorded cash from cleints for fees earned April 14-15, $3,175"
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Supplies").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["750"]
+    a.credit_total = ["750"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 18 - Paid cash for newspaper advertisement, $120."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["1850"]
+    a.credit_total = ["1850"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 22 - Recorded services provided on account for April 18-22, $1,100."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.debit_total = ["1600"]
+    a.credit_total = ["1600"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 22 - Recorded cash from cash clients for fees earned April 18-22, $1,850."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.debit_total = ["1600"]
+    a.credit_total = ["1600"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 25 - Received cash from clients on account, $1600."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["400"]
+    a.credit_total = ["400"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "Paid part-time receptionist for two week's salary, $400."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Telephone Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["130"]
+    a.credit_total = ["130"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 28 - Paid telephone bill for April, $130."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Utilities Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["200"]
+    a.credit_total = ["200"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - Paid electric bill for April, $200."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["2050"]
+    a.credit_total = ["2050"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - Recorded cash from cash clients for fees earned April 25-29, $2,050."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["1000"]
+    a.credit_total = ["1000"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - Recorded services provided on account for April 25-29, $1,000."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["4500"]
+    a.credit_total = ["4500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - John received $4,500 from the company as his salary."
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Insurance Expense").id]
+    a.credit_account = [Account.find_by(name: "Prepaid Insurance").id]
+    a.debit_total = ["150"]
+    a.credit_total = ["150"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Supplies Expense").id]
+    a.credit_account = [Account.find_by(name: "Supplies").id]
+    a.debit_total = ["980"]
+    a.credit_total = ["980"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Depreciation Expense").id]
+    a.credit_account = [Account.find_by(name: "Accumulated Depreciation").id]
+    a.debit_total = ["500"]
+    a.credit_total = ["500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Salaries Payable").id]
+    a.debit_total = ["20"]
+    a.credit_total = ["20"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Rent Expense").id]
+    a.credit_account = [Account.find_by(name: "Prepaid Rent").id]
+    a.debit_total = ["1500"]
+    a.credit_total = ["1500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Unearned Revenue").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["2000"]
+    a.credit_total = ["2000"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+puts "Created journal entries"
+
+# JournalEntry.create! do |a|
+#     a.user_id = 3
+#     a.debit_account = [Account.find_by(name: "").id]
+#     a.credit_account = [Account.find_by(name: "").id]
+#     a.debit_total = [""]
+#     a.credit_total = [""]
+#     a.entry_type = "Regular"
+#     a.status = "Pending"
+#     a.description = ""
+#     a.date_added = Time.now
+# end
 
 all_error_messages = [
                         ["account_updated", "Account has been Updated"],
