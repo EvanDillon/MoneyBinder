@@ -4,6 +4,7 @@
 <div class="container">
   <% if current_user.userType == 2 %>
     <h1 class="text-center">Trial Balance</h1>
+    <h5 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h5>
     <table class="table" id="table-layout">
       <thead>
         <tr>
@@ -15,7 +16,7 @@
       <tbody>
         <% @accounts.each do |account| %>
           <tr>
-            <td><%= link_to account.account_number, "/ledger/#{account.id}", method: :get %> - <%= account.name.truncate(40) %> </td>
+            <td><%= link_to "#{account.account_number} - #{account.name.truncate(40)}", "/ledger/#{account.id}", method: :get %> </td>
 
             <% if account.normal_side == "Debit" %>
               <td>$<%= number_with_precision(account.balance, precision: 2, delimiter: ',') %></td></td>
@@ -28,10 +29,18 @@
         <%end%>
       </tbody>
       <thead>
-        <tr>
+        <% if @debit_total != @credit_total %>
+          <tr class="table-danger">
+        <% else %>
+          <tr>
+        <% end %>
           <th scope="col">Total</th>
-          <th scope="col" id = "DebitTotal">$$$</th>
-          <th scope="col" id = "CreditTotal">$$$</th>
+          <th scope="col" id = "DebitTotal" style="text-decoration-line: underline; text-decoration-style: double; ">$
+            <%= number_with_precision(@debit_total, precision: 2, delimiter: ',') %>
+          </th>
+          <th scope="col" id = "CreditTotal" style="text-decoration-line: underline; text-decoration-style: double; ">$
+            <%= number_with_precision(@credit_total, precision: 2, delimiter: ',') %>
+          </th>
         </tr>
       </thead>
     </table>
