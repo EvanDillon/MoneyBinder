@@ -123,6 +123,9 @@ class SessionsController < ApplicationController
 
   def trial_balance
     @accounts = Account.all
+    # @non_zero_accounts = Account.where('balance != ?', 0 )
+    @debit_total = Account.where(normal_side: "Debit").pluck(:balance).sum.to_f
+    @credit_total = Account.where(normal_side: "Credit").pluck(:balance).sum.to_f
   end
 
   def destroy

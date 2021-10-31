@@ -176,10 +176,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Short Term'
-    a.initial_balance = 7000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 7000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -198,10 +198,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 99000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 99000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -239,10 +239,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 1500.89
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 1500.89
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -259,10 +259,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 560.50
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 560.50
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -279,10 +279,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 85783
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 85783
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -301,10 +301,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 100000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 100000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -321,10 +321,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 300000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 300000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -341,10 +341,10 @@ Account.create! do |a|
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 4000000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 400000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -2710,7 +2710,7 @@ puts "Created a total of #{Account.all.count} new accounts----------------------
 
 JournalEntry.create! do |a|
     a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id, Account.find_by(name: "Accounts Receivable").id, Account.find_by(name: "Supplies").id, Account.find_by(name: "Office Equipment")]
+    a.debit_account = [Account.find_by(name: "Cash").id, Account.find_by(name: "Accounts Receivable").id, Account.find_by(name: "Supplies").id, Account.find_by(name: "Office Equipment").id]
     a.credit_account = [Account.find_by(name: "Contributed Capital").id]
     a.debit_total = ["10000", "1500", "1250", "7500"]
     a.credit_total = ["20250"]

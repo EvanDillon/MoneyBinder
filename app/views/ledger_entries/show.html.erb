@@ -28,7 +28,7 @@
         <tr>
           <td><%= entry.created_at.to_date %></td>
           <td><%= link_to entry.postReference, journal_entry_path(entry.postReference), method: :get %></td>
-          <td><%= entry.description %></td>
+          <td><%= entry.description.truncate(60) %></td>
           <td><%= number_to_currency(entry.debit, precision: 2) %></td>
           <td><%= number_to_currency(entry.credit, precision: 2) %></td>
           <td><%= number_to_currency(entry.balance, precision: 2) %></td>
@@ -39,6 +39,8 @@
 
   <script>
   $(document).ready(function() {
-    $('#table-layout').dataTable();
+    $('#table-layout').dataTable( {
+      "pageLength": 100
+    });
   });
 </script>
