@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get 'homepage/', action: 'homepage'
     get 'user_management/', action: 'user_management'
     get 'trial_balance/', action: 'trial_balance'
+    get 'balance_sheet/', action: 'balance_sheet'
     get 'sign_up/', action: 'sign_up'
     post 'process_new_sign_up/', action: 'process_new_sign_up'
     get 'profile/', action: 'profile'

@@ -14,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @accounts.each do |account| %>
+        <% @non_zero_accounts.each do |account| %>
           <tr>
             <td><%= link_to "#{account.account_number} - #{account.name.truncate(40)}", "/ledger/#{account.id}", method: :get %> </td>
 
@@ -32,7 +32,7 @@
         <% if @debit_total != @credit_total %>
           <tr class="table-danger">
         <% else %>
-          <tr>
+          <tr class="table-active">
         <% end %>
           <th scope="col">Total</th>
           <th scope="col" id = "DebitTotal" style="text-decoration-line: underline; text-decoration-style: double; ">$
