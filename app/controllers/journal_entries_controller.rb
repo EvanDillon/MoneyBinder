@@ -134,7 +134,7 @@ class JournalEntriesController < ApplicationController
 
             # Check if debit has only 2 decimals and is not negative
             debit.each do |num|
-              if num > 0
+              if num.to_f > 0
                 ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
               else
                 return "Debit amount can not be 0"
@@ -143,7 +143,7 @@ class JournalEntriesController < ApplicationController
 
             # Check if credit has only 2 decimals and converts it to currency
             credit.each do |num|
-              if num > 0
+              if num.to_f > 0
                 ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
               else
                 return "Credit amount can not be 0"
@@ -165,12 +165,12 @@ class JournalEntriesController < ApplicationController
     def balanced?(debit, credit)
       debit_sum = 0
       debit.each do |num|
-        debit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2)
+        debit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2).to_f
       end  
 
       credit_sum = 0
       credit.each do |num|
-        credit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2)
+        credit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2).to_f
       end 
 
       if debit_sum == credit_sum

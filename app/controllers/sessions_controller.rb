@@ -122,6 +122,7 @@ class SessionsController < ApplicationController
   end
 
   def trial_balance
+    authorize current_user, :user_not_admin?
     # @accounts = Account.all
     @non_zero_accounts = Account.where('balance != ?', 0 )
     @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum
@@ -129,8 +130,9 @@ class SessionsController < ApplicationController
   end
 
   def balance_sheet
+    authorize current_user, :user_not_admin?
     @non_zero_accounts = Account.where('balance != ?', 0 )
-    
+
     @current_assets = @non_zero_accounts.where(category: "Asset").where.not(account_number: [188, 181])
     @equipment_assets = @non_zero_accounts.where(account_number: [188, 181]) # Only Office Equipment and Accumulated Depreciation accounts
     @total_current_assets = @current_assets.pluck(:balance).sum
