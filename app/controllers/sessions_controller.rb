@@ -122,26 +122,28 @@ class SessionsController < ApplicationController
   end
 
   def trial_balance
+    authorize current_user, :user_not_admin?
     # @accounts = Account.all
     @non_zero_accounts = Account.where('balance != ?', 0 )
-    @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).sum.to_f
-    @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).sum.to_f
+    @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum
+    @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum
   end
 
   def balance_sheet
+    authorize current_user, :user_not_admin?
     @non_zero_accounts = Account.where('balance != ?', 0 )
 
     @current_assets = @non_zero_accounts.where(category: "Asset").where.not(account_number: [188, 181])
     @equipment_assets = @non_zero_accounts.where(account_number: [188, 181]) # Only Office Equipment and Accumulated Depreciation accounts
-    @total_current_assets = @current_assets.pluck(:balance).sum.to_f
-    @total_equipment_assets = @equipment_assets.pluck(:balance).sum.to_f
+    @total_current_assets = @current_assets.pluck(:balance).sum
+    @total_equipment_assets = @equipment_assets.pluck(:balance).sum
 
     @total_assets = @total_current_assets + @total_equipment_assets
 
     @liability_accounts = @non_zero_accounts.where(name: ["Accounts Payable", "Salaries Payable", "Unearned Revenue"])
-    @total_liabilities = @liability_accounts.pluck(:balance).sum.to_f
+    @total_liabilities = @liability_accounts.pluck(:balance).sum
     @equity_accounts = @non_zero_accounts.where(name: ["Contributed Capital", "Retained Earnings"])
-    @total_equity = @equity_accounts.pluck(:balance).sum.to_f
+    @total_equity = @equity_accounts.pluck(:balance).sum
 
     @total_l_and_e = @total_liabilities + @total_equity
   end

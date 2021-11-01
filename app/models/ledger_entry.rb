@@ -3,7 +3,7 @@ class LedgerEntry < ApplicationRecord
   def self.create_new_entry(entry)
     (0..entry.debit_account.count-1).each do |index|
       accountId = entry.debit_account[index]
-      ledger_debit = entry.debit_total[index].to_f
+      ledger_debit = entry.debit_total[index]
       post_ref = entry.id
       desc = entry.description
       
@@ -20,7 +20,7 @@ class LedgerEntry < ApplicationRecord
 
     (0..entry.credit_account.count-1).each do |index|
       accountId = entry.credit_account[index]
-      ledger_credit = entry.credit_total[index].to_f
+      ledger_credit = entry.credit_total[index]
       post_ref = entry.id
       desc = entry.description
 

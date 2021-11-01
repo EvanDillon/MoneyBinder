@@ -66,21 +66,32 @@ class JournalEntriesController < ApplicationController
 
   def approve
     authorize current_user, :user_manager?
-    @entry = JournalEntry.find(params[:entry].to_i)
-    @entry.status = "Approved"
-    @entry.save
-
-    LedgerEntry.create_new_entry(@entry)
+    approve_entry(params[:entry].to_i)
     redirect_to journal_entries_path, success: "Journal entry approved"
   end
 
   def decline
     authorize current_user, :user_manager?
-    @entry = JournalEntry.find(params[:entry].to_i)
-    @entry.status = "Declined"
-    @entry.description += "\n #{current_user.username} has declined this entry because: '#{params[:reason]}'"
-    @entry.save
+    decline_entry(params[:entry].to_i, params[:reason])
     redirect_to journal_entries_path, danger: "Journal entry declined"
+  end
+
+  def approve_all
+    authorize current_user, :user_manager?
+    @pending_entries = JournalEntry.where(status: "Pending")
+    @pending_entries.each do |e|
+      approve_entry(e.id)
+    end
+    redirect_to journal_entries_path, success: "All Journal entries have been Approved"
+  end
+
+  def decline_all
+    authorize current_user, :user_manager?
+    @pending_entries = JournalEntry.where(status: "Pending")
+    @pending_entries.each do |e|
+      decline_entry(e.id, "He declined all entries")
+    end
+    redirect_to journal_entries_path, danger: "All Journal entries have been Declined"
   end
 
   def show
@@ -88,6 +99,21 @@ class JournalEntriesController < ApplicationController
   end
 
   private
+
+    def approve_entry(id)
+      @entry = JournalEntry.find(id)
+      @entry.status = "Approved"
+      @entry.save
+      LedgerEntry.create_new_entry(@entry)
+    end
+
+    def decline_entry(id, reason)
+      @entry = JournalEntry.find(id)
+      @entry.status = "Declined"
+      @entry.description += "\n #{current_user.username} has declined this entry because: '#{reason}'"
+      @entry.save
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_journal_entry
       @journal_entry = JournalEntry.find(params[:id])

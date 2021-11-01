@@ -1,95 +1,91 @@
 <%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %><br>
 <div class="container">
-  <% if current_user.userType == 2 %>
-    <h1 class="text-center">Balance Sheet</h1>
-    <h5 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h5><br>
-    <table class="table" id="table-layout">
-      <tbody>
-        <tr class="table-primary">
-          <td class="text-uppercase font-weight-bold" >Assets</td>
-          <td></td>
-          <td class="text-uppercase font-weight-bold text-right">Totals</td>
+  <h1 class="text-center">Balance Sheet</h1>
+  <h5 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h5><br>
+  <table class="table" id="table-layout">
+    <tbody>
+      <tr class="table-primary">
+        <td class="font-weight-bold" >Assets</td>
+        <td></td>
+        <td class="font-weight-bold text-right">Totals</td>
 
-        </tr>
-        <tr>
-          <td class="font-weight-bold" style="text-indent: 40px">Current Assets</td>
-          <td></td>
-          <td class="text-right">$<%= number_with_precision(@total_current_assets, precision: 2, delimiter: ',') %></td>
-        </tr>
-      
-        <% @current_assets.each do |a| %>
-        <tr>
-            <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
-            <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            <td></td>
-        </tr>
-        <% end %>
-
-
-        <tr>
-          <td class="font-weight-bold" style="text-indent: 40px">Property Plant & Equipment</td>
-          <td></td>
-          <td class="text-right">$<%= number_with_precision(@total_equipment_assets, precision: 2, delimiter: ',') %></td>
-        </tr>
-
-        <% @equipment_assets.each do |a| %>
-        <tr>
-            <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
-            <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            <td></td>
-        </tr>
-        <% end %>
-
-        <tr class="table-active">
-          <td class="text-uppercase font-weight-bold" >Total Assets</td>
-          <td></td>
-          <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@total_assets, precision: 2, delimiter: ',') %></td>
-        </tr>
-
-        <tr class="table-primary">
-          <td class="text-uppercase font-weight-bold" >Liabilities & Equity</td>
-          <td></td>
-          <td></td>
-        </tr>
-
-        <tr>
-          <td class="font-weight-bold" style="text-indent: 40px">Liabilities</td>
-          <td></td>
-          <td class="text-right">$<%= number_with_precision(@total_liabilities.abs, precision: 2, delimiter: ',') %></td>
-        </tr>
-
-        <% @liability_accounts.each do |a| %>
-        <tr>
+      </tr>
+      <tr>
+        <td class="font-weight-bold" style="text-indent: 40px">Current Assets</td>
+        <td></td>
+        <td class="text-right">$<%= number_with_precision(@total_current_assets, precision: 2, delimiter: ',') %></td>
+      </tr>
+    
+      <% @current_assets.each do |a| %>
+      <tr>
           <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
-          <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
+          <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
           <td></td>
-        </tr>
-        <% end %>
+      </tr>
+      <% end %>
 
 
-        <tr>
-          <td class="font-weight-bold" style="text-indent: 40px">Equity</td>
-          <td></td>
-          <td class="text-right">$<%= number_with_precision(@total_equity.abs, precision: 2, delimiter: ',') %></td>
-        </tr>
+      <tr>
+        <td class="font-weight-bold" style="text-indent: 40px">Property Plant & Equipment</td>
+        <td></td>
+        <td class="text-right">$<%= number_with_precision(@total_equipment_assets, precision: 2, delimiter: ',') %></td>
+      </tr>
 
-        <% @equity_accounts.each do |a| %>
-        <tr>
+      <% @equipment_assets.each do |a| %>
+      <tr>
           <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
-          <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
+          <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
           <td></td>
-        </tr>
-        <% end %>
+      </tr>
+      <% end %>
 
-        <tr class="table-active">
-          <td class="text-uppercase font-weight-bold" >Total Liabilities and Equity</td>
-          <td></td>
-          <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double; ">$<%= number_with_precision(@total_l_and_e.abs, precision: 2, delimiter: ',') %></td>
-        </tr>
-      </tbody>
-    </table>
-  <% else %>
-    <h1 class= "text-center">Forbidden. You do not have access to this page.</h1>
-  <% end %>
+      <tr class="table-active">
+        <td class="font-weight-bold" >Total Assets</td>
+        <td></td>
+        <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@total_assets, precision: 2, delimiter: ',') %></td>
+      </tr>
+
+      <tr class="table-primary">
+        <td class="font-weight-bold" >Liabilities & Equity</td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td class="font-weight-bold" style="text-indent: 40px">Liabilities</td>
+        <td></td>
+        <td class="text-right">$<%= number_with_precision(@total_liabilities.abs, precision: 2, delimiter: ',') %></td>
+      </tr>
+
+      <% @liability_accounts.each do |a| %>
+      <tr>
+        <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
+        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
+        <td></td>
+      </tr>
+      <% end %>
+
+
+      <tr>
+        <td class="font-weight-bold" style="text-indent: 40px">Equity</td>
+        <td></td>
+        <td class="text-right">$<%= number_with_precision(@total_equity.abs, precision: 2, delimiter: ',') %></td>
+      </tr>
+
+      <% @equity_accounts.each do |a| %>
+      <tr>
+        <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
+        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
+        <td></td>
+      </tr>
+      <% end %>
+
+      <tr class="table-active">
+        <td class="font-weight-bold" >Total Liabilities and Equity</td>
+        <td></td>
+        <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double; ">$<%= number_with_precision(@total_l_and_e.abs, precision: 2, delimiter: ',') %></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
