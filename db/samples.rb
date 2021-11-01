@@ -708,7 +708,7 @@ Account.create! do |a|
     a.name = 'Accumulated Depreciation'
     a.account_number = '188'
     a.description = ""
-    a.normal_side = "Debit"
+    a.normal_side = "Credit"
     a.category = 'Asset'
     a.subcategory = 'Current'
     a.initial_balance = 0
@@ -1492,9 +1492,9 @@ Account.create! do |a|
     a.name = 'Retained Earnings Appropriated for Paid in Capital from Sale of Tresury Stock'
     a.account_number = '329'
     a.description = ""
-    a.normal_side = ""
-    a.category = 'Credit'
-    a.subcategory = 'Revenue'
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
     a.initial_balance = 0
     a.debit = 0
     a.credit = 0
@@ -1513,9 +1513,9 @@ Account.create! do |a|
     a.name = 'Contributed Capital'
     a.account_number = '330'
     a.description = ""
-    a.normal_side = ""
-    a.category = 'Credit'
-    a.subcategory = 'Revenue'
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
@@ -1537,9 +1537,9 @@ Account.create! do |a|
     a.name = 'Fees and Sales'
     a.account_number = '401'
     a.description = "Fees include delivery fees, appraisal fees, medical fees, services fees, and repair fees"
-    a.normal_side = ""
-    a.category = 'Credit'
-    a.subcategory = 'Revenue'
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
     a.initial_balance = 0
     a.debit = 0
     a.credit = 0
@@ -1868,7 +1868,7 @@ Account.create! do |a|
     a.name = 'Advertising Expense'
     a.account_number = '512'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
@@ -1987,7 +1987,7 @@ Account.create! do |a|
     a.name = 'Depreciation Expense'
     a.account_number = '520'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0
@@ -2011,7 +2011,7 @@ Account.create! do |a|
     a.name = 'Rent Expense'
     a.account_number = '521'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
@@ -2091,7 +2091,7 @@ Account.create! do |a|
     a.name = 'Telephone Expense'
     a.account_number = '525'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
@@ -2291,7 +2291,7 @@ Account.create! do |a|
     a.name = 'Insurance Expense'
     a.account_number = '535'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
@@ -2513,7 +2513,7 @@ Account.create! do |a|
     a.name = 'Salaries Expense'
     a.account_number = '550'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
@@ -2633,7 +2633,7 @@ Account.create! do |a|
     a.name = 'Utilities Expense'
     a.account_number = '556'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 to test with solved problem
@@ -2656,7 +2656,7 @@ Account.create! do |a|
     a.name = 'Supplies Expense'
     a.account_number = '557'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 to test with solved problem

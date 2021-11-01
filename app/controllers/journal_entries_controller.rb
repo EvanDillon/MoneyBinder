@@ -66,21 +66,32 @@ class JournalEntriesController < ApplicationController
 
   def approve
     authorize current_user, :user_manager?
-    @entry = JournalEntry.find(params[:entry].to_i)
-    @entry.status = "Approved"
-    @entry.save
-
-    LedgerEntry.create_new_entry(@entry)
+    approve_entry(params[:entry].to_i)
     redirect_to journal_entries_path, success: "Journal entry approved"
   end
 
   def decline
     authorize current_user, :user_manager?
-    @entry = JournalEntry.find(params[:entry].to_i)
-    @entry.status = "Declined"
-    @entry.description += "\n #{current_user.username} has declined this entry because: '#{params[:reason]}'"
-    @entry.save
+    decline_entry(params[:entry].to_i, params[:reason])
     redirect_to journal_entries_path, danger: "Journal entry declined"
+  end
+
+  def approve_all
+    authorize current_user, :user_manager?
+    @pending_entries = JournalEntry.where(status: "Pending")
+    @pending_entries.each do |e|
+      approve_entry(e.id)
+    end
+    redirect_to journal_entries_path, success: "All Journal entries have been Approved"
+  end
+
+  def decline_all
+    authorize current_user, :user_manager?
+    @pending_entries = JournalEntry.where(status: "Pending")
+    @pending_entries.each do |e|
+      decline_entry(e.id, "He declined all entries")
+    end
+    redirect_to journal_entries_path, danger: "All Journal entries have been Declined"
   end
 
   def show
@@ -88,6 +99,21 @@ class JournalEntriesController < ApplicationController
   end
 
   private
+
+    def approve_entry(id)
+      @entry = JournalEntry.find(id)
+      @entry.status = "Approved"
+      @entry.save
+      LedgerEntry.create_new_entry(@entry)
+    end
+
+    def decline_entry(id, reason)
+      @entry = JournalEntry.find(id)
+      @entry.status = "Declined"
+      @entry.description += "\n #{current_user.username} has declined this entry because: '#{reason}'"
+      @entry.save
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_journal_entry
       @journal_entry = JournalEntry.find(params[:id])
@@ -108,7 +134,7 @@ class JournalEntriesController < ApplicationController
 
             # Check if debit has only 2 decimals and is not negative
             debit.each do |num|
-              if num.to_f > 0
+              if num > 0
                 ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
               else
                 return "Debit amount can not be 0"
@@ -117,7 +143,7 @@ class JournalEntriesController < ApplicationController
 
             # Check if credit has only 2 decimals and converts it to currency
             credit.each do |num|
-              if num.to_f > 0
+              if num > 0
                 ActionController::Base.helpers.number_to_currency(num, precision: 2, raise: true)
               else
                 return "Credit amount can not be 0"
@@ -139,12 +165,12 @@ class JournalEntriesController < ApplicationController
     def balanced?(debit, credit)
       debit_sum = 0
       debit.each do |num|
-        debit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2).to_f
+        debit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2)
       end  
 
       credit_sum = 0
       credit.each do |num|
-        credit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2).to_f
+        credit_sum += ActionController::Base.helpers.number_with_precision(num, precision: 2)
       end 
 
       if debit_sum == credit_sum

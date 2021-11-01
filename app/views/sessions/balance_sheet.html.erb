@@ -7,9 +7,9 @@
     <table class="table" id="table-layout">
       <tbody>
         <tr class="table-primary">
-          <td class="text-uppercase font-weight-bold" >Assets</td>
+          <td class="font-weight-bold" >Assets</td>
           <td></td>
-          <td class="text-uppercase font-weight-bold text-right">Totals</td>
+          <td class="font-weight-bold text-right">Totals</td>
 
         </tr>
         <tr>
@@ -42,13 +42,13 @@
         <% end %>
 
         <tr class="table-active">
-          <td class="text-uppercase font-weight-bold" >Total Assets</td>
+          <td class="font-weight-bold" >Total Assets</td>
           <td></td>
           <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@total_assets, precision: 2, delimiter: ',') %></td>
         </tr>
 
         <tr class="table-primary">
-          <td class="text-uppercase font-weight-bold" >Liabilities & Equity</td>
+          <td class="font-weight-bold" >Liabilities & Equity</td>
           <td></td>
           <td></td>
         </tr>
@@ -83,7 +83,7 @@
         <% end %>
 
         <tr class="table-active">
-          <td class="text-uppercase font-weight-bold" >Total Liabilities and Equity</td>
+          <td class="font-weight-bold" >Total Liabilities and Equity</td>
           <td></td>
           <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double; ">$<%= number_with_precision(@total_l_and_e.abs, precision: 2, delimiter: ',') %></td>
         </tr>

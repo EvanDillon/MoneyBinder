@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_30_181158) do
+ActiveRecord::Schema.define(version: 2021_11_01_184425) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer "user_id"
@@ -20,10 +20,10 @@ ActiveRecord::Schema.define(version: 2021_10_30_181158) do
     t.string "normal_side"
     t.string "category"
     t.string "subcategory"
-    t.decimal "initial_balance", default: "0.0"
-    t.decimal "debit", default: "0.0"
-    t.decimal "credit", default: "0.0"
-    t.decimal "balance", default: "0.0"
+    t.float "initial_balance", default: 0.0
+    t.float "debit", default: 0.0
+    t.float "credit", default: 0.0
+    t.float "balance", default: 0.0
     t.string "order"
     t.string "statement"
     t.text "comment"
@@ -94,9 +94,9 @@ ActiveRecord::Schema.define(version: 2021_10_30_181158) do
   create_table "ledger_entries", force: :cascade do |t|
     t.integer "account_id"
     t.integer "postReference"
-    t.decimal "debit"
-    t.decimal "credit"
-    t.decimal "balance"
+    t.float "debit", default: 0.0
+    t.float "credit", default: 0.0
+    t.float "balance", default: 0.0
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
