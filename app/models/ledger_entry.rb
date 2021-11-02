@@ -11,7 +11,8 @@ class LedgerEntry < ApplicationRecord
                           account_id: accountId, 
                           postReference: post_ref, 
                           debit: ledger_debit, 
-                          description: desc
+                          description: desc,
+                          created_at: entry.date_added
                         )
       new_balance = Account.update_account_balance(accountId)
       new_ledger_entry.balance = new_balance
@@ -28,7 +29,8 @@ class LedgerEntry < ApplicationRecord
                           account_id: accountId, 
                           postReference: post_ref, 
                           credit: ledger_credit, 
-                          description: desc
+                          description: desc,
+                          created_at: entry.date_added 
                         )
       new_balance = Account.update_account_balance(accountId)
       new_ledger_entry.balance = new_balance

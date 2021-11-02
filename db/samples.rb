@@ -2800,7 +2800,7 @@ JournalEntry.create! do |a|
     a.credit_total = ["2250"]
     a.entry_type = "Regular"
     a.status = "Pending"
-    a.description = "April 15 - Recorded Services provided on account for April 18-22, $1,100."
+    a.description = "April 15 - Recorded Services provided on account for April 18-22, $2,250."
     a.date_added = Date.new(2020, 4, 15)
 end
 
@@ -2844,8 +2844,8 @@ JournalEntry.create! do |a|
     a.user_id = 3
     a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
     a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["1850"]
-    a.credit_total = ["1850"]
+    a.debit_total = ["1100"]
+    a.credit_total = ["1100"]
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 22 - Recorded services provided on account for April 18-22, $1,100."
@@ -2855,9 +2855,9 @@ end
 JournalEntry.create! do |a|
     a.user_id = 3
     a.debit_account = [Account.find_by(name: "Cash").id]
-    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
-    a.debit_total = ["1600"]
-    a.credit_total = ["1600"]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["1850"]
+    a.credit_total = ["1850"]
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 22 - Recorded cash from cash clients for fees earned April 18-22, $1,850."
