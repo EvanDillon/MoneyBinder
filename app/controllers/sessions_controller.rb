@@ -155,7 +155,7 @@ class SessionsController < ApplicationController
     @total_advertising_expense = @advertising_expense.pluck(:balance).sum
     @total_expenses = @total_insurance_expense + @total_depreciation_expense + @total_rent_expense + @total_supplies_expense + @total_salaries_expense + @total_telephone_expense + @total_utilities_expense + @total_advertising_expense
 
-    @net_income = @total_revenues - @total_expenses
+    @net_income = @total_revenues.abs - @total_expenses
   end
 
   def balance_sheet
