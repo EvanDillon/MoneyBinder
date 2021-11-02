@@ -9,12 +9,7 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <%= f.label "Entry Type:" %><br>
-              <% if current_user.userType == 2 %>
-                <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"], ["Reversing", "Reversing"], ["Closing", "Closing"]], {selected: nil}, {class: "form-control"} %>
-              <% end %>
-              <% if current_user.userType == 3 %>
-                <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"], ["Reversing", "Reversing"]], {selected: nil}, {class: "form-control"} %>
-              <% end %>
+              <%= f.select :entry_type, [["Regular", "Regular"], ["Adjusting", "Adjusting"], ["Reversing", "Reversing"]], {selected: nil}, {class: "form-control"} %>
             </div>
             <div class="form-group col-md-6">
               <%= f.label "Entry Date:" %>

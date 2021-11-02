@@ -13,9 +13,9 @@ class Account < ApplicationRecord
   def self.update_account_balance(accountId)
     account = Account.find_by(id: accountId)
     ledgers_for_account = LedgerEntry.where(account_id: accountId)
-    debit_sum = ledgers_for_account.pluck(:debit).map(&:to_f).reduce(0, :+)
-    credit_sum = ledgers_for_account.pluck(:credit).map(&:to_f).reduce(0, :+)
-    init_balance = account.initial_balance.to_f
+    debit_sum = ledgers_for_account.pluck(:debit).reduce(0, :+)
+    credit_sum = ledgers_for_account.pluck(:credit).reduce(0, :+)
+    init_balance = account.initial_balance
 
     account.balance = (init_balance + (debit_sum - credit_sum))
     account.save

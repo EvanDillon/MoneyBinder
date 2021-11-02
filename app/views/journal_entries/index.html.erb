@@ -6,8 +6,19 @@
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col col-lg-2">
-      <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary btn-block" %>
+      <div class="btn-group">
+        <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %><br>
+        <% if current_user.userType == 2 %> 
+          <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <div class="dropdown-menu">
+            <%= button_to "Create Closing Entry", generate_closing_entry_path, method: :get, class: "dropdown-item" %>
+          </div>
+        <% end %>
+      </div>
     </div>
+
     <div class="col col-lg-2">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -145,6 +156,10 @@
       <% end %>
     </tbody>
   </table>
+  <% if JournalEntry.where(status: "Pending").count > 0 && current_user.userType == 2 %>
+    <%= button_to "Approve all", approve_all_path, method: :post, class: "btn btn-light btn-block", style: "color:white;" %> <!-- for bug testing only  -->
+    <%= button_to "Decline all", decline_all_path, method: :post, class: "btn btn-light btn-block", style: "color:white;" %>  <!-- for bug testing only  -->
+  <% end %>
 </div>
 
 <script>

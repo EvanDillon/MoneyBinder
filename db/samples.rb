@@ -149,17 +149,17 @@ puts "Created #{PasswordAuthorization.all.count} security question relationships
 # 100s - Cash Related Accounts
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Cash'
     a.account_number = '101'
     a.description = "The cash account."
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Short Term'
-    a.initial_balance = 1000
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
-    a.balance = 1000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -169,17 +169,17 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Petty Cash'
     a.account_number = '105'
     a.description = "Discretionary funds for when it is not sensible to make any disbursement by check."
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Short Term'
-    a.initial_balance = 7000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 7000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -191,17 +191,17 @@ puts "Created account: #{Account.last.name}"
 # 120s Receivables
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Notes Receivable'
     a.account_number = '121'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 99000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 99000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -211,17 +211,17 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Accounts Receivable'
     a.account_number = '122'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 123400
+    a.initial_balance = 0  # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
-    a.balance = 123400
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -232,17 +232,17 @@ puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Interest Receivable'
     a.account_number = '123'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 1500.89
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 1500.89
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -252,17 +252,17 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Common Stock Subscriptions Receivable'
     a.account_number = '125'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 560.50
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 560.50
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -272,17 +272,17 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Preferred Stock Subscriptions Receivable'
     a.account_number = '126'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 85783
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 85783
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -294,17 +294,17 @@ puts "Created account: #{Account.last.name}"
 # Inventories
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Merchandise Inventory'
     a.account_number = '131'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 100000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 100000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -314,17 +314,17 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Raw Materials'
     a.account_number = '132'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 300000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 300000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -334,17 +334,17 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Work in Process'
     a.account_number = '133'
     a.description = "Partially completed goods."
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 4000000
+    a.initial_balance = 0
     a.debit = 0
     a.credit = 0
-    a.balance = 400000
+    a.balance = 0
     a.order = 0
     a.statement = 0
     a.comment = 0
@@ -354,7 +354,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Finish Goods'
     a.account_number = '134'
     a.description = ""
@@ -376,14 +376,14 @@ puts "Created account: #{Account.last.name}"
 # 140s - Prepaid Items
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Supplies'
     a.account_number = '141'
     a.description = "Specialty items like Medical, Bicycle, Tailoring, etc."
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 0
+    a.initial_balance = 0 #  # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -396,7 +396,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Office Supplies'
     a.account_number = '142'
     a.description = ""
@@ -416,7 +416,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Food Supplies'
     a.account_number = '144'
     a.description = ""
@@ -436,14 +436,35 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Prepaid Insurance'
     a.account_number = '145'
     a.description = ""
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Current'
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# In solved problem, but not Chart of Accounts
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Prepaid Rent'
+    a.account_number = '146'
+    a.description = ""
+    a.normal_side = "Debit"
+    a.category = 'Asset'
+    a.subcategory = 'Current'
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -458,7 +479,7 @@ puts "Created account: #{Account.last.name}"
 # 150s - Long-Term Investments
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Bond Sinking Fund'
     a.account_number = '153'
     a.description = ""
@@ -480,7 +501,7 @@ puts "Created account: #{Account.last.name}"
 # 160s Land
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Land'
     a.account_number = '161'
     a.description = ""
@@ -500,7 +521,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Natural Resources'
     a.account_number = '162'
     a.description = ""
@@ -522,7 +543,7 @@ puts "Created account: #{Account.last.name}"
 # 170s - Buildings
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Buildings'
     a.account_number = '171'
     a.description = ""
@@ -544,14 +565,14 @@ puts "Created account: #{Account.last.name}"
 # 180s - Equipment
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Office Equipment'
     a.account_number = '181'
     a.description = "Also Store Equipment"
     a.normal_side = "Debit"
     a.category = 'Asset'
     a.subcategory = 'Long Term'
-    a.initial_balance = 0
+    a.initial_balance = 0 #  # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -564,7 +585,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Office Furniture'
     a.account_number = '182'
     a.description = ""
@@ -584,7 +605,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Athletic Equipment'
     a.account_number = '183'
     a.description = "Also Tailoring, Lawn, Cleaning"
@@ -604,7 +625,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Tennis Facilities'
     a.account_number = '184'
     a.description = "Also Basketball Facilities"
@@ -624,7 +645,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Delivery Equipment'
     a.account_number = '185'
     a.description = ""
@@ -644,7 +665,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Exercise Equipment'
     a.account_number = '186'
     a.description = ""
@@ -663,9 +684,8 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Computer Equipment'
     a.account_number = '187'
     a.description = ""
@@ -683,10 +703,30 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Accumulated Depreciation'
+    a.account_number = '188'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Asset'
+    a.subcategory = 'Current'
+    a.initial_balance = 0
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = true
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
 # 190s - Intangibles
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Patents'
     a.account_number = '191'
     a.description = ""
@@ -707,7 +747,7 @@ puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Copyrights'
     a.account_number = '192'
     a.description = ""
@@ -727,7 +767,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Organization Costs'
     a.account_number = '193'
     a.description = ""
@@ -749,7 +789,7 @@ puts "Created account: #{Account.last.name}"
 # Liabilities (200-299)
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Notes Payable'
     a.account_number = '201'
     a.description = ""
@@ -769,7 +809,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Accounts Payable'
     a.account_number = '202'
     a.description = ""
@@ -789,7 +829,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'United Way Contribution Payable'
     a.account_number = '203'
     a.description = ""
@@ -809,7 +849,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Income Tax Payable'
     a.account_number = '204'
     a.description = ""
@@ -829,7 +869,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Common Dividends Payable'
     a.account_number = '205'
     a.description = ""
@@ -849,7 +889,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Preferred Dividends Payable'
     a.account_number = '206'
     a.description = ""
@@ -869,7 +909,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Interest Payable'
     a.account_number = '207'
     a.description = "Also Bond Interest Payable"
@@ -891,7 +931,7 @@ puts "Created account: #{Account.last.name}"
 # 2010s - Employee Payroll Related Payables
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Employee Income Tax Payable'
     a.account_number = '211'
     a.description = ""
@@ -911,7 +951,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Social Security Tax Payable'
     a.account_number = '212'
     a.description = ""
@@ -931,7 +971,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Medicare Tax Payable'
     a.account_number = '213'
     a.description = ""
@@ -951,7 +991,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'City Earnings Tax Payable'
     a.account_number = '215'
     a.description = ""
@@ -970,7 +1010,7 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Health Insurance Premiums Payable'
     a.account_number = '216'
     a.description = ""
@@ -990,7 +1030,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Credit Union Payable'
     a.account_number = '217'
     a.description = ""
@@ -1010,7 +1050,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Savings Bond Deductions Payable'
     a.account_number = '218'
     a.description = ""
@@ -1030,7 +1070,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Wages Payable'
     a.account_number = '219'
     a.description = ""
@@ -1052,7 +1092,7 @@ puts "Created account: #{Account.last.name}"
 # 220s - Employer Payroll Related Payables
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'FUTA Tax Payable'
     a.account_number = '221'
     a.description = ""
@@ -1072,7 +1112,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'SUTA Tax Payable'
     a.account_number = '222'
     a.description = "Credit"
@@ -1092,7 +1132,7 @@ puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = "Worker\'s Compensation Insurance Payable"
     a.account_number = '223'
     a.description = ""
@@ -1114,7 +1154,7 @@ puts "Created account: #{Account.last.name}"
 # 230s - Sales Tax
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Sales Tax Payable'
     a.account_number = '231'
     a.description = ""
@@ -1136,7 +1176,7 @@ puts "Created account: #{Account.last.name}"
 # 240s - Deferred Revenues and Current Portion of Long-Term Debt
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Unearned Subscription Revenue'
     a.account_number = '241'
     a.description = "Also Unearned Ticket Revenue, Unearned Repair Fees"
@@ -1156,7 +1196,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Current Portion of Mortgage Payable'
     a.account_number = '242'
     a.description = ""
@@ -1175,10 +1215,33 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# No generic Unearned Revenue in Chart of Accounts, but one is used in the solved problem.
+# The solved problem journalizes Unearned Revenue, and not Unearned Subscription Revenue.
+# Creating this account just in case it's needed.
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Unearned Revenue'
+    a.account_number = '243'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Liability'
+    a.subcategory = 'Current'
+    a.initial_balance = 0 # This must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
 # 250s - Long-Term Liabilities
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Mortgage Payable'
     a.account_number = '251'
     a.description = ""
@@ -1198,7 +1261,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Premium on Bonds Payable'
     a.account_number = '253'
     a.description = ""
@@ -1220,7 +1283,7 @@ puts "Created account: #{Account.last.name}"
 # Owner's Equity (300-399)
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Jessica Jane, Capital'
     a.account_number = '311'
     a.description = ""
@@ -1240,7 +1303,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Jessica Jane, Drawing'
     a.account_number = '312'
     a.description = ""
@@ -1260,7 +1323,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Income Summary'
     a.account_number = '313'
     a.description = ""
@@ -1280,7 +1343,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Common Stock'
     a.account_number = '321'
     a.description = ""
@@ -1300,7 +1363,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Paid in Capital in Excess of Par/Stated Value - Common Stock'
     a.account_number = '322'
     a.description = ""
@@ -1320,7 +1383,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Preferred Stock'
     a.account_number = '323'
     a.description = ""
@@ -1341,7 +1404,7 @@ puts "Created account: #{Account.last.name}"
 
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Paid in Capital in Excess of Par/Stated Value - Preferred Stock'
     a.account_number = '324'
     a.description = ""
@@ -1361,7 +1424,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Retained Earnings'
     a.account_number = '325'
     a.description = ""
@@ -1385,7 +1448,7 @@ puts "Created account: #{Account.last.name}"
 # so the account appears in the below code as Retaiend Earnings Appropriated for Common Stock Subscribed.
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Retained Earnings Appropriated for Common Stock Subscribed'
     a.account_number = '327'
     a.description = ""
@@ -1405,7 +1468,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Retained Earnings Appropriated for Preferred Stock Subscribed'
     a.account_number = '328'
     a.description = ""
@@ -1425,14 +1488,35 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Retained Earnings Appropriated for Paid in Capital from Sale of Tresury Stock'
     a.account_number = '329'
     a.description = ""
-    a.normal_side = ""
-    a.category = 'Credit'
-    a.subcategory = 'Revenue'
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
     a.initial_balance = 0
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# This account was made for the solved problem. It did not exist in the Chart of Accounts file.
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Contributed Capital'
+    a.account_number = '330'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -1449,13 +1533,13 @@ puts "Created account: #{Account.last.name}"
 # 400s - Operating Revenues
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Fees and Sales'
     a.account_number = '401'
     a.description = "Fees include delivery fees, appraisal fees, medical fees, services fees, and repair fees"
-    a.normal_side = ""
-    a.category = 'Credit'
-    a.subcategory = 'Revenue'
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
     a.initial_balance = 0
     a.debit = 0
     a.credit = 0
@@ -1469,7 +1553,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Boarding and Grooming Revenue'
     a.account_number = '402'
     a.description = ""
@@ -1489,7 +1573,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Subscriptions Revenue - Main line of business'
     a.account_number = '403'
     a.description = ""
@@ -1508,12 +1592,33 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# Not in Chart of Accounts, but is in solved problem
+
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Service Revenue'
+    a.account_number = '404'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Revenue'
+    a.subcategory = ''
+    a.initial_balance = 0 # Needs to start at 0 for testing with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
 
 
 # 410s - Other Revenues
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Interest Revenue'
     a.account_number = '411'
     a.description = ""
@@ -1533,7 +1638,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Rent Revenue'
     a.account_number = '412'
     a.description = ""
@@ -1553,7 +1658,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Subscriptions Revenue - Not main line of business'
     a.account_number = '413'
     a.description = "Credit"
@@ -1573,7 +1678,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Sinking Fund Earnings'
     a.account_number = '414'
     a.description = ""
@@ -1593,7 +1698,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Uncollectible Accounts Recovered'
     a.account_number = '415'
     a.description = ""
@@ -1613,7 +1718,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Gain on Sale/Exchange of Equipment'
     a.account_number = '416'
     a.description = ""
@@ -1633,7 +1738,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Gain on Bonds Redeemed'
     a.account_number = '417'
     a.description = ""
@@ -1657,7 +1762,7 @@ puts "Created account: #{Account.last.name}"
 # 500s - Cost of Goods Sold
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Purchases'
     a.account_number = '501'
     a.description = ""
@@ -1677,7 +1782,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Freight-In'
     a.account_number = '502'
     a.description = ""
@@ -1697,7 +1802,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Overhead'
     a.account_number = '504'
     a.description = ""
@@ -1717,7 +1822,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Cost of Goods Sold'
     a.account_number = '505'
     a.description = ""
@@ -1739,7 +1844,7 @@ puts "Created account: #{Account.last.name}"
 # 510s - Selling Expenses
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Wages Expenses'
     a.account_number = '511'
     a.description = "Also Wages and Salaries Expense"
@@ -1759,14 +1864,14 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Advertising Expense'
     a.account_number = '512'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -1779,7 +1884,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Bank Credit Card Expense'
     a.account_number = '513'
     a.description = ""
@@ -1799,7 +1904,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Store Supplies Expense'
     a.account_number = '514'
     a.description = ""
@@ -1818,7 +1923,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Travel and Entertainment Expense'
     a.account_number = '515'
     a.description = ""
@@ -1838,7 +1943,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Cash Short and Over'
     a.account_number = '516'
     a.description = ""
@@ -1858,7 +1963,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Depreciation Expense - Store Equipment and Fixtures'
     a.account_number = '519'
     a.description = ""
@@ -1877,14 +1982,12 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-# 520s-40s 0 General and Administrative Expenses
-
 Account.create! do |a|
-    a.user_id = 1
-    a.name = 'Rent Expense'
-    a.account_number = '521'
+    a.user_id = 3
+    a.name = 'Depreciation Expense'
+    a.account_number = '520'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
     a.initial_balance = 0
@@ -1899,8 +2002,32 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# 520s-40s - General and Administrative Expenses
+
+# Not in Chart of Accounts, but is in solved problem
+
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
+    a.name = 'Rent Expense'
+    a.account_number = '521'
+    a.description = ""
+    a.normal_side = "Debit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+Account.create! do |a|
+    a.user_id = 3
     a.name = 'Office Salaries Expense'
     a.account_number = '522'
     a.description = ""
@@ -1920,7 +2047,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Office Supplies Expense'
     a.account_number = '523'
     a.description = "Also Medical"
@@ -1940,7 +2067,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Other Supplies: Food Supplies Expense'
     a.account_number = '524'
     a.description = ""
@@ -1960,14 +2087,14 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Telephone Expense'
     a.account_number = '525'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -1980,7 +2107,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Transportation/Automobile Expense'
     a.account_number = '526'
     a.description = "Also Laboratory, Travel"
@@ -2000,7 +2127,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Collection Expense'
     a.account_number = '527'
     a.description = ""
@@ -2020,7 +2147,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Inventory Short and Over'
     a.account_number = '528'
     a.description = ""
@@ -2040,7 +2167,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Loss on Write Down of Inventory'
     a.account_number = '529'
     a.description = ""
@@ -2060,7 +2187,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Payroll Taxes Expense'
     a.account_number = '530'
     a.description = ""
@@ -2080,7 +2207,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = "Workers\' Compensation Insurance Expense"
     a.account_number = '531'
     a.description = ""
@@ -2100,7 +2227,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Bad Debt Expense'
     a.account_number = '532'
     a.description = ""
@@ -2120,7 +2247,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Electricity Expense, Utilities Expense'
     a.account_number = '533'
     a.description = ""
@@ -2140,7 +2267,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Charitable Contributions Expense'
     a.account_number = '534'
     a.description = ""
@@ -2160,14 +2287,14 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Insurance Expense'
     a.account_number = '535'
     a.description = ""
-    a.normal_side = "Credit"
+    a.normal_side = "Debit"
     a.category = 'Expense'
     a.subcategory = ''
-    a.initial_balance = 0
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
     a.balance = 0
@@ -2180,7 +2307,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Postage Expense'
     a.account_number = '536'
     a.description = ""
@@ -2200,7 +2327,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Repair Expense'
     a.account_number = '537'
     a.description = ""
@@ -2220,7 +2347,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Oil and Gas Expense'
     a.account_number = '538'
     a.description = "Also Automobile Expense"
@@ -2240,7 +2367,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Depreciation Expense - Building'
     a.account_number = '540'
     a.description = ""
@@ -2260,7 +2387,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Depreciation Expense - Equipment'
     a.account_number = '541'
     a.description = "Also Tennis Facilities, Delivery Equipment, Office Equipment, Furniture"
@@ -2280,7 +2407,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Depreciation Expense - Other Equipment'
     a.account_number = '542'
     a.description = ""
@@ -2300,7 +2427,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Depletion Expense'
     a.account_number = '543'
     a.description = ""
@@ -2320,7 +2447,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Patent Amortization'
     a.account_number = '544'
     a.description = ""
@@ -2340,7 +2467,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Amortization of Organization Costs'
     a.account_number = '545'
     a.description = ""
@@ -2360,7 +2487,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Miscellaneous Expense'
     a.account_number = '549'
     a.description = ""
@@ -2382,7 +2509,27 @@ puts "Created account: #{Account.last.name}"
 # 550s - Other Expenses
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
+    a.name = 'Salaries Expense'
+    a.account_number = '550'
+    a.description = ""
+    a.normal_side = "Debit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 for testing with the solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+Account.create! do |a|
+    a.user_id = 3
     a.name = 'Interest Expense'
     a.account_number = '551'
     a.description = "Also Bond Interest Expense"
@@ -2402,7 +2549,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Loss on Discarded Equipment'
     a.account_number = '552'
     a.description = ""
@@ -2421,7 +2568,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Loss on Sale/Exchange of Equipment'
     a.account_number = '553'
     a.description = ""
@@ -2441,7 +2588,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Loss on Bonds Redeemed'
     a.account_number = '554'
     a.description = ""
@@ -2461,7 +2608,7 @@ end
 puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
-    a.user_id = 1
+    a.user_id = 3
     a.name = 'Income Tax Expense'
     a.account_number = '555'
     a.description = ""
@@ -2480,9 +2627,403 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# Not in Chart of Accounts document, but is in solved problem document
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Utilities Expense'
+    a.account_number = '556'
+    a.description = ""
+    a.normal_side = "Debit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 to test with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# Not in Chart of Accounts document, but is in solved problem document
+
+# This account appears on the income statement
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Supplies Expense'
+    a.account_number = '557'
+    a.description = ""
+    a.normal_side = "Debit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 to test with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+puts "Created account: #{Account.last.name}"
+
+# Not in Chart of Accounts document, but is in solved problem document
+# Appears on Income Statement
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Salaries Payable'
+    a.account_number = '558'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Expense'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 to test with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+
 puts "Created a total of #{Account.all.count} new accounts------------------------" 
 
+# Sample journal entries. These entries are from the solved problem document.
 
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id, Account.find_by(name: "Accounts Receivable").id, Account.find_by(name: "Supplies").id, Account.find_by(name: "Office Equipment").id]
+    a.credit_account = [Account.find_by(name: "Contributed Capital").id]
+    a.debit_total = ["10000", "1500", "1250", "7500"]
+    a.credit_total = ["20250"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 4 - Assets received from John Addams."
+    a.date_added = Date.new(2020, 4, 4)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Prepaid Rent").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["4500"]
+    a.credit_total = ["4500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 4 - Paid three month\'s rent on a lease rental contract."
+    a.date_added = Date.new(2020, 4, 4)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Prepaid Insurance").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["1800"]
+    a.credit_total = ["1800"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 4 - Paid premium on property and casualty insurance policies for the year."
+    a.date_added = Date.new(2020, 4, 4)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Unearned Revenue").id]
+    a.debit_total = ["3000"]
+    a.credit_total = ["3000"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 6 - Received cash from clients as an advance payment for services to be provided."
+    a.date_added = Date.new(2020, 4, 6)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Office Equipment").id]
+    a.credit_account = [Account.find_by(name: "Accounts Payable").id]
+    a.debit_total = ["1800"]
+    a.credit_total = ["1800"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 7 - Purchased additional office furniture on account from Morrilton Company."
+    a.date_added = Date.new(2020, 4, 7)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.debit_total = ["800"]
+    a.credit_total = ["800"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 8 - Received cash from clients on account."
+    a.date_added = Date.new(2020, 4, 8)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Advertising Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["120"]
+    a.credit_total = ["120"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 11 - Prepaid cash for newspaper advertisement."
+    a.date_added = Date.new(2020, 4,11)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Payable").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["800"]
+    a.credit_total = ["800"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 12 - Paid Morrilton Company $800 for debt incurred on April 7."
+    a.date_added = Date.new(2020, 4, 12)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["2250"]
+    a.credit_total = ["2250"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 15 - Recorded Services provided on account for April 18-22, $2,250."
+    a.date_added = Date.new(2020, 4, 15)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["400"]
+    a.credit_total = ["400"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 15 - Paid part-time receptionist for two weeks salary, $400."
+    a.date_added = Date.new(2020, 4, 15)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["3175"]
+    a.credit_total = ["3175"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 15 - Recorded cash from cleints for fees earned April 14-15, $3,175"
+    a.date_added = Date.new(2020, 4, 15)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Supplies").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["750"]
+    a.credit_total = ["750"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 18 - Paid cash for newspaper advertisement, $120."
+    a.date_added = Date.new(2020, 4, 16)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["1100"]
+    a.credit_total = ["1100"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 22 - Recorded services provided on account for April 18-22, $1,100."
+    a.date_added = Date.new(2020, 4, 22)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["1850"]
+    a.credit_total = ["1850"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 22 - Recorded cash from cash clients for fees earned April 18-22, $1,850."
+    a.date_added = Date.new(2020, 4, 22)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.debit_total = ["1600"]
+    a.credit_total = ["1600"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 25 - Received cash from clients on account, $1600."
+    a.date_added = Date.new(2020, 4, 25)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["400"]
+    a.credit_total = ["400"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 27 - Paid part-time receptionist for two week's salary, $400."
+    a.date_added = Date.new(2020, 4, 27)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Telephone Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["130"]
+    a.credit_total = ["130"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 28 - Paid telephone bill for April, $130."
+    a.date_added = Date.new(2020, 4, 28)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Utilities Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["200"]
+    a.credit_total = ["200"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - Paid electric bill for April, $200."
+    a.date_added = Date.new(2020, 4, 29)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Cash").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["2050"]
+    a.credit_total = ["2050"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - Recorded cash from cash clients for fees earned April 25-29, $2,050."
+    a.date_added = Date.new(2020, 4, 29)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["1000"]
+    a.credit_total = ["1000"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - Recorded services provided on account for April 25-29, $1,000."
+    a.date_added = Date.new(2020, 4, 29)
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Cash").id]
+    a.debit_total = ["4500"]
+    a.credit_total = ["4500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = "April 29 - John received $4,500 from the company as his salary."
+    a.date_added = Date.new(2020, 4, 29)
+end
+
+# The remaining journal entries appear in the Solved Problem document, but do not have comments stating when the
+# transaction took place, or any other additional details the above journal entries do contain.
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Insurance Expense").id]
+    a.credit_account = [Account.find_by(name: "Prepaid Insurance").id]
+    a.debit_total = ["150"]
+    a.credit_total = ["150"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Supplies Expense").id]
+    a.credit_account = [Account.find_by(name: "Supplies").id]
+    a.debit_total = ["980"]
+    a.credit_total = ["980"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Depreciation Expense").id]
+    a.credit_account = [Account.find_by(name: "Accumulated Depreciation").id]
+    a.debit_total = ["500"]
+    a.credit_total = ["500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+    a.credit_account = [Account.find_by(name: "Salaries Payable").id]
+    a.debit_total = ["20"]
+    a.credit_total = ["20"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Rent Expense").id]
+    a.credit_account = [Account.find_by(name: "Prepaid Rent").id]
+    a.debit_total = ["1500"]
+    a.credit_total = ["1500"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+JournalEntry.create! do |a|
+    a.user_id = 3
+    a.debit_account = [Account.find_by(name: "Unearned Revenue").id]
+    a.credit_account = [Account.find_by(name: "Service Revenue").id]
+    a.debit_total = ["2000"]
+    a.credit_total = ["2000"]
+    a.entry_type = "Regular"
+    a.status = "Pending"
+    a.description = ""
+    a.date_added = Time.now
+end
+
+puts "Created journal entries"
 
 all_error_messages = [
                         ["account_updated", "Account has been Updated"],

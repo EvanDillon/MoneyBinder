@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     get 'user_management/', action: 'user_management'
     get 'trial_balance/', action: 'trial_balance'
     get 'retained_earnings/', action: 'retained_earnings'
+    get 'income_statement/', action: 'income_statement'
+    get 'balance_sheet/', action: 'balance_sheet'
     get 'sign_up/', action: 'sign_up'
     post 'process_new_sign_up/', action: 'process_new_sign_up'
     get 'profile/', action: 'profile'
@@ -39,6 +41,9 @@ Rails.application.routes.draw do
   post 'administrator/email', to: 'users#administrator_email'
   post '/approve', to: 'journal_entries#approve'
   post '/decline', to: 'journal_entries#decline'
+  post '/approve_all', to: 'journal_entries#approve_all'
+  post '/decline_all', to: 'journal_entries#decline_all'
+  get '/generate_closing_entry', to: 'journal_entries#generate_closing_entry'
   get 'ledger/:account_id', to: 'ledger_entries#show'
   get '/journal_entry/:id', to: 'journal_entries#show'
 
