@@ -94,6 +94,28 @@ class JournalEntriesController < ApplicationController
     redirect_to journal_entries_path, danger: "All Journal entries have been Declined"
   end
 
+  def generate_closing_entry
+    @service_revenue = Account.find_by(name: "Service Revenue")
+    @expense_accounts = Account.where('balance > ?', 0).where(category: "Expense")
+
+    @closing_journal_entry = JournalEntry.new(  user_id: current_user.id,
+                                        debit_account:  [@service_revenue.id],
+                                        credit_account: @expense_accounts.pluck(:id),
+                                        debit_total:    [-@service_revenue.balance],
+                                        credit_total:   @expense_accounts.pluck(:balance),
+                                        entry_type: "Closing",
+                                        status: "Pending",
+                                        description: "Closing entry created by #{current_user.username}"
+                                      )
+
+    if @closing_journal_entry.save
+      redirect_to journal_entries_path, success: "Closing Journal Entry Pending"
+    else
+      flash.now[:danger] = "Unable to create closing entry"
+      render new_journal_entry_path
+    end
+  end
+
   def show
     @journal_entry = JournalEntry.find_by(id: params[:id])
   end
