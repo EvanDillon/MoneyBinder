@@ -177,6 +177,10 @@ class SessionsController < ApplicationController
     @total_l_and_e = @total_liabilities + @total_equity
   end
 
+  def retained_earnings
+      @accounts = Account.all
+  end
+
   def destroy
     session.delete(:user_id)
     @current_user = nil

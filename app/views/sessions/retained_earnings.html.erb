@@ -1,0 +1,31 @@
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %>
+<div class="container">
+<% if current_user.userType == 2 %>
+<h1 class="text-center">Retained Earnings</h1>
+<h2 class="text-center">For the period ending <%= Time.new.strftime("%B %d, %Y") %></h2>
+<br>
+<table class="table">
+<tbody>
+    <tr>
+        <td>Beginning Balance</td>
+        <td align="right">$0.00</td>
+    </tr>
+    <tr>
+        <td>Net Income</td>
+        <td align="right">$0.00</td>
+    </tr>
+    <tr>
+        <td>Loss Drawings</td>
+        <td align="right">$0.00</td>
+    </tr>
+    <tr>
+        <td>Ending Balance</td>
+        <td align="right" style="text-decoration: underline; text-decoration-style: double"><p style="text-decoration: overline;">$0.00</p></td>
+    </tr>
+</tbody>
+</table>
+</div>
+<% else %>
+<h1 class= "text-center">Forbidden. You do not have access to this page.</h1>
+<% end %>
