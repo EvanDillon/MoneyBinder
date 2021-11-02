@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   post '/decline', to: 'journal_entries#decline'
   post '/approve_all', to: 'journal_entries#approve_all'
   post '/decline_all', to: 'journal_entries#decline_all'
-
+  get '/generate_closing_entry', to: 'journal_entries#generate_closing_entry'
   get 'ledger/:account_id', to: 'ledger_entries#show'
   get '/journal_entry/:id', to: 'journal_entries#show'
 
