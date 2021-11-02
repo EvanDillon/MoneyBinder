@@ -129,6 +129,35 @@ class SessionsController < ApplicationController
     @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum
   end
 
+  def income_statement
+    authorize current_user, :user_not_admin?
+    @non_zero_accounts = Account.where('balance != ?', 0 )
+
+    @service_revenue = @non_zero_accounts.where(name: "Service Revenue")
+    @total_service_revenue = @service_revenue.pluck(:balance).sum
+    @total_revenues = @total_service_revenue
+
+    @insurance_expense = @non_zero_accounts.where(name: "Insurance Expense")
+    @total_insurance_expense = @insurance_expense.pluck(:balance).sum
+    @depreciation_expense = @non_zero_accounts.where(name: "Depreciation Expense")
+    @total_depreciation_expense = @depreciation_expense.pluck(:balance).sum
+    @rent_expense = @non_zero_accounts.where(name: "Rent Expense")
+    @total_rent_expense = @rent_expense.pluck(:balance).sum
+    @supplies_expense = @non_zero_accounts.where(name: "Supplies Expense")
+    @total_supplies_expense = @supplies_expense.pluck(:balance).sum
+    @salaries_expense = @non_zero_accounts.where(name: "Salaries Expense")
+    @total_salaries_expense = @salaries_expense.pluck(:balance).sum
+    @telephone_expense = @non_zero_accounts.where(name: "Telephone Expense")
+    @total_telephone_expense = @telephone_expense.pluck(:balance).sum
+    @utilities_expense = @non_zero_accounts.where(name: "Utilities Expense")
+    @total_utilities_expense = @utilities_expense.pluck(:balance).sum
+    @advertising_expense = @non_zero_accounts.where(name: "Advertising Expense")
+    @total_advertising_expense = @advertising_expense.pluck(:balance).sum
+    @total_expenses = @total_insurance_expense + @total_depreciation_expense + @total_rent_expense + @total_supplies_expense + @total_salaries_expense + @total_telephone_expense + @total_utilities_expense + @total_advertising_expense
+
+    @net_income = @total_revenues - @total_expenses
+  end
+
   def balance_sheet
     authorize current_user, :user_not_admin?
     @non_zero_accounts = Account.where('balance != ?', 0 )

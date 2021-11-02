@@ -25,17 +25,16 @@
           <li class="nav-item <%= active_class(event_logs_path) %>">
             <%= link_to 'Event Logs', event_logs_path, class: "nav-link"%>
           </li>
-          <% if current_user.userType != 1 %>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
-              <div class="dropdown-menu">
-                <%= link_to 'Trial Balance',      trial_balance_path, class: "dropdown-item"%>
-                <%= link_to 'Income Statement',   "#",                class: "dropdown-item"%>
-                <%= link_to 'Retained Earnings',  "#",                class: "dropdown-item"%>
-                <%= link_to 'Balance Sheet',      balance_sheet_path, class: "dropdown-item"%>
-              </div>
-            </li>
-          <% end %>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
+            <div class="dropdown-menu">
+              <%= link_to 'Trial Balance',      trial_balance_path,     class: "dropdown-item"%>
+              <%= link_to 'Income Statement',   income_statement_path,  class: "dropdown-item"%>
+              <%= link_to 'Retained Earnings',  "#",                    class: "dropdown-item"%>
+              <%= link_to 'Balance Sheet',      balance_sheet_path,     class: "dropdown-item"%>
+            </div>
+          </li>
           <% if current_user.userType == 1 %>
             <li class="nav-item <%= active_class(user_management_path) %>">
               <%= link_to 'User Management', user_management_path, class: "nav-link"%>
