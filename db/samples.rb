@@ -142,6 +142,77 @@ PasswordAuthorization.create(user_id: User.where(username: 'ExpiredUser').pluck(
 puts "Created #{PasswordAuthorization.all.count} security question relationships"
 
 
+all_error_messages = [
+                        ["account_updated", "Account has been Updated"],
+                        ["account_deleted", "Account has been Deleted"],
+                        ["account_created", "Account has been Created"],
+
+                        ["account_not_found", "No account found"],
+
+                        ["user_updated", "User has been Updated"],
+                        ["user_deleted", "User has been Deleted"],
+                        ["user_created", "User has been Created"],
+                        ["user_reset_password", "A link has been sent to your email to reset your password"],
+                        ["user_create_request", "A request for your account has been sent to an Administrator to approve"],
+
+                        ["user_expired_password", "Your password is expired. Please reset your password now."],
+                        ["user_almost_expired_password_part1", "Your password is going to expire in "],
+                        ["user_almost_expired_password_part2", " days. You can change your password in Profile Settings"],
+
+                        ["user_not_found", "Username not found"],
+
+                        ["user_used_password", "Please choose a password you have not used before"],
+                        ["user_incorrect_password_part1", "Incorrect Password (Attempts left: "],
+                        ["user_incorrect_password_part2", ")"],
+                        ["user_suspended", "This account has been suspended for 1 min"],
+                        ["user_suspended_until", "This account is suspended until: "],
+                        ["user_inactive", "This account is not active"],
+                        ["email_sent", "Email was successfully sent."],
+                        ["can_not_deactivate_account", "You can not deactivate an account with a balance greater than 0"]
+                    ]
+
+# Creates all error messages
+all_error_messages.each do |error|
+    ErrorMessage.create! do |b|
+        b.error_name = error.first
+        b.body = error.last
+    end
+end
+puts "Created #{ErrorMessage.count} error messages"
+
+
+EventLog.create! do |a|
+    a.account_name = "Cash"
+    a.user_name = "Admin"
+    a.event_type = 'Modified'
+    a.account_before = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":1,\"debit\":0,\"credit\":0,\"balance\":1,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.account_after = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Credit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":123000,\"debit\":0,\"credit\":0,\"balance\":123000,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.created_at = Time.now
+    a.updated_at = Time.now
+end
+
+
+EventLog.create! do |a|
+    a.account_name = "Accounts Receivable"
+    a.user_name = "Manager"
+    a.event_type = 'Deactivated'
+    a.account_before = "{\"id\":2,\"user_id\":1,\"name\":\"Accounts Receivable\",\"account_number\":122,\"description\":\"This account is for Accounts Receivable\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Accounts Receivable\",\"initial_balance\":7500,\"debit\":0,\"credit\":0,\"balance\":7500,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T16:49:44.983Z\",\"updated_at\":\"2021-10-02T16:49:44.983Z\"}"
+    a.account_after = "{\"id\":2,\"user_id\":1,\"name\":\"Accounts Receivable\",\"account_number\":122,\"description\":\"This account is for Accounts Receivable\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Accounts Receivable\",\"initial_balance\":7500,\"debit\":0,\"credit\":0,\"balance\":7500,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":false,\"created_at\":\"2021-10-02T16:49:44.983Z\",\"updated_at\":\"2021-10-02T16:49:44.983Z\"}"
+    a.created_at = Time.now
+    a.updated_at = Time.now
+end
+
+EventLog.create! do |a|
+    a.account_name = "Accounts Payable"
+    a.user_name = "EvanD"
+    a.event_type = 'Added'
+    a.account_before = ""
+    a.account_after = "{\"id\":3,\"user_id\":2,\"name\":\"Accounts Payable\",\"account_number\":202,\"description\":\"This account is for Accounts Payable\",\"normal_side\":\"Credit\",\"category\":\"Liability\",\"subcategory\":\"Accounts Payable\",\"initial_balance\":0,\"debit\":0,\"credit\":0,\"balance\":0,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
+    a.created_at = Time.now
+    a.updated_at = Time.now
+end
+puts "Created #{EventLog.count} EventLogs"
+
 # The following accounts are from the Chart of Accounts document.
 # Accounts that used the same number multiple times in the document are collapsed into one account with a description
 # acknowledging everything that it contains.
@@ -155,7 +226,7 @@ Account.create! do |a|
     a.description = "The cash account."
     a.normal_side = "Debit"
     a.category = 'Asset'
-    a.subcategory = 'Short Term'
+    a.subcategory = 'Current'
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
@@ -168,47 +239,47 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Petty Cash'
-    a.account_number = '105'
-    a.description = "Discretionary funds for when it is not sensible to make any disbursement by check."
-    a.normal_side = "Debit"
-    a.category = 'Asset'
-    a.subcategory = 'Short Term'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Petty Cash'
+#     a.account_number = '105'
+#     a.description = "Discretionary funds for when it is not sensible to make any disbursement by check."
+#     a.normal_side = "Debit"
+#     a.category = 'Asset'
+#     a.subcategory = 'Short Term'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-# 120s Receivables
+# # 120s Receivables
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Notes Receivable'
-    a.account_number = '121'
-    a.description = ""
-    a.normal_side = "Debit"
-    a.category = 'Asset'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Notes Receivable'
+#     a.account_number = '121'
+#     a.description = ""
+#     a.normal_side = "Debit"
+#     a.category = 'Asset'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 3
@@ -828,6 +899,27 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
+# Not in Chart of Accounts document, but is in solved problem document
+# Appears on Income Statement
+Account.create! do |a|
+    a.user_id = 3
+    a.name = 'Salaries Payable'
+    a.account_number = '208'
+    a.description = ""
+    a.normal_side = "Credit"
+    a.category = 'Liability'
+    a.subcategory = ''
+    a.initial_balance = 0 # Must start at 0 to test with solved problem
+    a.debit = 0
+    a.credit = 0
+    a.balance = 0
+    a.order = 0
+    a.statement = 0
+    a.comment = 0
+    a.contra = false
+    a.active = true
+end
+
 Account.create! do |a|
     a.user_id = 3
     a.name = 'United Way Contribution Payable'
@@ -950,206 +1042,206 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Social Security Tax Payable'
-    a.account_number = '212'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Social Security Tax Payable'
+#     a.account_number = '212'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Medicare Tax Payable'
-    a.account_number = '213'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Medicare Tax Payable'
+#     a.account_number = '213'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'City Earnings Tax Payable'
-    a.account_number = '215'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Health Insurance Premiums Payable'
-    a.account_number = '216'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'City Earnings Tax Payable'
+#     a.account_number = '215'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Health Insurance Premiums Payable'
+#     a.account_number = '216'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Credit Union Payable'
-    a.account_number = '217'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Credit Union Payable'
+#     a.account_number = '217'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Savings Bond Deductions Payable'
-    a.account_number = '218'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Savings Bond Deductions Payable'
+#     a.account_number = '218'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Wages Payable'
-    a.account_number = '219'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Wages Payable'
+#     a.account_number = '219'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-# 220s - Employer Payroll Related Payables
+# # 220s - Employer Payroll Related Payables
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'FUTA Tax Payable'
-    a.account_number = '221'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'FUTA Tax Payable'
+#     a.account_number = '221'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'SUTA Tax Payable'
-    a.account_number = '222'
-    a.description = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'SUTA Tax Payable'
+#     a.account_number = '222'
+#     a.description = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = "Worker\'s Compensation Insurance Payable"
-    a.account_number = '223'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = "Worker\'s Compensation Insurance Payable"
+#     a.account_number = '223'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Liability'
+#     a.subcategory = 'Current'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 # 230s - Sales Tax
 
@@ -1240,188 +1332,188 @@ puts "Created account: #{Account.last.name}"
 
 # 250s - Long-Term Liabilities
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Mortgage Payable'
-    a.account_number = '251'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Long Term'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# # Account.create! do |a|
+# #     a.user_id = 3
+# #     a.name = 'Mortgage Payable'
+# #     a.account_number = '251'
+# #     a.description = ""
+# #     a.normal_side = "Credit"
+# #     a.category = 'Liability'
+# #     a.subcategory = 'Long Term'
+# #     a.initial_balance = 0
+# #     a.debit = 0
+# #     a.credit = 0
+# #     a.balance = 0
+# #     a.order = 0
+# #     a.statement = 0
+# #     a.comment = 0
+# #     a.contra = false
+# #     a.active = true
+# # end
+# # puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Premium on Bonds Payable'
-    a.account_number = '253'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Liability'
-    a.subcategory = 'Long Term'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# # Account.create! do |a|
+# #     a.user_id = 3
+# #     a.name = 'Premium on Bonds Payable'
+# #     a.account_number = '253'
+# #     a.description = ""
+# #     a.normal_side = "Credit"
+# #     a.category = 'Liability'
+# #     a.subcategory = 'Long Term'
+# #     a.initial_balance = 0
+# #     a.debit = 0
+# #     a.credit = 0
+# #     a.balance = 0
+# #     a.order = 0
+# #     a.statement = 0
+# #     a.comment = 0
+# #     a.contra = false
+# #     a.active = true
+# # end
+# # puts "Created account: #{Account.last.name}"
 
-# Owner's Equity (300-399)
+# # # Owner's Equity (300-399)
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Jessica Jane, Capital'
-    a.account_number = '311'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Equity'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# # Account.create! do |a|
+# #     a.user_id = 3
+# #     a.name = 'Jessica Jane, Capital'
+# #     a.account_number = '311'
+# #     a.description = ""
+# #     a.normal_side = "Credit"
+# #     a.category = 'Equity'
+# #     a.subcategory = ''
+# #     a.initial_balance = 0
+# #     a.debit = 0
+# #     a.credit = 0
+# #     a.balance = 0
+# #     a.order = 0
+# #     a.statement = 0
+# #     a.comment = 0
+# #     a.contra = false
+# #     a.active = true
+# # end
+# # puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Jessica Jane, Drawing'
-    a.account_number = '312'
-    a.description = ""
-    a.normal_side = "Debit"
-    a.category = 'Equity'
-    a.subcategory = 'Current'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = true
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# # Account.create! do |a|
+# #     a.user_id = 3
+# #     a.name = 'Jessica Jane, Drawing'
+# #     a.account_number = '312'
+# #     a.description = ""
+# #     a.normal_side = "Debit"
+# #     a.category = 'Equity'
+# #     a.subcategory = 'Current'
+# #     a.initial_balance = 0
+# #     a.debit = 0
+# #     a.credit = 0
+# #     a.balance = 0
+# #     a.order = 0
+# #     a.statement = 0
+# #     a.comment = 0
+# #     a.contra = true
+# #     a.active = true
+# # end
+# # puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Income Summary'
-    a.account_number = '313'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# # Account.create! do |a|
+# #     a.user_id = 3
+# #     a.name = 'Income Summary'
+# #     a.account_number = '313'
+# #     a.description = ""
+# #     a.normal_side = "Credit"
+# #     a.category = 'Revenue'
+# #     a.subcategory = ''
+# #     a.initial_balance = 0
+# #     a.debit = 0
+# #     a.credit = 0
+# #     a.balance = 0
+# #     a.order = 0
+# #     a.statement = 0
+# #     a.comment = 0
+# #     a.contra = false
+# #     a.active = true
+# # end
+# # puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Common Stock'
-    a.account_number = '321'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Equity'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# # Account.create! do |a|
+# #     a.user_id = 3
+# #     a.name = 'Common Stock'
+# #     a.account_number = '321'
+# #     a.description = ""
+# #     a.normal_side = "Credit"
+# #     a.category = 'Equity'
+# #     a.subcategory = ''
+# #     a.initial_balance = 0
+# #     a.debit = 0
+# #     a.credit = 0
+# #     a.balance = 0
+# #     a.order = 0
+# #     a.statement = 0
+# #     a.comment = 0
+# #     a.contra = false
+# #     a.active = true
+# # end
+# # puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Paid in Capital in Excess of Par/Stated Value - Common Stock'
-    a.account_number = '322'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Equity'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Paid in Capital in Excess of Par/Stated Value - Common Stock'
+#     a.account_number = '322'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Equity'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Preferred Stock'
-    a.account_number = '323'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Equity'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Preferred Stock'
+#     a.account_number = '323'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Equity'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Paid in Capital in Excess of Par/Stated Value - Preferred Stock'
-    a.account_number = '324'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Equity'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Paid in Capital in Excess of Par/Stated Value - Preferred Stock'
+#     a.account_number = '324'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Equity'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 3
@@ -1429,7 +1521,7 @@ Account.create! do |a|
     a.account_number = '325'
     a.description = ""
     a.normal_side = "Credit"
-    a.category = 'Revenue'
+    a.category = 'Equity'
     a.subcategory = ''
     a.initial_balance = 0
     a.debit = 0
@@ -1443,69 +1535,69 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-# Account 326 is named "Retained Earnings Appropriated for..."
-# Based on this text, I believe that it is referring to 327-329. For example, 327 is named "Common Stock Subscribed",
-# so the account appears in the below code as Retaiend Earnings Appropriated for Common Stock Subscribed.
+# # Account 326 is named "Retained Earnings Appropriated for..."
+# # Based on this text, I believe that it is referring to 327-329. For example, 327 is named "Common Stock Subscribed",
+# # so the account appears in the below code as Retaiend Earnings Appropriated for Common Stock Subscribed.
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Retained Earnings Appropriated for Common Stock Subscribed'
-    a.account_number = '327'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Retained Earnings Appropriated for Common Stock Subscribed'
+#     a.account_number = '327'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Retained Earnings Appropriated for Preferred Stock Subscribed'
-    a.account_number = '328'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Retained Earnings Appropriated for Preferred Stock Subscribed'
+#     a.account_number = '328'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Retained Earnings Appropriated for Paid in Capital from Sale of Tresury Stock'
-    a.account_number = '329'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Retained Earnings Appropriated for Paid in Capital from Sale of Tresury Stock'
+#     a.account_number = '329'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 # This account was made for the solved problem. It did not exist in the Chart of Accounts file.
 Account.create! do |a|
@@ -1514,7 +1606,7 @@ Account.create! do |a|
     a.account_number = '330'
     a.description = ""
     a.normal_side = "Credit"
-    a.category = 'Revenue'
+    a.category = 'Equity'
     a.subcategory = ''
     a.initial_balance = 0 # Must start at 0 for testing with the solved problem
     a.debit = 0
@@ -1617,251 +1709,251 @@ puts "Created account: #{Account.last.name}"
 
 # 410s - Other Revenues
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Interest Revenue'
-    a.account_number = '411'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Interest Revenue'
+#     a.account_number = '411'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Rent Revenue'
-    a.account_number = '412'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Rent Revenue'
+#     a.account_number = '412'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Subscriptions Revenue - Not main line of business'
-    a.account_number = '413'
-    a.description = "Credit"
-    a.normal_side = "Revenue"
-    a.category = ''
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Subscriptions Revenue - Not main line of business'
+#     a.account_number = '413'
+#     a.description = "Credit"
+#     a.normal_side = "Revenue"
+#     a.category = ''
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Sinking Fund Earnings'
-    a.account_number = '414'
-    a.description = ""
-    a.normal_side = "Debit"
-    a.category = 'Asset'
-    a.subcategory = 'Long Term'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Sinking Fund Earnings'
+#     a.account_number = '414'
+#     a.description = ""
+#     a.normal_side = "Debit"
+#     a.category = 'Asset'
+#     a.subcategory = 'Long Term'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Uncollectible Accounts Recovered'
-    a.account_number = '415'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Uncollectible Accounts Recovered'
+#     a.account_number = '415'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Gain on Sale/Exchange of Equipment'
-    a.account_number = '416'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Gain on Sale/Exchange of Equipment'
+#     a.account_number = '416'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Gain on Bonds Redeemed'
-    a.account_number = '417'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Revenue'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Gain on Bonds Redeemed'
+#     a.account_number = '417'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Revenue'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-# Operating Expenses (500-599)
+# # Operating Expenses (500-599)
 
-# 500s - Cost of Goods Sold
+# # 500s - Cost of Goods Sold
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Purchases'
-    a.account_number = '501'
-    a.description = ""
-    a.normal_side = "Debit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Purchases'
+#     a.account_number = '501'
+#     a.description = ""
+#     a.normal_side = "Debit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Freight-In'
-    a.account_number = '502'
-    a.description = ""
-    a.normal_side = "Debit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Freight-In'
+#     a.account_number = '502'
+#     a.description = ""
+#     a.normal_side = "Debit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Overhead'
-    a.account_number = '504'
-    a.description = ""
-    a.normal_side = "Debit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Overhead'
+#     a.account_number = '504'
+#     a.description = ""
+#     a.normal_side = "Debit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Cost of Goods Sold'
-    a.account_number = '505'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Cost of Goods Sold'
+#     a.account_number = '505'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-# 510s - Selling Expenses
+# # 510s - Selling Expenses
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Wages Expenses'
-    a.account_number = '511'
-    a.description = "Also Wages and Salaries Expense"
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Wages Expenses'
+#     a.account_number = '511'
+#     a.description = "Also Wages and Salaries Expense"
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 3
@@ -2106,185 +2198,185 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Transportation/Automobile Expense'
-    a.account_number = '526'
-    a.description = "Also Laboratory, Travel"
-    a.normal_side = ""
-    a.category = 'Credit'
-    a.subcategory = 'Expense'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Transportation/Automobile Expense'
+#     a.account_number = '526'
+#     a.description = "Also Laboratory, Travel"
+#     a.normal_side = ""
+#     a.category = 'Credit'
+#     a.subcategory = 'Expense'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Collection Expense'
-    a.account_number = '527'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Collection Expense'
+#     a.account_number = '527'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Inventory Short and Over'
-    a.account_number = '528'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Inventory Short and Over'
+#     a.account_number = '528'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Loss on Write Down of Inventory'
-    a.account_number = '529'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Loss on Write Down of Inventory'
+#     a.account_number = '529'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Payroll Taxes Expense'
-    a.account_number = '530'
-    a.description = ""
-    a.normal_side = ""
-    a.category = 'Credit'
-    a.subcategory = 'Expense'
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Payroll Taxes Expense'
+#     a.account_number = '530'
+#     a.description = ""
+#     a.normal_side = ""
+#     a.category = 'Credit'
+#     a.subcategory = 'Expense'
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = "Workers\' Compensation Insurance Expense"
-    a.account_number = '531'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = "Workers\' Compensation Insurance Expense"
+#     a.account_number = '531'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Bad Debt Expense'
-    a.account_number = '532'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Bad Debt Expense'
+#     a.account_number = '532'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Electricity Expense, Utilities Expense'
-    a.account_number = '533'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Electricity Expense, Utilities Expense'
+#     a.account_number = '533'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Charitable Contributions Expense'
-    a.account_number = '534'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
-puts "Created account: #{Account.last.name}"
+# Account.create! do |a|
+#     a.user_id = 3
+#     a.name = 'Charitable Contributions Expense'
+#     a.account_number = '534'
+#     a.description = ""
+#     a.normal_side = "Credit"
+#     a.category = 'Expense'
+#     a.subcategory = ''
+#     a.initial_balance = 0
+#     a.debit = 0
+#     a.credit = 0
+#     a.balance = 0
+#     a.order = 0
+#     a.statement = 0
+#     a.comment = 0
+#     a.contra = false
+#     a.active = true
+# end
+# puts "Created account: #{Account.last.name}"
 
 Account.create! do |a|
     a.user_id = 3
@@ -2671,26 +2763,6 @@ Account.create! do |a|
 end
 puts "Created account: #{Account.last.name}"
 
-# Not in Chart of Accounts document, but is in solved problem document
-# Appears on Income Statement
-Account.create! do |a|
-    a.user_id = 3
-    a.name = 'Salaries Payable'
-    a.account_number = '558'
-    a.description = ""
-    a.normal_side = "Credit"
-    a.category = 'Expense'
-    a.subcategory = ''
-    a.initial_balance = 0 # Must start at 0 to test with solved problem
-    a.debit = 0
-    a.credit = 0
-    a.balance = 0
-    a.order = 0
-    a.statement = 0
-    a.comment = 0
-    a.contra = false
-    a.active = true
-end
 
 puts "Created a total of #{Account.all.count} new accounts------------------------" 
 
@@ -2705,7 +2777,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 4 - Assets received from John Addams."
-    a.date_added = Date.new(2020, 4, 4)
+    a.date_added = Date.new(2021, 4, 4)
 end
 
 JournalEntry.create! do |a|
@@ -2717,7 +2789,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 4 - Paid three month\'s rent on a lease rental contract."
-    a.date_added = Date.new(2020, 4, 4)
+    a.date_added = Date.new(2021, 4, 4)
 end
 
 JournalEntry.create! do |a|
@@ -2729,7 +2801,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 4 - Paid premium on property and casualty insurance policies for the year."
-    a.date_added = Date.new(2020, 4, 4)
+    a.date_added = Date.new(2021, 4, 4)
 end
 
 JournalEntry.create! do |a|
@@ -2741,7 +2813,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 6 - Received cash from clients as an advance payment for services to be provided."
-    a.date_added = Date.new(2020, 4, 6)
+    a.date_added = Date.new(2021, 4, 6)
 end
 
 JournalEntry.create! do |a|
@@ -2753,7 +2825,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 7 - Purchased additional office furniture on account from Morrilton Company."
-    a.date_added = Date.new(2020, 4, 7)
+    a.date_added = Date.new(2021, 4, 7)
 end
 
 JournalEntry.create! do |a|
@@ -2765,7 +2837,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 8 - Received cash from clients on account."
-    a.date_added = Date.new(2020, 4, 8)
+    a.date_added = Date.new(2021, 4, 8)
 end
 
 JournalEntry.create! do |a|
@@ -2777,7 +2849,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 11 - Prepaid cash for newspaper advertisement."
-    a.date_added = Date.new(2020, 4,11)
+    a.date_added = Date.new(2021, 4,11)
 end
 
 JournalEntry.create! do |a|
@@ -2789,7 +2861,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 12 - Paid Morrilton Company $800 for debt incurred on April 7."
-    a.date_added = Date.new(2020, 4, 12)
+    a.date_added = Date.new(2021, 4, 12)
 end
 
 JournalEntry.create! do |a|
@@ -2801,7 +2873,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 15 - Recorded Services provided on account for April 18-22, $2,250."
-    a.date_added = Date.new(2020, 4, 15)
+    a.date_added = Date.new(2021, 4, 15)
 end
 
 JournalEntry.create! do |a|
@@ -2813,7 +2885,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 15 - Paid part-time receptionist for two weeks salary, $400."
-    a.date_added = Date.new(2020, 4, 15)
+    a.date_added = Date.new(2021, 4, 15)
 end
 
 JournalEntry.create! do |a|
@@ -2825,7 +2897,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 15 - Recorded cash from cleints for fees earned April 14-15, $3,175"
-    a.date_added = Date.new(2020, 4, 15)
+    a.date_added = Date.new(2021, 4, 15)
 end
 
 JournalEntry.create! do |a|
@@ -2837,7 +2909,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 18 - Paid cash for newspaper advertisement, $120."
-    a.date_added = Date.new(2020, 4, 16)
+    a.date_added = Date.new(2021, 4, 16)
 end
 
 JournalEntry.create! do |a|
@@ -2849,7 +2921,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 22 - Recorded services provided on account for April 18-22, $1,100."
-    a.date_added = Date.new(2020, 4, 22)
+    a.date_added = Date.new(2021, 4, 22)
 end
 
 JournalEntry.create! do |a|
@@ -2861,7 +2933,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 22 - Recorded cash from cash clients for fees earned April 18-22, $1,850."
-    a.date_added = Date.new(2020, 4, 22)
+    a.date_added = Date.new(2021, 4, 22)
 end
 
 JournalEntry.create! do |a|
@@ -2873,7 +2945,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 25 - Received cash from clients on account, $1600."
-    a.date_added = Date.new(2020, 4, 25)
+    a.date_added = Date.new(2021, 4, 25)
 end
 
 JournalEntry.create! do |a|
@@ -2885,7 +2957,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 27 - Paid part-time receptionist for two week's salary, $400."
-    a.date_added = Date.new(2020, 4, 27)
+    a.date_added = Date.new(2021, 4, 27)
 end
 
 JournalEntry.create! do |a|
@@ -2897,7 +2969,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 28 - Paid telephone bill for April, $130."
-    a.date_added = Date.new(2020, 4, 28)
+    a.date_added = Date.new(2021, 4, 28)
 end
 
 JournalEntry.create! do |a|
@@ -2909,7 +2981,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 29 - Paid electric bill for April, $200."
-    a.date_added = Date.new(2020, 4, 29)
+    a.date_added = Date.new(2021, 4, 29)
 end
 
 JournalEntry.create! do |a|
@@ -2921,7 +2993,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 29 - Recorded cash from cash clients for fees earned April 25-29, $2,050."
-    a.date_added = Date.new(2020, 4, 29)
+    a.date_added = Date.new(2021, 4, 29)
 end
 
 JournalEntry.create! do |a|
@@ -2933,7 +3005,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 29 - Recorded services provided on account for April 25-29, $1,000."
-    a.date_added = Date.new(2020, 4, 29)
+    a.date_added = Date.new(2021, 4, 29)
 end
 
 JournalEntry.create! do |a|
@@ -2945,7 +3017,7 @@ JournalEntry.create! do |a|
     a.entry_type = "Regular"
     a.status = "Pending"
     a.description = "April 29 - John received $4,500 from the company as his salary."
-    a.date_added = Date.new(2020, 4, 29)
+    a.date_added = Date.new(2021, 4, 29)
 end
 
 # The remaining journal entries appear in the Solved Problem document, but do not have comments stating when the
@@ -3023,75 +3095,4 @@ JournalEntry.create! do |a|
     a.date_added = Time.now
 end
 
-puts "Created journal entries"
-
-all_error_messages = [
-                        ["account_updated", "Account has been Updated"],
-                        ["account_deleted", "Account has been Deleted"],
-                        ["account_created", "Account has been Created"],
-
-                        ["account_not_found", "No account found"],
-
-                        ["user_updated", "User has been Updated"],
-                        ["user_deleted", "User has been Deleted"],
-                        ["user_created", "User has been Created"],
-                        ["user_reset_password", "A link has been sent to your email to reset your password"],
-                        ["user_create_request", "A request for your account has been sent to an Administrator to approve"],
-
-                        ["user_expired_password", "Your password is expired. Please reset your password now."],
-                        ["user_almost_expired_password_part1", "Your password is going to expire in "],
-                        ["user_almost_expired_password_part2", " days. You can change your password in Profile Settings"],
-
-                        ["user_not_found", "Username not found"],
-
-                        ["user_used_password", "Please choose a password you have not used before"],
-                        ["user_incorrect_password_part1", "Incorrect Password (Attempts left: "],
-                        ["user_incorrect_password_part2", ")"],
-                        ["user_suspended", "This account has been suspended for 1 min"],
-                        ["user_suspended_until", "This account is suspended until: "],
-                        ["user_inactive", "This account is not active"],
-                        ["email_sent", "Email was successfully sent."],
-                        ["can_not_deactivate_account", "You can not deactivate an account with a balance greater than 0"]
-                    ]
-
-# Creates all error messages
-all_error_messages.each do |error|
-    ErrorMessage.create! do |b|
-        b.error_name = error.first
-        b.body = error.last
-    end
-end
-puts "Created #{ErrorMessage.count} error messages"
-
-
-EventLog.create! do |a|
-    a.account_name = "Cash"
-    a.user_name = "Admin"
-    a.event_type = 'Modified'
-    a.account_before = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":1,\"debit\":0,\"credit\":0,\"balance\":1,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
-    a.account_after = "{\"id\":1,\"user_id\":1,\"name\":\"Cash\",\"account_number\":101,\"description\":\"This account is for Cash\",\"normal_side\":\"Credit\",\"category\":\"Asset\",\"subcategory\":\"Cash\",\"initial_balance\":123000,\"debit\":0,\"credit\":0,\"balance\":123000,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
-    a.created_at = Time.now
-    a.updated_at = Time.now
-end
-
-
-EventLog.create! do |a|
-    a.account_name = "Accounts Receivable"
-    a.user_name = "Manager"
-    a.event_type = 'Deactivated'
-    a.account_before = "{\"id\":2,\"user_id\":1,\"name\":\"Accounts Receivable\",\"account_number\":122,\"description\":\"This account is for Accounts Receivable\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Accounts Receivable\",\"initial_balance\":7500,\"debit\":0,\"credit\":0,\"balance\":7500,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T16:49:44.983Z\",\"updated_at\":\"2021-10-02T16:49:44.983Z\"}"
-    a.account_after = "{\"id\":2,\"user_id\":1,\"name\":\"Accounts Receivable\",\"account_number\":122,\"description\":\"This account is for Accounts Receivable\",\"normal_side\":\"Debit\",\"category\":\"Asset\",\"subcategory\":\"Accounts Receivable\",\"initial_balance\":7500,\"debit\":0,\"credit\":0,\"balance\":7500,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":false,\"created_at\":\"2021-10-02T16:49:44.983Z\",\"updated_at\":\"2021-10-02T16:49:44.983Z\"}"
-    a.created_at = Time.now
-    a.updated_at = Time.now
-end
-
-EventLog.create! do |a|
-    a.account_name = "Accounts Payable"
-    a.user_name = "EvanD"
-    a.event_type = 'Added'
-    a.account_before = ""
-    a.account_after = "{\"id\":3,\"user_id\":2,\"name\":\"Accounts Payable\",\"account_number\":202,\"description\":\"This account is for Accounts Payable\",\"normal_side\":\"Credit\",\"category\":\"Liability\",\"subcategory\":\"Accounts Payable\",\"initial_balance\":0,\"debit\":0,\"credit\":0,\"balance\":0,\"order\":\"0\",\"statement\":\"0\",\"comment\":\"0\",\"active\":true,\"created_at\":\"2021-10-02T15:32:01.116Z\",\"updated_at\":\"2021-10-02T15:32:01.116Z\"}"
-    a.created_at = Time.now
-    a.updated_at = Time.now
-end
-puts "Created #{EventLog.count} EventLogs"
+puts "Created #{JournalEntry.all.count} journal entries"

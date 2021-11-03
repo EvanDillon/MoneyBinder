@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:login, :welcome, :sign_up, :process_new_sign_up]
+  before_action :stored_net_income, :only => [:income_statement, :retained_earnings]
+  before_action :calculate_retained_earnings, :only => [:retained_earnings, :balance_sheet]
   
   rescue_from Pundit::NotAuthorizedError do 
     redirect_to error_path
@@ -133,27 +135,11 @@ class SessionsController < ApplicationController
     authorize current_user, :user_not_admin?
     @non_zero_accounts = Account.where('balance != ?', 0 )
 
-    @service_revenue = @non_zero_accounts.where(name: "Service Revenue")
-    @total_service_revenue = @service_revenue.pluck(:balance).sum
-    @total_revenues = @total_service_revenue
+    @revenue_accounts = @non_zero_accounts.where(category: "Revenue")
+    @total_revenues = @revenue_accounts.pluck(:balance).sum
 
-    @insurance_expense = @non_zero_accounts.where(name: "Insurance Expense")
-    @total_insurance_expense = @insurance_expense.pluck(:balance).sum
-    @depreciation_expense = @non_zero_accounts.where(name: "Depreciation Expense")
-    @total_depreciation_expense = @depreciation_expense.pluck(:balance).sum
-    @rent_expense = @non_zero_accounts.where(name: "Rent Expense")
-    @total_rent_expense = @rent_expense.pluck(:balance).sum
-    @supplies_expense = @non_zero_accounts.where(name: "Supplies Expense")
-    @total_supplies_expense = @supplies_expense.pluck(:balance).sum
-    @salaries_expense = @non_zero_accounts.where(name: "Salaries Expense")
-    @total_salaries_expense = @salaries_expense.pluck(:balance).sum
-    @telephone_expense = @non_zero_accounts.where(name: "Telephone Expense")
-    @total_telephone_expense = @telephone_expense.pluck(:balance).sum
-    @utilities_expense = @non_zero_accounts.where(name: "Utilities Expense")
-    @total_utilities_expense = @utilities_expense.pluck(:balance).sum
-    @advertising_expense = @non_zero_accounts.where(name: "Advertising Expense")
-    @total_advertising_expense = @advertising_expense.pluck(:balance).sum
-    @total_expenses = @total_insurance_expense + @total_depreciation_expense + @total_rent_expense + @total_supplies_expense + @total_salaries_expense + @total_telephone_expense + @total_utilities_expense + @total_advertising_expense
+    @expense_accounts = @non_zero_accounts.where(category: "Expense")
+    @total_expenses = @expense_accounts.pluck(:balance).sum
 
     @net_income = @total_revenues.abs - @total_expenses
   end
@@ -170,15 +156,15 @@ class SessionsController < ApplicationController
     @total_assets = @total_current_assets + @total_equipment_assets
 
     @liability_accounts = @non_zero_accounts.where(name: ["Accounts Payable", "Salaries Payable", "Unearned Revenue"])
-    @total_liabilities = @liability_accounts.pluck(:balance).sum
+    @total_liabilities = @liability_accounts.pluck(:balance).map(&:abs).sum
     @equity_accounts = @non_zero_accounts.where(name: ["Contributed Capital", "Retained Earnings"])
-    @total_equity = @equity_accounts.pluck(:balance).sum
+    @total_equity = @equity_accounts.pluck(:balance).map(&:abs).sum
 
     @total_l_and_e = @total_liabilities + @total_equity
   end
 
   def retained_earnings
-      @accounts = Account.all
+    calculate_retained_earnings
   end
 
   def destroy
@@ -198,5 +184,28 @@ class SessionsController < ApplicationController
 
   def initialize_security_question(user, question_id, answer)
     PasswordAuthorization.create(user_id: user.id, security_question_id: question_id.to_i, answer: answer)
+  end
+
+  def stored_net_income
+    non_zero_accounts = Account.where('balance != ?', 0 )
+    revenue_accounts = Account.find_by(name: "Service Revenue")
+    total_revenues = revenue_accounts.balance
+
+    expense_accounts = non_zero_accounts.where(category: "Expense")
+    total_expenses = expense_accounts.pluck(:balance).sum
+
+    @net_income = total_revenues.abs - total_expenses
+  end
+
+  def calculate_retained_earnings
+    stored_net_income
+    @beginning_balance = 0
+    @net_income #Pulls from stored_net_income
+    @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
+    @ending_balance = (@beginning_balance + @net_income) - @less_drawings
+
+    re_account = Account.find_by(name: "Retained Earnings")
+    re_account.balance = @ending_balance 
+    re_account.save
   end
 end

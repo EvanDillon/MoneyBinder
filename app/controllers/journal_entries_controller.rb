@@ -97,6 +97,7 @@ class JournalEntriesController < ApplicationController
   def generate_closing_entry
     @service_revenue = Account.find_by(name: "Service Revenue")
     @expense_accounts = Account.where('balance > ?', 0).where(category: "Expense")
+    @expense_accounts += Account.where(name: "Retained Earnings")
 
     @closing_journal_entry = JournalEntry.new(  user_id: current_user.id,
                                         debit_account:  [@service_revenue.id],
