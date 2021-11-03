@@ -1,31 +1,28 @@
 <%= render partial: "shared/navigation_bar"%>
-<%= render 'flash_messages' %>
+<%= render 'flash_messages' %><br>
+
 <div class="container">
-<% if current_user.userType == 2 %>
-<h1 class="text-center">Retained Earnings</h1>
-<h2 class="text-center">For the period ending <%= Time.new.strftime("%B %d, %Y") %></h2>
-<br>
-<table class="table">
-<tbody>
-    <tr>
-        <td>Beginning Balance</td>
-        <td align="right">$0.00</td>
-    </tr>
-    <tr>
-        <td>Net Income</td>
-        <td align="right">$0.00</td>
-    </tr>
-    <tr>
-        <td>Loss Drawings</td>
-        <td align="right">$0.00</td>
-    </tr>
-    <tr>
-        <td>Ending Balance</td>
-        <td align="right" style="text-decoration: underline; text-decoration-style: double"><p style="text-decoration: overline;">$0.00</p></td>
-    </tr>
-</tbody>
-</table>
+  <h1 class="text-center">Addams & Family Inc.</h1>
+  <h2 class="text-center">Retained Earnings</h2>
+  <h5 class="text-center">For the period ending <%= Date.new(2021, 12, 31).strftime("%B %d, %Y") %></h5><br>
+  <table class="table">
+  <tbody>
+      <tr>
+          <td>Beginning Retained Earnings</td>
+          <td class="text-right">$<%= number_with_precision(@beginning_balance, precision: 2, delimiter: ',') %></td>
+      </tr>
+      <tr>
+          <td>Net Income</td>
+          <td class="text-right">$<%= number_with_precision(@net_income, precision: 2, delimiter: ',') %></td>
+      </tr>
+      <tr>
+          <td>Less Drawings (Dividends)</td>
+          <td class="text-right">$<%= number_with_precision(@less_drawings, precision: 2, delimiter: ',') %></td>
+      </tr>
+      <tr class="table-active font-weight-bold">
+          <td>Ending Retained Balance</td>
+          <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@ending_balance, precision: 2, delimiter: ',') %></td>
+      </tr>
+  </tbody>
+  </table>
 </div>
-<% else %>
-<h1 class= "text-center">Forbidden. You do not have access to this page.</h1>
-<% end %>

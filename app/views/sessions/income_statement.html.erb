@@ -1,101 +1,47 @@
 <%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %><br>
 <div class="container">
-    <h1 class="text-center">Income Statement</h1>
-    <h5 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h5><br>
-    <table class="table" id="table-layout">
-        <tbody>
-        <tr class="table-primary">
-            <td class="font-weight-bold" >Revenues</td>
-            <td></td>
-        </tr>
-        <% @service_revenue.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        <tr class="table-active">
-            <td class="font-weight-bold" >Total Revenues</td>
-            <td class="text-right">$<%= number_with_precision(@total_revenues.abs, precision: 2, delimiter: ',') %></td>
-        </tr>
+  <h1 class="text-center">Addams & Family Inc.</h1>
+  <h2 class="text-center">Income Statement</h2>
+  <h5 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h5><br>
+  <table class="table" id="table-layout">
+    <tbody>
+      <tr class="table-primary">
+        <td class="font-weight-bold" >Revenues</td>
+        <td></td>
+      </tr>
 
-        <tr class="table-primary">
-            <td class="font-weight-bold" >Expenses</td>
-            <td></td>
+      <% @revenue_accounts.each do |a| %>
+        <tr>
+          <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
+          <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
         </tr>
+      <% end %>
+      <tr class="table-active font-weight-bold">
+        <td>Total Revenues</td>
+        <td class="text-right">$<%= number_with_precision(@total_revenues.abs, precision: 2, delimiter: ',') %></td>
+      </tr>
 
-        <% @insurance_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        </tr>
-        
-        <% @depreciation_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        </tr>
-        
-        <% @rent_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        </tr>
-        
-        <% @supplies_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        </tr>
-        
-        <% @salaries_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        </tr>
+      <tr class="table-primary">
+        <td>Expenses</td>
+        <td></td>
+      </tr>
 
-        <% @telephone_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
+      <% @expense_accounts.each do |a| %>
+        <tr>
+            <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
+            <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
         </tr>
-        
-        <% @utilities_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        </tr>
-
-        <% @advertising_expense.each do |a| %>
-            <tr>
-                <td style="text-indent: 40px"><%= a.name.truncate(40) %> </td>
-                <td class="text-right" style="text-indent: 80px">$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-            </tr>
-        <% end %>
-        </tr>
-        <tr class="table-active">
-            <td class="font-weight-bold" >Total Expenses</td>
-            <td class="text-right">$<%= number_with_precision(@total_expenses, precision: 2, delimiter: ',') %></td>
-        </tr>
-        <tr class="table-primary">
-        <td class="font-weight-bold" >Net Income (Loss)</td>
-        <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@net_income, precision: 2, delimiter: ',') %></td>
-        </tr>
-        </tbody>
-    </table>
+      <% end %>
+      
+      <tr class="table-active font-weight-bold">
+          <td>Total Expenses</td>
+          <td class="text-right">$<%= number_with_precision(@total_expenses, precision: 2, delimiter: ',') %></td>
+      </tr>
+      <tr class="table-primary font-weight-bold">
+      <td>Net Income (Loss)</td>
+      <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@net_income, precision: 2, delimiter: ',') %></td>
+      </tr>
+    </tbody>
+  </table>
 </div>

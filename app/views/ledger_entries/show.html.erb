@@ -22,7 +22,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td><%= number_to_currency(@account.initial_balance, precision: 2) %></td>
+        <td class="text-right"><%= number_to_currency(@account.initial_balance, precision: 2) %></td>
       </tr>
       <% @ledger_entries.each do |entry| %>
         <tr>
@@ -30,18 +30,18 @@
           <td><%= link_to entry.postReference, journal_entry_path(entry.postReference), method: :get %></td>
           <td><%= entry.description.truncate(60) %></td>
           <% if entry.debit != 0 %>
-            <td><%= number_to_currency(entry.debit, precision: 2) %></td>
+            <td class="text-right"><%= number_to_currency(entry.debit, precision: 2) %></td>
           <% else %>
             <td></td>
           <% end %>
 
           <% if entry.credit != 0 %>
-            <td><%= number_to_currency(entry.credit, precision: 2) %></td>
+            <td class="text-right"><%= number_to_currency(entry.credit, precision: 2) %></td>
           <% else %>
             <td></td>
           <% end %>
           
-          <td><%= number_to_currency(entry.balance, precision: 2) %></td>
+          <td class="text-right"><%= number_to_currency(entry.balance, precision: 2) %></td>
         </tr>
       <%end%>
     </tbody>

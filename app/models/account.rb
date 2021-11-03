@@ -21,4 +21,21 @@ class Account < ApplicationRecord
     account.save
     return account.balance
   end
+
+  # def retained_earnings_value
+  #   non_zero_accounts = Account.where('balance != ?', 0 )
+  #   revenue_accounts = Account.find_by(name: "Service Revenue")
+  #   total_revenues = revenue_accounts.balance
+
+  #   expense_accounts = non_zero_accounts.where(category: "Expense")
+  #   total_expenses = expense_accounts.pluck(:balance).sum
+
+  #   net_income = total_revenues.abs - total_expenses
+
+  #   beginning_balance = 0
+  #   @ess_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
+  #   @ending_balance = (beginning_balance + net_income) - less_drawings
+
+  #   return(@ending_balance)
+  # end
 end
