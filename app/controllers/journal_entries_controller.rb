@@ -98,19 +98,21 @@ class JournalEntriesController < ApplicationController
     @service_revenue = Account.find_by(name: "Service Revenue")
     @expense_accounts = Account.where('balance > ?', 0).where(category: "Expense")
     @expense_accounts += Account.where(name: "Retained Earnings")
-
+    @debit = @expense_accounts.pluck(:balance)
+    @debit.pop
+    
     @closing_journal_entry = JournalEntry.new(  user_id: current_user.id,
                                         debit_account:  [@service_revenue.id],
                                         credit_account: @expense_accounts.pluck(:id),
                                         debit_total:    [-@service_revenue.balance],
-                                        credit_total:   @expense_accounts.pluck(:balance),
+                                        credit_total:   @debit << Account.retained_earnings_value(),
                                         entry_type: "Closing",
                                         status: "Pending",
                                         description: "Closing entry created by #{current_user.username}"
                                       )
 
     if @closing_journal_entry.save
-      redirect_to journal_entries_path, success: "Closing Journal Entry Pending"
+      redirect_to journal_entries_path, success: "Created closing Journal Entry"
     else
       flash.now[:danger] = "Unable to create closing entry"
       render new_journal_entry_path

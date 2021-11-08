@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:login, :welcome, :sign_up, :process_new_sign_up]
   before_action :stored_net_income, :only => [:income_statement, :retained_earnings]
-  before_action :calculate_retained_earnings, :only => [:retained_earnings, :balance_sheet]
   
   rescue_from Pundit::NotAuthorizedError do 
     redirect_to error_path
@@ -125,8 +124,7 @@ class SessionsController < ApplicationController
 
   def trial_balance
     authorize current_user, :user_not_admin?
-    # @accounts = Account.all
-    @non_zero_accounts = Account.where('balance != ?', 0 )
+    @non_zero_accounts = Account.where('balance != ?', 0)
     @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum
     @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum
   end
@@ -157,14 +155,20 @@ class SessionsController < ApplicationController
 
     @liability_accounts = @non_zero_accounts.where(name: ["Accounts Payable", "Salaries Payable", "Unearned Revenue"])
     @total_liabilities = @liability_accounts.pluck(:balance).map(&:abs).sum
-    @equity_accounts = @non_zero_accounts.where(name: ["Contributed Capital", "Retained Earnings"])
-    @total_equity = @equity_accounts.pluck(:balance).map(&:abs).sum
+    @equity_accounts = @non_zero_accounts.where(name: ["Contributed Capital"])
+
+    @retained_earnings_account = ["Retained Earnings", Account.retained_earnings_value()]
+    @total_equity = @equity_accounts.pluck(:balance).map(&:abs).sum + Account.retained_earnings_value()
 
     @total_l_and_e = @total_liabilities + @total_equity
   end
 
   def retained_earnings
-    calculate_retained_earnings
+    stored_net_income
+    @beginning_balance = 0
+    @net_income #Pulls from stored_net_income
+    @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
+    @ending_balance = (@beginning_balance + @net_income) - @less_drawings
   end
 
   def destroy
@@ -195,17 +199,5 @@ class SessionsController < ApplicationController
     total_expenses = expense_accounts.pluck(:balance).sum
 
     @net_income = total_revenues.abs - total_expenses
-  end
-
-  def calculate_retained_earnings
-    stored_net_income
-    @beginning_balance = 0
-    @net_income #Pulls from stored_net_income
-    @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
-    @ending_balance = (@beginning_balance + @net_income) - @less_drawings
-
-    re_account = Account.find_by(name: "Retained Earnings")
-    re_account.balance = @ending_balance 
-    re_account.save
   end
 end
