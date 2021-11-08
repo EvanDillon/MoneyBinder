@@ -13,7 +13,7 @@
             </div>
             <div class="form-group col-md-6">
               <%= f.label "Entry Date:" %>
-              <%= f.date_select :date, default: Time.now%>
+              <%= text_field_tag :date, "#{Date.current}", required: true, class: "form-control", id: "entry_date" %>
             </div>
           </div>
         
@@ -85,11 +85,7 @@
             </tbody>
           </table>
 
-          <div class="custom-file">
-            <%= f.file_field :source_document, required: false, multiple: false, class: "custom-file-input", id: "customFile" %><br><br>
-            <%= f.label :source_document, class: "custom-file-label form-control-file", for: "customFile" %>
-          </div>
-          
+            <%= f.file_field :source_document, required: false, multiple: true %><br><br>
           <div class="actions">
             <div class="form-row">
               <div class="col-6">
@@ -160,4 +156,10 @@
     var fileName = $(this).val().split("\\").pop();
     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
   });
+
+  new DateTime($('#entry_date'), {
+      buttons: {
+          today: true,
+      }
+});
 </script>

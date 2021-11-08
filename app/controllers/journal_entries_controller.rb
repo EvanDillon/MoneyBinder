@@ -43,8 +43,7 @@ class JournalEntriesController < ApplicationController
     error_list = balanced?(debit_amounts, credit_amounts) if !balanced?(debit_amounts, credit_amounts).nil?
 
     if error_list.nil?
-      date = DateTime.new(journal_entry_params["date(1i)"].to_i, journal_entry_params["date(2i)"].to_i, journal_entry_params["date(3i)"].to_i)
-      @journal_entry.date_added = date
+      @journal_entry.date_added = params[:date].to_date
       
       if @journal_entry.save
         redirect_to journal_entries_path, success: "Journal Entry Pending"
@@ -135,7 +134,7 @@ class JournalEntriesController < ApplicationController
     def decline_entry(id, reason)
       @entry = JournalEntry.find(id)
       @entry.status = "Declined"
-      @entry.description += "\n #{current_user.username} has declined this entry because: '#{reason}'"
+      @entry.description += "\n (#{current_user.username} has declined this entry because: '#{reason}')"
       @entry.save
     end
 
