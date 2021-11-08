@@ -77,10 +77,16 @@
       <% @equity_accounts.each do |a| %>
       <tr>
         <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
-        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
+        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
         <td></td>
       </tr>
       <% end %>
+
+      <tr>
+        <td style="text-indent: 80px"><%= @retained_earnings_account.first.truncate(40) %> </td>
+        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(@retained_earnings_account.second, precision: 2, delimiter: ',') %></td>
+        <td></td>
+      </tr>
 
       <tr class="table-active font-weight-bold">
         <td>Total Liabilities and Equity</td>
