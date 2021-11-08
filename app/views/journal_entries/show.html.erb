@@ -67,14 +67,22 @@
         
     </div>
     <div class="col">
-      <strong>Source Document:</strong><br>
-      <% if @journal_entry.source_document.attached? %>
-        <iframe src="<%= rails_blob_path(@journal_entry.source_document, disposition: :inline) %>" width="500" height="300" style="border: none;" class="border"> </iframe>
-      <% else %>
-        <div class="border text-center" style="width:500px; height:300px;">
-          <p class="font-weight-light">(No documents found)</p>
-        </div>
-      <% end %>
+      <table class="table bordered">
+        <strong>Source Document:</strong><br>
+        <% if @journal_entry.source_document.attached? %>
+          <% @journal_entry.source_document.each do |doc| %>
+            <tr>
+              <td> <%= link_to doc.filename, rails_blob_path(doc, disposition: 'attachment') %> </td>
+              <td> <%= link_to "View", rails_blob_path(doc, disposition: 'preview') %> </td>
+            </tr>
+            <!-- <iframe src="<%= rails_blob_path(doc, disposition: :inline) %>" width="500" height="300" style="border: none;" class="border"> </iframe> -->
+          <% end %>
+        <% else %>
+          <div class="border text-center" style="width:500px; height:300px;">
+            <p class="font-weight-light">(No documents found)</p>
+          </div>
+        <% end %>
+      </table>
     </div>
   </div>
 </div>

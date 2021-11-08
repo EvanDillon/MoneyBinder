@@ -4,5 +4,5 @@ class JournalEntry < ApplicationRecord
     serialize :debit_total, Array
     serialize :credit_total, Array
 
-    has_one_attached :source_document
+    has_many_attached :source_document
 end
