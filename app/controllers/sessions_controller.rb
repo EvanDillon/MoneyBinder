@@ -142,14 +142,14 @@ class SessionsController < ApplicationController
   end
 
   def trial_balance
-    authorize current_user, :user_not_admin?
+    # authorize current_user, :user_not_admin?
     @non_zero_accounts = Account.where('balance != ?', 0)
     @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum
     @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum
   end
 
   def income_statement
-    authorize current_user, :user_not_admin?
+    # authorize current_user, :user_not_admin?
     @non_zero_accounts = Account.where('balance != ?', 0 )
 
     @revenue_accounts = @non_zero_accounts.where(category: "Revenue")
@@ -162,7 +162,7 @@ class SessionsController < ApplicationController
   end
 
   def balance_sheet
-    authorize current_user, :user_not_admin?
+    # authorize current_user, :user_not_admin?
     @non_zero_accounts = Account.where('balance != ?', 0 )
 
     @current_assets = @non_zero_accounts.where(category: "Asset").where.not(account_number: [188, 181])
