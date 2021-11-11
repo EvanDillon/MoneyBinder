@@ -29,6 +29,7 @@ gem 'jquery-rails'
 
 gem 'pundit'
 
+gem "google_visualr", "~> 2.5.1"
 
 
 # Use Active Storage variant

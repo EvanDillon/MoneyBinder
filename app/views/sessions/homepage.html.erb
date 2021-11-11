@@ -1,5 +1,87 @@
 <%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %>
-<div class="container">
-    <h2 class="text-center">Dashboard will be added in a future iteration.</h2>
+<div class="container"><br>
+    <h2 class="text-center">Dashboard</h2>
+    <table>
+      <tr>
+        <% @all_gauges.each do |ratio|%>
+        <td style="padding: 10px;">
+          <div id= "<%= @index.to_s %>"></div>
+          <%= render_chart ratio.first, @index.to_s %>
+
+          <% if ratio.third == "green" %>
+            <div class="p-3 mb-2 bg-success text-white text-center rounded">
+              <h2> 
+                <i class="bi bi-caret-up-fill"></i>
+                <%= ratio.second %>%
+              </h2>
+              <div class="h5">
+                <%= ratio.fourth %>
+              </div>              </div>
+          <% elsif ratio.third == "yellow"%>
+            <div class="p-3 mb-2 bg-warning text-center rounded">
+              <h2> 
+                <i class="bi bi-dash-lg"></i>
+                <%= ratio.second %>%
+              </h2>
+              <div class="h5">
+                <%= ratio.fourth %>
+              </div>
+            </div>
+          <% elsif ratio.third == "red"%>
+            <div class="p-3 mb-2 bg-danger text-white text-center rounded">
+              <h2> 
+                <i class="bi bi-caret-down-fill"></i>
+                <%= ratio.second %>%
+              </h2>
+              <div class="h5">
+                <%= ratio.fourth %>
+              </div>              
+            </div>
+          <% end %>
+          <% @index -= 1 %>
+        </td>
+        <% end %>
+      </tr>
+    </table>
+
+
+    <!-- <div id="donut_single" style="width: 900px; height: 500px;"></div> -->
 </div>
+
+<!-- Better Gauge idea -->
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        
+        var data = google.visualization.arrayToDataTable([
+          ['Pac Man', 'Percentage'],
+          ['', 50],
+          ['', 16.6],
+          ['', 16.6],
+          ['', 16.6]
+        ]);
+
+      var options = {
+        legend: 'none',
+        pieHole: 0.7,
+        pieSliceText: 'none',
+        pieStartAngle: 90,
+        tooltip: { trigger: 'none' },
+        slices: {
+          0: { color: 'transparent' },
+          1: { color: 'red' },
+          2: { color: 'yellow' },
+          3: { color: 'green' }
+
+        }
+      };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donut_single'));
+        chart.draw(data, options);
+      }
+  </script> -->
