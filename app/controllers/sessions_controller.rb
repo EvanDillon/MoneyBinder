@@ -59,11 +59,15 @@ class SessionsController < ApplicationController
 
   def homepage
     # Can access any variable in reports (such as the ones below) because of before_actions at the top.
-    curret_ratio = (@total_current_assets / @total_liabilities).round(1)
-    curret_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(curret_ratio), get_options)
+    if !@total_current_assets.zero? || !@total_liabilities.zero?
+      current_ratio = (@total_current_assets / @total_liabilities).round(1)
+    else
+      current_ratio = 0
+    end
+    current_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(current_ratio), get_options)
 
     #                         Gauge:               Value:        Color:                          Name:
-    current_ratio_data =     [curret_ratio_gauge, curret_ratio, calculate_color(curret_ratio), "Current Ratio"]
+    current_ratio_data =     [current_ratio_gauge, current_ratio, calculate_color(current_ratio), "Current Ratio"]
 
 
     # Once you create a new gauge at to this array 
