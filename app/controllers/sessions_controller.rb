@@ -1,6 +1,10 @@
 class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:login, :welcome, :sign_up, :process_new_sign_up]
   before_action :stored_net_income, :only => [:income_statement, :retained_earnings]
+  before_action :trial_balance,     :only => :homepage
+  before_action :income_statement,  :only => :homepage
+  before_action :retained_earnings, :only => :homepage
+  before_action :balance_sheet,     :only => :homepage
   
   rescue_from Pundit::NotAuthorizedError do 
     redirect_to error_path
@@ -54,6 +58,17 @@ class SessionsController < ApplicationController
   end
 
   def homepage
+    # Can access any variable in reports (such as the ones below) because of before_actions at the top.
+    curret_ratio = (@total_current_assets / @total_liabilities).round(1)
+    curret_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(curret_ratio), get_options)
+
+    #                         Gauge:               Value:        Color:                          Name:
+    current_ratio_data =     [curret_ratio_gauge, curret_ratio, calculate_color(curret_ratio), "Current Ratio"]
+
+
+    # Once you create a new gauge at to this array 
+    @all_gauges = [current_ratio_data]
+    @index = @all_gauges.count
   end
 
   def sign_up
@@ -181,6 +196,37 @@ class SessionsController < ApplicationController
   end
 
   private
+
+  def new_gauge(value)
+    data_table = GoogleVisualr::DataTable.new
+    data_table.new_column('string'  , 'Name')
+    data_table.new_column('number'  , 'Value')
+    data_table.add_rows(1)
+    data_table.set_cell(0, 0, '' )
+    data_table.set_cell(0, 1, value)
+    return data_table
+  end 
+
+  def get_options
+    opts   = {  :width => 200,      :height => 300, 
+                :redFrom => 0,      :redTo => 33, 
+                :yellowFrom => 33,  :yellowTo => 66, 
+                :greenFrom => 66,   :greenTo => 100, 
+                :min => 0,          :max => 100,
+                :minorTicks => 5
+              }
+  end
+
+  def calculate_color(value)
+    if value <= 33
+      color = "red"
+    elsif value >= 34 && value <= 66
+      color = "yellow"
+    elsif value >= 67
+      color = "green"
+    end
+    return color
+  end
 
   def user_params
     params.permit(:firstName, :lastName, :user_name, :password, :address, :email, :phoneNum, :dob, :userType, :active)    
