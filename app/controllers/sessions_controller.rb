@@ -60,18 +60,27 @@ class SessionsController < ApplicationController
   def homepage
     # Can access any variable in reports (such as the ones below) because of before_actions at the top.
     if !@total_current_assets.zero? || !@total_liabilities.zero?
-      current_ratio = (@total_current_assets / @total_liabilities).round(1)
+      current_ratio = (@total_current_assets / @total_liabilities).round(1) * 100
     else
       current_ratio = 0
     end
     current_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(current_ratio), get_options)
 
-    #                         Gauge:               Value:        Color:                          Name:
-    current_ratio_data =     [current_ratio_gauge, current_ratio, calculate_color(current_ratio), "Current Ratio"]
+    if !@net_income.zero? || !@total_assets.zero?
+      asset_turnover = (@net_income / @total_assets).round(1) * 100
+    else
+      asset_turnover = 0
+    end
+    asset_turnover_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(asset_turnover), get_options)
+
+
+    #                       Gauge:               Value:        Color:                          Name:
+    current_ratio_data =    [current_ratio_gauge, current_ratio, calculate_color(current_ratio), "Current Ratio"]
+    asset_turnover_data =   [asset_turnover_gauge, asset_turnover, calculate_color(asset_turnover), "Asset Turnover"]
 
 
     # Once you create a new gauge at to this array 
-    @all_gauges = [current_ratio_data]
+    @all_gauges = [current_ratio_data, asset_turnover_data]
     @index = @all_gauges.count
   end
 
