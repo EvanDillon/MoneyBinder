@@ -75,7 +75,7 @@ class SessionsController < ApplicationController
 
     @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
     if !@total_liabilities.zero?
-      quick_ratio = (@total_current_assets - @total_inventory)/@total_liabilities
+      quick_ratio = ( (@total_current_assets - @total_inventory) / @total_liabilities ).round(1) * 100
     else
       quick_ratio = 0
     end
