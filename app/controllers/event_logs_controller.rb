@@ -23,6 +23,7 @@ class EventLogsController < ApplicationController
         @event_logs << [event, before_model, after_model]
       end
     end
+    @approved_journal_entries = JournalEntry.where(status: "Approved")
   end
 
   # GET /event_logs/1 or /event_logs/1.json
