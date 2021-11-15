@@ -73,14 +73,23 @@ class SessionsController < ApplicationController
     end
     asset_turnover_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(asset_turnover), get_options)
 
+    @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
+    if !@total_liabilities.zero?
+      quick_ratio = ( (@total_current_assets - @total_inventory) / @total_liabilities ).round(1) * 100
+    else
+      quick_ratio = 0
+    end
+
+    quick_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(quick_ratio), get_options)
 
     #                       Gauge:               Value:        Color:                          Name:
     current_ratio_data =    [current_ratio_gauge, current_ratio, calculate_color(current_ratio), "Current Ratio"]
     asset_turnover_data =   [asset_turnover_gauge, asset_turnover, calculate_color(asset_turnover), "Asset Turnover"]
+    quick_ratio_data =      [quick_ratio_gauge, quick_ratio, calculate_color(quick_ratio), "Quick Ratio"]
 
 
     # Once you create a new gauge at to this array 
-    @all_gauges = [current_ratio_data, asset_turnover_data]
+    @all_gauges = [current_ratio_data, asset_turnover_data, quick_ratio_data]
     @index = @all_gauges.count
   end
 
