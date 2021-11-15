@@ -46,7 +46,7 @@ class JournalEntriesController < ApplicationController
       @journal_entry.date_added = params[:date].to_date
       
       if @journal_entry.save
-        redirect_to journal_entries_path, success: "Journal Entry Pending"
+        redirect_to journal_entries_path, warning: "Journal entry pending"
         User.where(userType: 2).pluck(:email).each do |email|
           ResetMailer.with(user_email: email).pending_journal_entry.deliver_now
         end
@@ -81,16 +81,16 @@ class JournalEntriesController < ApplicationController
     @pending_entries.each do |e|
       approve_entry(e.id)
     end
-    redirect_to journal_entries_path, success: "All Journal entries have been Approved"
+    redirect_to journal_entries_path, success: "All journal entries have been approved"
   end
 
   def decline_all
     authorize current_user, :user_manager?
     @pending_entries = JournalEntry.where(status: "Pending")
     @pending_entries.each do |e|
-      decline_entry(e.id, "He declined all entries")
+      decline_entry(e.id, "Manager has declined all entries")
     end
-    redirect_to journal_entries_path, danger: "All Journal entries have been Declined"
+    redirect_to journal_entries_path, danger: "All journal entries have been declined"
   end
 
   def generate_closing_entry
@@ -111,7 +111,7 @@ class JournalEntriesController < ApplicationController
                                       )
 
     if @closing_journal_entry.save
-      redirect_to journal_entries_path, success: "Created closing Journal Entry"
+      redirect_to journal_entries_path, success: "Created closing journal entry"
     else
       flash.now[:danger] = "Unable to create closing entry"
       render new_journal_entry_path
