@@ -59,36 +59,41 @@ class SessionsController < ApplicationController
 
   def homepage
     # Can access any variable in reports (such as the ones below) because of before_actions at the top.
+    # Current ratio (current assets / total liabilites)
     if !@total_current_assets.zero? || !@total_liabilities.zero?
-      current_ratio = (@total_current_assets / @total_liabilities).round(1) * 100
+      current_ratio = ActionController::Base.helpers.number_with_precision((@total_current_assets / @total_liabilities), precision: 2, delimiter: ',').to_f
     else
       current_ratio = 0
     end
-    current_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(current_ratio), get_options)
 
+    # Asset Turnover ratio  (Net income / total assets)
     if !@net_income.zero? || !@total_assets.zero?
-      asset_turnover = (@net_income / @total_assets).round(1) * 100
+      asset_turnover_ratio = ActionController::Base.helpers.number_with_precision((@net_income / @total_assets), precision: 2, delimiter: ',').to_f
     else
-      asset_turnover = 0
+      asset_turnover_ratio = 0
     end
-    asset_turnover_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(asset_turnover), get_options)
 
     @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
     if !@total_liabilities.zero?
-      quick_ratio = ( (@total_current_assets - @total_inventory) / @total_liabilities ).round(1) * 100
+      quick_ratio = ActionController::Base.helpers.number_with_precision(((@total_current_assets - @total_inventory) / @total_liabilities ), precision: 2, delimiter: ',').to_f
     else
       quick_ratio = 0
     end
 
-    quick_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(quick_ratio), get_options)
+    # Return on Equity Ratio (ROE)  (Net income / Shareholder equity)
+    if !@net_income.zero? || !@total_equity.zero?
+      reo_percentage = ActionController::Base.helpers.number_with_precision((@net_income / @total_equity)*100, precision: 1, delimiter: ',').to_f
+    else
+      reo_percentage = 0
+    end
 
-    if (!@net_income.zero? ||@total_assets.zero?)
+    # Return on asset
+    if !@net_income.zero? || !@total_assets.zero?
       return_on_asset = (@net_income / @total_assets).round(1) * 100
     else
       return_on_asset = 0;
     end
 
-    return_on_asset_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(return_on_asset), get_options)
 
     @account = Account.find_by(name: 'Service Revenue')
     net_profit_helper = @account.balance
@@ -97,19 +102,31 @@ class SessionsController < ApplicationController
     else
       net_profit = 0
     end
-    net_profit_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(net_profit), get_options)
-    
 
-    #                       Gauge:               Value:        Color:                          Name:
-    current_ratio_data =    [current_ratio_gauge, current_ratio, calculate_color(current_ratio), "Current Ratio"]
-    asset_turnover_data =   [asset_turnover_gauge, asset_turnover, calculate_color(asset_turnover), "Asset Turnover"]
-    quick_ratio_data =      [quick_ratio_gauge, quick_ratio, calculate_color(quick_ratio), "Quick Ratio"]
-    return_on_asset_data =  [return_on_asset_gauge, return_on_asset, calculate_color(return_on_asset), "Return on Asset"]
-    net_profit_data =       [net_profit_gauge, net_profit, calculate_color(net_profit), "Net Profit Ratio"]
-    
+    # Ratios
+    current_ratio_gauge =         GoogleVisualr::Interactive::Gauge.new(  new_gauge(current_ratio),        get_ratio_options)
+    asset_turnover_ratio_gauge =  GoogleVisualr::Interactive::Gauge.new(  new_gauge(asset_turnover_ratio), get_ratio_options)
+    quick_ratio_gauge =           GoogleVisualr::Interactive::Gauge.new(  new_gauge(quick_ratio),          get_ratio_options)
+
+    # Percentages 
+    reo_percentage_gauge =        GoogleVisualr::Interactive::Gauge.new(  new_gauge(reo_percentage),       get_percentage_options)
+    return_on_asset_gauge =       GoogleVisualr::Interactive::Gauge.new(  new_gauge(return_on_asset),      get_percentage_options)
+    net_profit_gauge =            GoogleVisualr::Interactive::Gauge.new(  new_gauge(net_profit),           get_percentage_options)
+
+
+    #                             Gauge:                        Value:                 Color:                                       Name:
+    current_ratio_data =          [current_ratio_gauge,         current_ratio,        calculate_ratio_color(current_ratio),         "Current Ratio"]
+    asset_turnover_ratio_data =   [asset_turnover_ratio_gauge,  asset_turnover_ratio, calculate_ratio_color(asset_turnover_ratio),  "Asset Turnover"]
+    quick_ratio_data =            [quick_ratio_gauge,           quick_ratio,          calculate_ratio_color(quick_ratio),           "Quick Ratio"]
+
+    reo_percentage_data =         [reo_percentage_gauge,        reo_percentage,       calculate_percentage_color(reo_percentage),   "Return on Equity"]
+    return_on_asset_data =        [return_on_asset_gauge,       return_on_asset,      calculate_percentage_color(return_on_asset),  "Return on Asset"]
+    net_profit_data =             [net_profit_gauge,            net_profit,           calculate_percentage_color(net_profit),       "Net Profit Ratio"]
+
     # Once you create a new gauge at to this array 
-    @all_gauges = [current_ratio_data, asset_turnover_data, quick_ratio_data, return_on_asset_data, net_profit_data]
-    @index = @all_gauges.count
+    @ratio_gauges = [current_ratio_data, asset_turnover_ratio_data, quick_ratio_data]
+    @percentage_gauges = [reo_percentage_data, return_on_asset_data, net_profit_data]
+    @index = @ratio_gauges.count
   end
 
   def sign_up
@@ -213,15 +230,15 @@ class SessionsController < ApplicationController
     @total_liabilities = @liability_accounts.pluck(:balance).map(&:abs).sum
     @equity_accounts = @non_zero_accounts.where(name: ["Contributed Capital"])
 
-    @retained_earnings_account = ["Retained Earnings", Account.retained_earnings_value()]
-    @total_equity = @equity_accounts.pluck(:balance).map(&:abs).sum + Account.retained_earnings_value()
+    @retained_earnings_account = ["Retained Earnings", Account.find_by(account_number: 325).balance.abs]
+    @total_equity = @equity_accounts.pluck(:balance).map(&:abs).sum + Account.find_by(account_number: 325).balance.abs
 
     @total_l_and_e = @total_liabilities + @total_equity
   end
 
   def retained_earnings
     stored_net_income
-    @beginning_balance = 0
+    @beginning_balance = Account.find_by(account_number: 325).balance.abs
     @net_income #Pulls from stored_net_income
     @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
     @ending_balance = (@beginning_balance + @net_income) - @less_drawings
@@ -248,22 +265,44 @@ class SessionsController < ApplicationController
     return data_table
   end 
 
-  def get_options
-    opts   = {  :width => 200,      :height => 300, 
-                :redFrom => 0,      :redTo => 33, 
-                :yellowFrom => 33,  :yellowTo => 66, 
-                :greenFrom => 66,   :greenTo => 100, 
-                :min => 0,          :max => 100,
+  def get_ratio_options
+    opts   = {  :width => 250,      :height => 350, 
+                :redFrom => 0,      :redTo => 0.5, 
+                :yellowFrom => 0.5,  :yellowTo => 1, 
+                :greenFrom => 1,   :greenTo => 10, 
+                :min => 0,          :max => 10,
+                :minorTicks => 2.5
+              }
+  end
+
+  def get_percentage_options
+    opts   = {  :width => 250,      :height => 350, 
+                :redFrom => 0,      :redTo => 7.5, 
+                :yellowFrom => 7.5,  :yellowTo => 15, 
+                :greenFrom => 15,   :greenTo => 50, 
+                :min => 0,          :max => 50,
                 :minorTicks => 5
               }
   end
 
-  def calculate_color(value)
-    if value <= 33
+  def calculate_ratio_color(value)
+    if value <= 3
       color = "red"
-    elsif value >= 34 && value <= 66
+    elsif value >= 3 && value <= 6
       color = "yellow"
-    elsif value >= 67
+    elsif value >= 6
+      color = "green"
+    end
+    return color
+  end
+
+
+  def calculate_percentage_color(value)
+    if value <= 7.5
+      color = "red"
+    elsif value >= 7.5 && value <= 15
+      color = "yellow"
+    elsif value >= 15
       color = "green"
     end
     return color
