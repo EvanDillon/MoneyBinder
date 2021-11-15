@@ -51,9 +51,7 @@
               <p style="line-height:40%" class="text-center">
                 <a class="nav-link"></a>
                 <%= link_to 'Help', "/help_index", class: "nav-link"%>
-                <% if current_user.userType != 1 %>
-                  <%= link_to "Email", send_message_path, class: "nav-link"%>
-                <% end %>
+                <%= link_to "Email", send_message_path, class: "nav-link"%>
               </p>
             </li>
             <a href="/profile" class="nav-link">
