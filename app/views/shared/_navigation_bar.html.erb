@@ -5,9 +5,6 @@
       <%= image_tag("logo.png", width: '60px', class: "mr-auto d-block")%>
       <%= link_to "MoneyBinder", homepage_path, class: "navbar-brand", style: "padding-left:10px" %>
     
-      <button class="btn btn-primary bi-arrow-left hBack" type="button"></button>
-      <button class="btn btn-primary bi-arrow-right hForward" type="button"></button>
-    
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto nav-fill w-75" id= navSelect>
           <li class="nav-item <%= active_class(homepage_path) %>">
@@ -44,6 +41,8 @@
               <%= link_to 'User Management', user_management_path, class: "nav-link"%>
             </li>
           <%end%>
+          <button class="btn btn-primary bi-arrow-left hBack" type="button"></button>
+          <button class="btn btn-primary bi-arrow-right hForward" type="button"></button>
         </ul>
         <form class="form-inline my-2 my-lg-0">
           <ul class="navbar-nav ml-auto">
