@@ -73,6 +73,7 @@ class SessionsController < ApplicationController
       asset_turnover_ratio = 0
     end
 
+<<<<<<< HEAD
     @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
     if !@total_liabilities.zero?
       quick_ratio = ActionController::Base.helpers.number_with_precision(((@total_current_assets - @total_inventory) / @total_liabilities ), precision: 2, delimiter: ',').to_f
@@ -80,12 +81,15 @@ class SessionsController < ApplicationController
       quick_ratio = 0
     end
 
+=======
+>>>>>>> 38511c737d3b957f934b545736be18d7a407cbc9
     # Return on Equity Ratio (ROE)  (Net income / Shareholder equity)
     if !@net_income.zero? || !@total_equity.zero?
       reo_percentage = ActionController::Base.helpers.number_with_precision((@net_income / @total_equity)*100, precision: 1, delimiter: ',').to_f
     else
       reo_percentage = 0
     end
+<<<<<<< HEAD
 
     current_ratio_gauge =         GoogleVisualr::Interactive::Gauge.new(  new_gauge(current_ratio),        get_ratio_options)
     asset_turnover_ratio_gauge =  GoogleVisualr::Interactive::Gauge.new(  new_gauge(asset_turnover_ratio), get_ratio_options)
@@ -100,10 +104,24 @@ class SessionsController < ApplicationController
 
     reo_percentage_data =         [reo_percentage_gauge,        reo_percentage,       calculate_percentage_color(reo_percentage),   "Return on Equity"]
 
+=======
 
+    current_ratio_gauge =         GoogleVisualr::Interactive::Gauge.new(  new_gauge(current_ratio),        get_ratio_options)
+    asset_turnover_ratio_gauge =  GoogleVisualr::Interactive::Gauge.new(  new_gauge(asset_turnover_ratio), get_ratio_options)
+    reo_percentage_gauge =        GoogleVisualr::Interactive::Gauge.new(  new_gauge(reo_percentage),       get_percentage_options)
+>>>>>>> 38511c737d3b957f934b545736be18d7a407cbc9
+
+    #                             Gauge:                        Value:                 Color:                                       Name:
+    current_ratio_data =          [current_ratio_gauge,         current_ratio,        calculate_ratio_color(current_ratio),         "Current Ratio"]
+    asset_turnover_ratio_data =   [asset_turnover_ratio_gauge,  asset_turnover_ratio, calculate_ratio_color(asset_turnover_ratio),  "Asset Turnover"]
+    reo_percentage_data =         [reo_percentage_gauge,        reo_percentage,       calculate_percentage_color(reo_percentage),   "Return on Equity"]
 
     # Once you create a new gauge at to this array 
+<<<<<<< HEAD
     @ratio_gauges = [current_ratio_data, asset_turnover_ratio_data, quick_ratio_data]
+=======
+    @ratio_gauges = [current_ratio_data, asset_turnover_ratio_data]
+>>>>>>> 38511c737d3b957f934b545736be18d7a407cbc9
     @percentage_gauges = [reo_percentage_data]
     @index = @ratio_gauges.count
   end
