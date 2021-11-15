@@ -113,6 +113,10 @@ class SessionsController < ApplicationController
     return_on_asset_gauge =       GoogleVisualr::Interactive::Gauge.new(  new_gauge(return_on_asset),      get_percentage_options)
     net_profit_gauge =            GoogleVisualr::Interactive::Gauge.new(  new_gauge(net_profit),           get_percentage_options)
 
+    #                             Gauge:                        Value:                 Color:                                       Name:
+    current_ratio_data =          [current_ratio_gauge,         current_ratio,        calculate_ratio_color(current_ratio),         "Current Ratio"]
+    asset_turnover_ratio_data =   [asset_turnover_ratio_gauge,  asset_turnover_ratio, calculate_ratio_color(asset_turnover_ratio),  "Asset Turnover"]
+    reo_percentage_data =         [reo_percentage_gauge,        reo_percentage,       calculate_percentage_color(reo_percentage),   "Return on Equity"]
 
     #                             Gauge:                        Value:                 Color:                                       Name:
     current_ratio_data =          [current_ratio_gauge,         current_ratio,        calculate_ratio_color(current_ratio),         "Current Ratio"]
