@@ -59,57 +59,72 @@ class SessionsController < ApplicationController
 
   def homepage
     # Can access any variable in reports (such as the ones below) because of before_actions at the top.
+    # Current ratio (current assets / total liabilites)
     if !@total_current_assets.zero? || !@total_liabilities.zero?
-      current_ratio = (@total_current_assets / @total_liabilities).round(1) * 100
+      current_ratio = ActionController::Base.helpers.number_with_precision((@total_current_assets / @total_liabilities), precision: 2, delimiter: ',').to_f
     else
       current_ratio = 0
     end
-    current_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(current_ratio), get_options)
 
+    # Asset Turnover ratio  (Net income / total assets)
     if !@net_income.zero? || !@total_assets.zero?
-      asset_turnover = (@net_income / @total_assets).round(1) * 100
+      asset_turnover_ratio = ActionController::Base.helpers.number_with_precision((@net_income / @total_assets), precision: 2, delimiter: ',').to_f
     else
-      asset_turnover = 0
+      asset_turnover_ratio = 0
     end
-    asset_turnover_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(asset_turnover), get_options)
 
     @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
-    if !@total_liabilities.zero?
-      quick_ratio = ( (@total_current_assets - @total_inventory) / @total_liabilities ).round(1) * 100
+    if !@total_liabilities.zero? || !@total_current_assets.zero?
+      quick_ratio = ActionController::Base.helpers.number_with_precision(((@total_current_assets - @total_inventory) / @total_liabilities ), precision: 2, delimiter: ',').to_f
     else
       quick_ratio = 0
     end
 
-    quick_ratio_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(quick_ratio), get_options)
+    # Return on Equity Ratio (ROE)  (Net income / Shareholder equity)
+    if !@net_income.zero? || !@total_equity.zero?
+      reo_percentage = ActionController::Base.helpers.number_with_precision((@net_income / @total_equity)*100, precision: 1, delimiter: ',').to_f
+    else
+      reo_percentage = 0
+    end
 
-    if (!@net_income.zero? ||@total_assets.zero?)
-      return_on_asset = (@net_income / @total_assets).round(1) * 100
+    # Return on asset
+    if !@net_income.zero? || !@total_assets.zero?
+      return_on_asset = ActionController::Base.helpers.number_with_precision((@net_income / @total_assets)*100, precision: 1, delimiter: ',').to_f
     else
       return_on_asset = 0;
     end
 
-    return_on_asset_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(return_on_asset), get_options)
-
+    # Net Profit ratio
     @account = Account.find_by(name: 'Service Revenue')
     net_profit_helper = @account.balance
     if !@net_income.zero? || !net_profit_helper.zero?
-      net_profit = (@net_income/ (net_profit_helper.abs)).round(2) * 100
+      net_profit = ActionController::Base.helpers.number_with_precision((@net_income/ (net_profit_helper.abs))*100, precision: 1, delimiter: ',').to_f
     else
       net_profit = 0
     end
-    net_profit_gauge = GoogleVisualr::Interactive::Gauge.new(new_gauge(net_profit), get_options)
-    
 
-    #                       Gauge:               Value:        Color:                          Name:
-    current_ratio_data =    [current_ratio_gauge, current_ratio, calculate_color(current_ratio), "Current Ratio"]
-    asset_turnover_data =   [asset_turnover_gauge, asset_turnover, calculate_color(asset_turnover), "Asset Turnover"]
-    quick_ratio_data =      [quick_ratio_gauge, quick_ratio, calculate_color(quick_ratio), "Quick Ratio"]
-    return_on_asset_data =  [return_on_asset_gauge, return_on_asset, calculate_color(return_on_asset), "Return on Asset"]
-    net_profit_data =       [net_profit_gauge, net_profit, calculate_color(net_profit), "Net Profit Ratio"]
-    
+    # Ratios                                                                                              (red_max, yellow_max, max_limit, ticks)
+    current_ratio_gauge =         GoogleVisualr::Interactive::Gauge.new(  new_gauge(current_ratio),        get_options(0.5, 1, 10, 2.5))
+    quick_ratio_gauge =           GoogleVisualr::Interactive::Gauge.new(  new_gauge(quick_ratio),          get_options(0.5, 1, 10, 2.5))
+    asset_turnover_ratio_gauge =  GoogleVisualr::Interactive::Gauge.new(  new_gauge(asset_turnover_ratio), get_options(0.5, 1, 2, 2.5))
+
+    # Percentages 
+    reo_percentage_gauge =        GoogleVisualr::Interactive::Gauge.new(  new_gauge(reo_percentage),       get_options(7.5, 15, 50, 5))
+    return_on_asset_gauge =       GoogleVisualr::Interactive::Gauge.new(  new_gauge(return_on_asset),      get_options(7.5, 15, 50, 5))
+    net_profit_gauge =            GoogleVisualr::Interactive::Gauge.new(  new_gauge(net_profit),           get_options(7.5, 15, 50, 5))
+
+    #                             Gauge:                        Value:                Color:  (value, red_max, yellow_max)       Name:
+    current_ratio_data =          [current_ratio_gauge,         current_ratio,        calc_color(current_ratio, 0.5, 1),        "Current Ratio"]
+    quick_ratio_data =            [quick_ratio_gauge,           quick_ratio,          calc_color(quick_ratio, 0.5, 1),          "Quick Ratio"]
+    asset_turnover_ratio_data =   [asset_turnover_ratio_gauge,  asset_turnover_ratio, calc_color(asset_turnover_ratio, 0.5, 1), "Asset Turnover"]
+    reo_percentage_data =         [reo_percentage_gauge,        reo_percentage,       calc_color(reo_percentage, 7.5, 15),      "Return on Equity"]
+    return_on_asset_data =        [return_on_asset_gauge,       return_on_asset,      calc_color(return_on_asset, 7.5, 15),     "Return on Asset"]
+    net_profit_data =             [net_profit_gauge,            net_profit,           calc_color(net_profit, 7.5, 15),          "Net Profit Ratio"]
+
     # Once you create a new gauge at to this array 
-    @all_gauges = [current_ratio_data, asset_turnover_data, quick_ratio_data, return_on_asset_data, net_profit_data]
-    @index = @all_gauges.count
+    @ratio_gauges = [current_ratio_data, quick_ratio_data, asset_turnover_ratio_data]
+    @percentage_gauges = [reo_percentage_data, return_on_asset_data, net_profit_data]
+    @index = @ratio_gauges.count
   end
 
   def sign_up
@@ -221,7 +236,7 @@ class SessionsController < ApplicationController
 
   def retained_earnings
     stored_net_income
-    @beginning_balance = 0
+    @beginning_balance = Account.find_by(account_number: 325).balance.abs
     @net_income #Pulls from stored_net_income
     @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
     @ending_balance = (@beginning_balance + @net_income) - @less_drawings
@@ -248,25 +263,25 @@ class SessionsController < ApplicationController
     return data_table
   end 
 
-  def get_options
-    opts   = {  :width => 200,      :height => 300, 
-                :redFrom => 0,      :redTo => 33, 
-                :yellowFrom => 33,  :yellowTo => 66, 
-                :greenFrom => 66,   :greenTo => 100, 
-                :min => 0,          :max => 100,
-                :minorTicks => 5
-              }
+  def get_options(red_max, yellow_max, max_limit, ticks)
+    opts =  { 
+              :width => 250,            :height => 350, 
+              :redFrom => 0,            :redTo => red_max, 
+              :yellowFrom => red_max,   :yellowTo => yellow_max, 
+              :greenFrom => yellow_max, :greenTo => max_limit, 
+              :min => 0,                :max => max_limit,
+              :minorTicks => ticks
+            }
   end
 
-  def calculate_color(value)
-    if value <= 33
+  def calc_color(value, red_max, yellow_max)
+    if value <= red_max
       color = "red"
-    elsif value >= 34 && value <= 66
+    elsif value >= red_max && value <= yellow_max
       color = "yellow"
-    elsif value >= 67
+    elsif value >= yellow_max
       color = "green"
     end
-    return color
   end
 
   def user_params

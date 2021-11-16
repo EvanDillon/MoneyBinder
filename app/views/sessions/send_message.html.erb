@@ -2,29 +2,25 @@
 <%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %><br>
 <div class="container">
-  <% if current_user.userType != 1 %>
-    <h1 class="text-center">Email</h1>
-    <table class="table" id="table-layout">
-        <thead>
-        <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Email Address</th>
-            <th scope="col">Email</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @all_users.each do |user| %>
-            <tr>
-            <td><%= user.username %></td>
-            <td><%= user.email %></td>
-            <td><%= button_to "Email", "mailto:#{user.email}", method: :get, class: "btn btn-primary btn-sm float-left", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Send this user an email' %></td>
-            </tr>
-        <%end%>
-        </tbody>
-    </table>
-  <% else %>
-    <h1 class= "text-center">Forbidden. You do not have access to this page.</h1>
-  <% end %>
+  <h1 class="text-center">Email</h1>
+  <table class="table" id="table-layout">
+      <thead>
+      <tr>
+          <th scope="col">Username</th>
+          <th scope="col">Email Address</th>
+          <th scope="col">Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @all_users.each do |user| %>
+          <tr>
+          <td><%= user.username %></td>
+          <td><%= user.email %></td>
+          <td><%= button_to "Email", "mailto:#{user.email}", method: :get, class: "btn btn-primary btn-sm float-left", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Send this user an email' %></td>
+          </tr>
+      <%end%>
+      </tbody>
+  </table>
 </div>
 
 <script>

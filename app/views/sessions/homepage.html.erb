@@ -2,12 +2,59 @@
 <%= render 'flash_messages' %>
 <div class="container"><br>
     <h2 class="text-center">Dashboard</h2>
-    <table>
+    <table class="table">
       <tr>
-        <% @all_gauges.each do |ratio|%>
+        <% @ratio_gauges.each do |ratio|%>
         <td style="padding: 10px;">
-          <div id= "<%= @index.to_s %>"></div>
-          <%= render_chart ratio.first, @index.to_s %>
+
+          <div style="padding-left:15%;">
+            <div id= "<%= @index.to_s %>"></div>
+            <%= render_chart ratio.first, @index.to_s %>
+          </div>
+
+          <% if ratio.third == "green" %>
+            <div class="p-3 mb-2 bg-success text-white text-center rounded">
+              <h2> 
+                <i class="bi bi-caret-up-fill"></i>
+                <%= ratio.second %> : 1
+              </h2>
+              <div class="h5">
+                <%= ratio.fourth %>
+              </div>              
+            </div>
+          <% elsif ratio.third == "yellow"%>
+            <div class="p-3 mb-2 bg-warning text-center rounded">
+              <h2> 
+                <i class="bi bi-exclamation-square"></i>                
+                <%= ratio.second %> : 1
+              </h2>
+              <div class="h5">
+                <%= ratio.fourth %>
+              </div>
+            </div>
+          <% elsif ratio.third == "red"%>
+            <div class="p-3 mb-2 bg-danger text-white text-center rounded">
+              <h2> 
+                <i class="bi bi-caret-down-fill"></i>
+                <%= ratio.second %> : 1
+              </h2>
+              <div class="h5">
+                <%= ratio.fourth %>
+              </div>              
+            </div>
+          <% end %>
+          <% @index -= 1 %>
+        </td>
+        <% end %>
+      </tr>
+      <tr>
+        <% @percentage_gauges.each do |ratio|%>
+        <td style="padding: 10px;">
+
+          <div style="padding-left:15%;">
+            <div id= "<%= @index.to_s %>"></div>
+            <%= render_chart ratio.first, @index.to_s %>
+          </div>
 
           <% if ratio.third == "green" %>
             <div class="p-3 mb-2 bg-success text-white text-center rounded">
@@ -17,11 +64,12 @@
               </h2>
               <div class="h5">
                 <%= ratio.fourth %>
-              </div>              </div>
+              </div>              
+            </div>
           <% elsif ratio.third == "yellow"%>
             <div class="p-3 mb-2 bg-warning text-center rounded">
               <h2> 
-                <i class="bi bi-dash-lg"></i>
+                <i class="bi bi-exclamation-square"></i>                
                 <%= ratio.second %>%
               </h2>
               <div class="h5">
