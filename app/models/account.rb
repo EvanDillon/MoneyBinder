@@ -35,7 +35,10 @@ class Account < ApplicationRecord
     beginning_balance = 0
     less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
     @ending_balance = (beginning_balance + net_income) - less_drawings
-
-    return(@ending_balance)
+      if Account.find_by(account_number: 325).balance.abs > 0
+        return(Account.find_by(account_number: 325).balance.abs)
+      else 
+        return(@ending_balance)
+      end
   end
 end

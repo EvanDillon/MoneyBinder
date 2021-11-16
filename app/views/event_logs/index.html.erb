@@ -110,9 +110,10 @@
     <table class="table" id="table-layout-2">
       <thead>
         <tr>
+          <th scope="col">#</th>
           <th scope="col" class="text-center">Date Added</th>
           <th scope="col" class="text-center">Entry Type</th>
-          <th scope="col">Created by</th>
+          <th scope="col" class="text-center">Created by</th>
           <th scope="col">Accounts</th>
           <th scope="col" class="text-right">Debit</th>
           <th scope="col" class="text-right">Credit</th>
@@ -122,9 +123,10 @@
       <tbody>
         <% @approved_journal_entries.each do |journal_entry| %>
         <tr>
+          <td><%= journal_entry.id %></td>
           <td class="text-center"><%= journal_entry.date_added %></td>
           <td class="text-center"><%= journal_entry.entry_type %></td>
-          <td><%= User.find_by(id: journal_entry.user_id).username.truncate(10) %></td>
+          <td class="text-center"><%= User.find_by(id: journal_entry.user_id).username.truncate(10) %></td>
           <td>
             <% journal_entry.debit_account.each do |a|%>
               <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(10)}", "/ledger/#{a}"%><br>
@@ -163,12 +165,20 @@
 
 <script>
   $(document).ready(function() {
-    $('#table-layout-1').dataTable();
+    $('#table-layout-1').dataTable(
+      {
+        "order": [[ 0, "desc" ]]
+      }
+    );
   });
 </script>
 
 <script>
   $(document).ready(function() {
-    $('#table-layout-2').dataTable();
+    $('#table-layout-2').dataTable(
+      {
+        "order": [[ 0, "desc" ]]
+      }
+    );
   });
 </script>
