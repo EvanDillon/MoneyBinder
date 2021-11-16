@@ -66,13 +66,6 @@ class SessionsController < ApplicationController
       current_ratio = 0
     end
 
-    # Asset Turnover ratio  (Net income / total assets)
-    if !@net_income.zero? || !@total_assets.zero?
-      asset_turnover_ratio = ActionController::Base.helpers.number_with_precision((@net_income / @total_assets), precision: 2, delimiter: ',').to_f
-    else
-      asset_turnover_ratio = 0
-    end
-
     @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
     if !@total_liabilities.zero? || !@total_current_assets.zero?
       quick_ratio = ActionController::Base.helpers.number_with_precision(((@total_current_assets - @total_inventory) / @total_liabilities ), precision: 2, delimiter: ',').to_f
@@ -101,6 +94,13 @@ class SessionsController < ApplicationController
       net_profit = ActionController::Base.helpers.number_with_precision((@net_income/ (net_profit_helper.abs))*100, precision: 1, delimiter: ',').to_f
     else
       net_profit = 0
+    end
+    
+    # Asset Turnover Ratio  (sales / total assets)
+    if !net_profit_helper.zero? || !@total_assets.zero?
+      asset_turnover_ratio = ActionController::Base.helpers.number_with_precision(((net_profit_helper.abs) / @total_assets), precision: 2, delimiter: ',').to_f
+    else
+      asset_turnover_ratio = 0
     end
 
     # Ratios                                                                                              (red_max, yellow_max, max_limit, ticks)
