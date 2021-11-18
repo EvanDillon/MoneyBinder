@@ -88,8 +88,7 @@ class SessionsController < ApplicationController
     end
 
     # Net Profit ratio
-    @account = Account.find_by(name: 'Service Revenue')
-    net_profit_helper = @account.balance
+    net_profit_helper = Account.find_by(name: 'Service Revenue').balance
     if !@net_income.zero? || !net_profit_helper.zero?
       net_profit = ActionController::Base.helpers.number_with_precision((@net_income/ (net_profit_helper.abs))*100, precision: 1, delimiter: ',').to_f
     else
