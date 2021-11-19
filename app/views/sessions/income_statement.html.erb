@@ -19,7 +19,7 @@
       <% end %>
       <tr class="table-active font-weight-bold">
         <td>Total Revenues</td>
-        <td class="text-right">$<%= number_with_precision(@total_revenues.abs, precision: 2, delimiter: ',') %></td>
+        <td class="text-right" style="text-decoration: underline;">$<%= number_with_precision(@total_revenues.abs, precision: 2, delimiter: ',') %></td>
       </tr>
 
       <tr class="table-primary">
@@ -36,7 +36,7 @@
       
       <tr class="table-active font-weight-bold">
           <td>Total Expenses</td>
-          <td class="text-right">$<%= number_with_precision(@total_expenses, precision: 2, delimiter: ',') %></td>
+          <td class="text-right" style="text-decoration: underline;">$<%= number_with_precision(@total_expenses, precision: 2, delimiter: ',') %></td>
       </tr>
       <tr class="table-primary font-weight-bold">
       <td>Net Income (Loss)</td>

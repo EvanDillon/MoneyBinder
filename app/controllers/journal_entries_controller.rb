@@ -107,7 +107,8 @@ class JournalEntriesController < ApplicationController
                                         credit_total:   @debit << Account.retained_earnings_value(),
                                         entry_type: "Closing",
                                         status: "Pending",
-                                        description: "Closing entry created by #{current_user.username}"
+                                        description: "Closing entry created by #{current_user.username}",
+                                        date_added: Time.now.to_date
                                       )
 
     if @closing_journal_entry.save

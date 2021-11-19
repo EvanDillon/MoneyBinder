@@ -237,8 +237,9 @@ class SessionsController < ApplicationController
     stored_net_income
     @beginning_balance = Account.find_by(account_number: 325).balance.abs
     @net_income #Pulls from stored_net_income
+    @total_earnings = @beginning_balance + @net_income
     @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
-    @ending_balance = (@beginning_balance + @net_income) - @less_drawings
+    @ending_balance = (@total_earnings) - @less_drawings
   end
 
   def destroy

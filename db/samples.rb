@@ -1321,7 +1321,7 @@ Account.create! do |a|
     a.description = ""
     a.normal_side = "Credit"
     a.category = 'Liability'
-    a.subcategory = 'Current'
+    a.subcategory = 'Long Term'
     a.initial_balance = 0 # This must start at 0 for testing with the solved problem
     a.debit = 0
     a.credit = 0
