@@ -8,19 +8,23 @@
   <table class="table">
   <tbody>
       <tr>
-          <td>Beginning Retained Earnings</td>
+          <td>Retained Earnings, beginning</td>
           <td class="text-right">$<%= number_with_precision(@beginning_balance, precision: 2, delimiter: ',') %></td>
       </tr>
       <tr>
           <td>Net Income</td>
           <td class="text-right">$<%= number_with_precision(@net_income, precision: 2, delimiter: ',') %></td>
       </tr>
+      <tr class="table-active">
+        <td>Total Income</td>
+        <td class="text-right" style="text-decoration-line: underline; text-decoration-style: underline;">$<%= number_with_precision(@total_earnings, precision: 2, delimiter: ',') %></td>
+      </tr>
       <tr>
           <td>Less Drawings (Dividends)</td>
           <td class="text-right">$<%= number_with_precision(@less_drawings, precision: 2, delimiter: ',') %></td>
       </tr>
-      <tr class="table-active font-weight-bold">
-          <td>Ending Retained Balance</td>
+      <tr class="table-primary font-weight-bold">
+          <td>Retained Earnings, ending</td>
           <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@ending_balance, precision: 2, delimiter: ',') %></td>
       </tr>
   </tbody>
