@@ -197,6 +197,15 @@ class SessionsController < ApplicationController
     @non_zero_accounts = Account.where('balance != ?', 0)
     @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum
     @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum
+
+    # Creates the trial_balance PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "trial_balance_#{Time.now.year}", 
+                template: "sessions/reports_pdf/trial_balance_pdf.html.erb"
+      end
+    end
   end
 
   def income_statement
@@ -210,6 +219,15 @@ class SessionsController < ApplicationController
     @total_expenses = @expense_accounts.pluck(:balance).sum
 
     @net_income = @total_revenues.abs - @total_expenses
+
+    # Creates the income_statement PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "income_statement_#{Time.now.year}", 
+                template: "sessions/reports_pdf/income_statement_pdf.html.erb"
+      end
+    end
   end
 
   def balance_sheet
@@ -231,6 +249,15 @@ class SessionsController < ApplicationController
     @total_equity = @equity_accounts.pluck(:balance).map(&:abs).sum + Account.retained_earnings_value()
 
     @total_l_and_e = @total_liabilities + @total_equity
+
+    # Creates the balance_sheet PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "balance_sheet_#{Time.now.year}", 
+                template: "sessions/reports_pdf/balance_sheet_pdf.html.erb"
+      end
+    end
   end
 
   def retained_earnings
@@ -240,6 +267,15 @@ class SessionsController < ApplicationController
     @total_earnings = @beginning_balance + @net_income
     @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
     @ending_balance = (@total_earnings) - @less_drawings
+
+    # Creates the retained_earnings PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "retained_earnings_#{Time.now.year}", 
+                template: "sessions/reports_pdf/retained_earnings_pdf.html.erb"
+      end
+    end
   end
 
   def destroy

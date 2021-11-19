@@ -1,0 +1,52 @@
+<div style="margin: auto; width: 90%; border: 3px solid #0275d8; padding: 10px;">
+  <div style="margin: auto; width: 50%; text-align:center;">
+    <h2>Addams & Family Inc.</h2>
+    <h2>Trial Balance</h2>
+    <h3>As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3>
+  </div><br>
+
+  <div style="margin: auto; width: 75%; text-align:center; ">
+    <table style="width: 100%;">
+      <thead>
+        <tr style="background-color: #cce5ff;">
+          <th style="width: 60%;">Account</th>
+          <th style="width: 20%;">Debit</th>
+          <th style="width: 20%;">Credit</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% @non_zero_accounts.each do |account| %>
+          <tr>
+            <td style="text-indent: 40px"><%= "#{account.account_number} - #{account.name.truncate(40)}" %> </td>
+            <% if account.normal_side == "Debit" %>
+              <td style="text-align:right;">$<%= number_with_precision(account.balance.abs, precision: 2, delimiter: ',') %></td></td>
+              <td></td>
+            <% else %>
+              <td></td>
+              <td style="text-align:right;">$<%= number_with_precision(account.balance.abs, precision: 2, delimiter: ',') %></td>
+            <% end %>
+          </tr>
+          <%end%>
+      </tbody>
+      <thead>
+        <tr style="background-color: #e2e3e5;">
+          <th>Total</th>
+          <th style="text-decoration: underline; text-decoration-style: double; ">$
+            <%= number_with_precision(@debit_total, precision: 2, delimiter: ',') %>
+          </th>
+          <th style="text-decoration: underline; text-decoration-style: double; ">$
+            <%= number_with_precision(@credit_total, precision: 2, delimiter: ',') %>
+          </th>
+        </tr>
+      </thead>
+    </table>
+  </div><br><br>
+</div>
+
+<style>
+  table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+</style>

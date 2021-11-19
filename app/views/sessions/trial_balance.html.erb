@@ -4,7 +4,14 @@
 <div class="container">
   <h2 class="text-center">Addams & Family Inc.</h2>
   <h2 class="text-center">Trial Balance</h2>
-  <h3 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3><br>
+  <h3 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3>
+
+  <% unless current_user.userType != 2 %>
+    <div class="text-right">  
+        <%= link_to "Save PDF", trial_balance_path(format: :pdf), class: "btn btn-primary" %>
+    </div>
+  <%end%><br>
+
   <table class="table" id="table-layout">
     <thead>
       <tr class="table-primary">
