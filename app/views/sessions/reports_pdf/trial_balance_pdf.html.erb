@@ -17,7 +17,7 @@
       <tbody>
           <% @non_zero_accounts.each do |account| %>
           <tr>
-            <td style="text-indent: 40px"><%= "#{account.account_number} - #{account.name.truncate(40)}" %> </td>
+            <td style="text-indent: 40px; text-align:left;"><%= "#{account.account_number} - #{account.name.truncate(40)}" %> </td>
             <% if account.normal_side == "Debit" %>
               <td style="text-align:right;">$<%= number_with_precision(account.balance.abs, precision: 2, delimiter: ',') %></td></td>
               <td></td>
@@ -32,10 +32,10 @@
         <tr style="background-color: #e2e3e5;">
           <th>Total</th>
           <th style="text-decoration: underline; text-decoration-style: double; ">$
-            <%= number_with_precision(@debit_total, precision: 2, delimiter: ',') %>
+            <%= number_with_precision(@non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum, precision: 2, delimiter: ',') %>
           </th>
           <th style="text-decoration: underline; text-decoration-style: double; ">$
-            <%= number_with_precision(@credit_total, precision: 2, delimiter: ',') %>
+            <%= number_with_precision(@non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum, precision: 2, delimiter: ',') %>
           </th>
         </tr>
       </thead>

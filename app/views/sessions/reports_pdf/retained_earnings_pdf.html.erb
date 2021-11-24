@@ -5,7 +5,7 @@
     <h3>For the period ending <%= Date.new(2021, 12, 31).strftime("%B %d, %Y") %></h3>
   </div><br>
   
-  <div style="margin: auto; width: 75%; text-align:center; ">
+  <div style="margin: auto; width: 75%; text-align:left; ">
     <table style="width: 100%;">
       <tbody>
         <tr>
@@ -18,7 +18,7 @@
         </tr>
         <tr style="background-color: #e2e3e5;">
           <td><b>Total Income</b></td>
-          <td style="text-align:right;" style="text-decoration-line: underline; text-decoration-style: underline;"><b>$<%= number_with_precision(@total_earnings, precision: 2, delimiter: ',') %></b></td>
+          <td style="text-align:right;" style="text-decoration-line: underline; text-decoration-style: underline;"><b>$<%= number_with_precision(@beginning_balance + @net_income, precision: 2, delimiter: ',') %></b></td>
         </tr>
         <tr>
           <td>Less Drawings (Dividends)</td>
@@ -26,7 +26,7 @@
         </tr>
         <tr style="background-color: #cce5ff;">
           <td><b>Retained Earnings, ending</b></td>
-          <td style="text-align:right; text-decoration: underline;"><b>$<%= number_with_precision(@ending_balance, precision: 2, delimiter: ',') %></b></td>
+          <td style="text-align:right; text-decoration: underline;"><b>$<%= number_with_precision((@beginning_balance + @net_income) - @less_drawings, precision: 2, delimiter: ',') %></b></td>
         </tr>
       </tbody>
     </table>

@@ -1,10 +1,10 @@
 class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:login, :welcome, :sign_up, :process_new_sign_up]
   before_action :stored_net_income, :only => [:income_statement, :retained_earnings]
-  before_action :trial_balance,     :only => :homepage
-  before_action :income_statement,  :only => :homepage
-  before_action :retained_earnings, :only => :homepage
-  before_action :balance_sheet,     :only => :homepage
+  before_action :trial_balance,     :only => [:homepage, :send_trial_balance]
+  before_action :income_statement,  :only => [:homepage, :send_income_statement]
+  before_action :retained_earnings, :only => [:homepage, :send_retained_earnings]
+  before_action :balance_sheet,     :only => [:homepage, :send_balance_sheet]
   
   rescue_from Pundit::NotAuthorizedError do 
     redirect_to error_path
@@ -276,6 +276,56 @@ class SessionsController < ApplicationController
                 template: "sessions/reports_pdf/retained_earnings_pdf.html.erb"
       end
     end
+  end
+
+  def send_trial_balance
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    non_zero_accounts: @non_zero_accounts
+                  ).trial_balance_email.deliver_now
+    redirect_to trial_balance_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
+  end
+
+  def send_income_statement
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    revenue_accounts: @revenue_accounts,
+                    total_revenues: @total_revenues,
+                    expense_accounts: @expense_accounts,
+                    total_expenses: @total_expenses
+                  ).income_statement_email.deliver_now
+    redirect_to income_statement_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
+  end
+
+  def send_retained_earnings
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    beginning_balance: @beginning_balance,
+                    net_income: @net_income,
+                    less_drawings: @less_drawings
+                  ).retained_earnings_email.deliver_now
+    redirect_to retained_earnings_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
+  end
+
+  def send_balance_sheet
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    current_assets: @current_assets,
+                    equipment_assets: @equipment_assets,
+                    liability_accounts: @liability_accounts,
+                    equity_accounts: @equity_accounts,
+                    retained_earnings_account: @retained_earnings_account,
+                    total_equity: @total_equity
+                  ).balance_sheet_email.deliver_now
+    redirect_to balance_sheet_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
   end
 
   def destroy

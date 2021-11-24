@@ -5,7 +5,7 @@
     <h3>As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3>
   </div><br>
   
-  <div style="margin: auto; width: 75%; text-align:center; border: 1px solid black;">
+  <div style="margin: auto; width: 75%; text-align:left; border: 1px solid black;">
 
     <table style="width: 100%;">
       <tbody>
@@ -41,7 +41,7 @@
         </tr>
         <tr style="background-color: #cce5ff;">
           <td ><b>Net Income (Loss)</b></td>
-          <td style="text-decoration: underline; text-align:right; padding-right: 25px; "><b>$<%= number_with_precision(@net_income, precision: 2, delimiter: ',') %></b></td>
+          <td style="text-decoration: underline; text-align:right; padding-right: 25px; "><b>$<%= number_with_precision(@total_revenues.abs - @total_expenses, precision: 2, delimiter: ',') %></b></td>
         </tr>
       </tbody>
     </table>
