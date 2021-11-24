@@ -3,7 +3,24 @@
 <div class="container">
   <h2 class="text-center">Addams & Family Inc.</h2>
   <h2 class="text-center">Balance Sheet</h2>
-  <h3 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3><br>
+  <h3 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3>
+
+  <% unless current_user.userType != 2 %>
+    <div class="text-right">  
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Email to:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <% User.all.each do |user| %>
+          <%= link_to user.username, send_balance_sheet_path(:pdf => "balance_sheet_pdf", :email => user.email), class: "dropdown-item" %>
+          <%end%>
+        </div>
+        <%= link_to "Save PDF", balance_sheet_path(format: :pdf), class: "btn btn-primary" %>
+      </div>
+    </div>
+  <%end%><br>
+
   <table class="table" id="table-layout">
     <tbody>
       <tr class="table-primary">

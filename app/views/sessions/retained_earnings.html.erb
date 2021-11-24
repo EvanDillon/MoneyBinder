@@ -4,7 +4,24 @@
 <div class="container">
   <h2 class="text-center">Addams & Family Inc.</h2>
   <h2 class="text-center">Retained Earnings</h2>
-  <h3 class="text-center">For the period ending <%= Date.new(2021, 12, 31).strftime("%B %d, %Y") %></h3><br>
+  <h3 class="text-center">For the period ending <%= Date.new(2021, 12, 31).strftime("%B %d, %Y") %></h3>
+
+  <% unless current_user.userType != 2 %>
+    <div class="text-right">  
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Email to:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <% User.all.each do |user| %>
+            <%= link_to user.username, send_retained_earnings_path(:pdf => "retained_earnings_pdf", :email => user.email), class: "dropdown-item" %>
+          <%end%>
+        </div>
+        <%= link_to "Save PDF", retained_earnings_path(format: :pdf), class: "btn btn-primary" %>
+      </div>
+    </div>
+  <%end%><br>
+
   <table class="table">
   <tbody>
       <tr>
@@ -15,7 +32,7 @@
           <td>Net Income</td>
           <td class="text-right">$<%= number_with_precision(@net_income, precision: 2, delimiter: ',') %></td>
       </tr>
-      <tr class="table-active">
+      <tr class="table-active font-weight-bold">
         <td>Total Income</td>
         <td class="text-right" style="text-decoration-line: underline; text-decoration-style: underline;">$<%= number_with_precision(@total_earnings, precision: 2, delimiter: ',') %></td>
       </tr>

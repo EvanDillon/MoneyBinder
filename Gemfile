@@ -31,6 +31,10 @@ gem 'pundit'
 
 gem "google_visualr", "~> 2.5.1"
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
