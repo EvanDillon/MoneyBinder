@@ -13,12 +13,12 @@ class UsersController < ApplicationController
 
   def create
     authorize current_user, :user_admin?
+    @user = User.new(user_params)
     user_name = User.create_username(params[:firstName], params[:lastName], Time.zone.now)
     pass_check = User.valid_pass?(params[:password])
     password_update = Time.now
 
     if pass_check.empty? && !user_name.nil?
-      @user = User.new(user_params)
       @user.username = user_name
       @user.passUpdatedAt = password_update
 
@@ -26,10 +26,12 @@ class UsersController < ApplicationController
         initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
         redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_created").body 
       else 
-        redirect_to new_user_path, danger: "#{@user.errors.full_messages.first}"
+        flash.now[:danger] = "#{@user.errors.full_messages.first}"
+        render new_user_path
       end
     else
-      redirect_to new_user_path, danger: "#{pass_check}"
+      flash.now[:danger] = "#{pass_check}"
+      render new_user_path
     end
   end
 
