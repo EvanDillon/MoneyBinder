@@ -9,7 +9,7 @@
         <div class="form-row">
           <%= label_tag 'Username'%>
           <%= text_field_tag :username, "#{@user.username}", required: true, class: 'form-control'%>
-        </div>
+        </div><br>
         <%= render 'form', user: @user, type: "edit" %>
 
         <%= label_tag @user.security_question.first.question%>

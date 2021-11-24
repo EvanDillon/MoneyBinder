@@ -8,7 +8,7 @@
     <%= text_field_tag :lastName, "#{@user.lastName}", required: true, class: 'form-control'%>
   </div>
 </div>
-<% if @user.password_digest.nil? %>
+<% if type == "new" %>
   <div class="form-group">
     <%= label_tag :password%>
     <%= password_field_tag :password, nil, required: true, class: 'form-control' %>

@@ -131,12 +131,12 @@ class SessionsController < ApplicationController
   end
 
   def process_new_sign_up
+    @user = User.new(user_params)
     user_name = User.create_username(params[:firstName], params[:lastName], Time.zone.now)
     pass_check = User.valid_pass?(params[:password])
     password_update = Time.now
 
     if pass_check.empty? && !user_name.nil?
-      @user = User.new(user_params)
       @user.username = user_name
       @user.passUpdatedAt = password_update
 
@@ -156,10 +156,12 @@ class SessionsController < ApplicationController
           redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "user_create_request").body
         end      
       else 
-        redirect_to sign_up_path, danger: "#{@user.errors.full_messages.first}"
+        flash.now[:danger] = "#{@user.errors.full_messages.first}"
+        render "sessions/sign_up"
       end
     else
-      redirect_to sign_up_path, danger: "#{pass_check}"
+      flash.now[:danger] = "#{pass_check}"
+      render "sessions/sign_up"
     end
   end
 
