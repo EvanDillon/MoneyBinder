@@ -2771,332 +2771,333 @@ puts "Created account: #{Account.last.name}"
 puts "Created a total of #{Account.all.count} new accounts------------------------" 
 
 # Sample journal entries. These entries are from the solved problem document.
+if Rails.env != "production"
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Cash").id, Account.find_by(name: "Accounts Receivable").id, Account.find_by(name: "Supplies").id, Account.find_by(name: "Office Equipment").id]
+        a.credit_account = [Account.find_by(name: "Contributed Capital").id]
+        a.debit_total = ["10000", "1500", "1250", "7500"]
+        a.credit_total = ["20250"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 4 - Assets received from John Addams."
+        a.date_added = Date.new(2021, 4, 4)
+    end
 
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id, Account.find_by(name: "Accounts Receivable").id, Account.find_by(name: "Supplies").id, Account.find_by(name: "Office Equipment").id]
-    a.credit_account = [Account.find_by(name: "Contributed Capital").id]
-    a.debit_total = ["10000", "1500", "1250", "7500"]
-    a.credit_total = ["20250"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 4 - Assets received from John Addams."
-    a.date_added = Date.new(2021, 4, 4)
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Prepaid Rent").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["4500"]
+        a.credit_total = ["4500"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 4 - Paid three month\'s rent on a lease rental contract."
+        a.date_added = Date.new(2021, 4, 4)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Prepaid Insurance").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["1800"]
+        a.credit_total = ["1800"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 4 - Paid premium on property and casualty insurance policies for the year."
+        a.date_added = Date.new(2021, 4, 4)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Cash").id]
+        a.credit_account = [Account.find_by(name: "Unearned Revenue").id]
+        a.debit_total = ["3000"]
+        a.credit_total = ["3000"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 6 - Received cash from clients as an advance payment for services to be provided."
+        a.date_added = Date.new(2021, 4, 6)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Office Equipment").id]
+        a.credit_account = [Account.find_by(name: "Accounts Payable").id]
+        a.debit_total = ["1800"]
+        a.credit_total = ["1800"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 7 - Purchased additional office furniture on account from Morrilton Company."
+        a.date_added = Date.new(2021, 4, 7)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Cash").id]
+        a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
+        a.debit_total = ["800"]
+        a.credit_total = ["800"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 8 - Received cash from clients on account."
+        a.date_added = Date.new(2021, 4, 8)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Advertising Expense").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["120"]
+        a.credit_total = ["120"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 11 - Prepaid cash for newspaper advertisement."
+        a.date_added = Date.new(2021, 4,11)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Accounts Payable").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["800"]
+        a.credit_total = ["800"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 12 - Paid Morrilton Company $800 for debt incurred on April 7."
+        a.date_added = Date.new(2021, 4, 12)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+        a.credit_account = [Account.find_by(name: "Service Revenue").id]
+        a.debit_total = ["2250"]
+        a.credit_total = ["2250"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 15 - Recorded Services provided on account for April 18-22, $2,250."
+        a.date_added = Date.new(2021, 4, 15)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["400"]
+        a.credit_total = ["400"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 15 - Paid part-time receptionist for two weeks salary, $400."
+        a.date_added = Date.new(2021, 4, 15)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Cash").id]
+        a.credit_account = [Account.find_by(name: "Service Revenue").id]
+        a.debit_total = ["3175"]
+        a.credit_total = ["3175"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 15 - Recorded cash from cleints for fees earned April 14-15, $3,175"
+        a.date_added = Date.new(2021, 4, 15)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Supplies").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["750"]
+        a.credit_total = ["750"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 18 - Paid cash for newspaper advertisement, $120."
+        a.date_added = Date.new(2021, 4, 16)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+        a.credit_account = [Account.find_by(name: "Service Revenue").id]
+        a.debit_total = ["1100"]
+        a.credit_total = ["1100"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 22 - Recorded services provided on account for April 18-22, $1,100."
+        a.date_added = Date.new(2021, 4, 22)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Cash").id]
+        a.credit_account = [Account.find_by(name: "Service Revenue").id]
+        a.debit_total = ["1850"]
+        a.credit_total = ["1850"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 22 - Recorded cash from cash clients for fees earned April 18-22, $1,850."
+        a.date_added = Date.new(2021, 4, 22)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Cash").id]
+        a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
+        a.debit_total = ["1600"]
+        a.credit_total = ["1600"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 25 - Received cash from clients on account, $1600."
+        a.date_added = Date.new(2021, 4, 25)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["400"]
+        a.credit_total = ["400"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 27 - Paid part-time receptionist for two week's salary, $400."
+        a.date_added = Date.new(2021, 4, 27)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Telephone Expense").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["130"]
+        a.credit_total = ["130"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 28 - Paid telephone bill for April, $130."
+        a.date_added = Date.new(2021, 4, 28)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Utilities Expense").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["200"]
+        a.credit_total = ["200"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 29 - Paid electric bill for April, $200."
+        a.date_added = Date.new(2021, 4, 29)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Cash").id]
+        a.credit_account = [Account.find_by(name: "Service Revenue").id]
+        a.debit_total = ["2050"]
+        a.credit_total = ["2050"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 29 - Recorded cash from cash clients for fees earned April 25-29, $2,050."
+        a.date_added = Date.new(2021, 4, 29)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
+        a.credit_account = [Account.find_by(name: "Service Revenue").id]
+        a.debit_total = ["1000"]
+        a.credit_total = ["1000"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 29 - Recorded services provided on account for April 25-29, $1,000."
+        a.date_added = Date.new(2021, 4, 29)
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+        a.credit_account = [Account.find_by(name: "Cash").id]
+        a.debit_total = ["4500"]
+        a.credit_total = ["4500"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = "April 29 - John received $4,500 from the company as his salary."
+        a.date_added = Date.new(2021, 4, 29)
+    end
+
+    # The remaining journal entries appear in the Solved Problem document, but do not have comments stating when the
+    # transaction took place, or any other additional details the above journal entries do contain.
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Insurance Expense").id]
+        a.credit_account = [Account.find_by(name: "Prepaid Insurance").id]
+        a.debit_total = ["150"]
+        a.credit_total = ["150"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = ""
+        a.date_added = Time.now
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Supplies Expense").id]
+        a.credit_account = [Account.find_by(name: "Supplies").id]
+        a.debit_total = ["980"]
+        a.credit_total = ["980"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = ""
+        a.date_added = Time.now
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Depreciation Expense").id]
+        a.credit_account = [Account.find_by(name: "Accumulated Depreciation").id]
+        a.debit_total = ["500"]
+        a.credit_total = ["500"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = ""
+        a.date_added = Time.now
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Salaries Expense").id]
+        a.credit_account = [Account.find_by(name: "Salaries Payable").id]
+        a.debit_total = ["20"]
+        a.credit_total = ["20"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = ""
+        a.date_added = Time.now
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Rent Expense").id]
+        a.credit_account = [Account.find_by(name: "Prepaid Rent").id]
+        a.debit_total = ["1500"]
+        a.credit_total = ["1500"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = ""
+        a.date_added = Time.now
+    end
+
+    JournalEntry.create! do |a|
+        a.user_id = 3
+        a.debit_account = [Account.find_by(name: "Unearned Revenue").id]
+        a.credit_account = [Account.find_by(name: "Service Revenue").id]
+        a.debit_total = ["2000"]
+        a.credit_total = ["2000"]
+        a.entry_type = "Regular"
+        a.status = "Pending"
+        a.description = ""
+        a.date_added = Time.now
+    end
+
+    puts "Created #{JournalEntry.all.count} journal entries----------------------"
 end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Prepaid Rent").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["4500"]
-    a.credit_total = ["4500"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 4 - Paid three month\'s rent on a lease rental contract."
-    a.date_added = Date.new(2021, 4, 4)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Prepaid Insurance").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["1800"]
-    a.credit_total = ["1800"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 4 - Paid premium on property and casualty insurance policies for the year."
-    a.date_added = Date.new(2021, 4, 4)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id]
-    a.credit_account = [Account.find_by(name: "Unearned Revenue").id]
-    a.debit_total = ["3000"]
-    a.credit_total = ["3000"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 6 - Received cash from clients as an advance payment for services to be provided."
-    a.date_added = Date.new(2021, 4, 6)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Office Equipment").id]
-    a.credit_account = [Account.find_by(name: "Accounts Payable").id]
-    a.debit_total = ["1800"]
-    a.credit_total = ["1800"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 7 - Purchased additional office furniture on account from Morrilton Company."
-    a.date_added = Date.new(2021, 4, 7)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id]
-    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
-    a.debit_total = ["800"]
-    a.credit_total = ["800"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 8 - Received cash from clients on account."
-    a.date_added = Date.new(2021, 4, 8)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Advertising Expense").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["120"]
-    a.credit_total = ["120"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 11 - Prepaid cash for newspaper advertisement."
-    a.date_added = Date.new(2021, 4,11)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Accounts Payable").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["800"]
-    a.credit_total = ["800"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 12 - Paid Morrilton Company $800 for debt incurred on April 7."
-    a.date_added = Date.new(2021, 4, 12)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
-    a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["2250"]
-    a.credit_total = ["2250"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 15 - Recorded Services provided on account for April 18-22, $2,250."
-    a.date_added = Date.new(2021, 4, 15)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["400"]
-    a.credit_total = ["400"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 15 - Paid part-time receptionist for two weeks salary, $400."
-    a.date_added = Date.new(2021, 4, 15)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id]
-    a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["3175"]
-    a.credit_total = ["3175"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 15 - Recorded cash from cleints for fees earned April 14-15, $3,175"
-    a.date_added = Date.new(2021, 4, 15)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Supplies").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["750"]
-    a.credit_total = ["750"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 18 - Paid cash for newspaper advertisement, $120."
-    a.date_added = Date.new(2021, 4, 16)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
-    a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["1100"]
-    a.credit_total = ["1100"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 22 - Recorded services provided on account for April 18-22, $1,100."
-    a.date_added = Date.new(2021, 4, 22)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id]
-    a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["1850"]
-    a.credit_total = ["1850"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 22 - Recorded cash from cash clients for fees earned April 18-22, $1,850."
-    a.date_added = Date.new(2021, 4, 22)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id]
-    a.credit_account = [Account.find_by(name: "Accounts Receivable").id]
-    a.debit_total = ["1600"]
-    a.credit_total = ["1600"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 25 - Received cash from clients on account, $1600."
-    a.date_added = Date.new(2021, 4, 25)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["400"]
-    a.credit_total = ["400"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 27 - Paid part-time receptionist for two week's salary, $400."
-    a.date_added = Date.new(2021, 4, 27)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Telephone Expense").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["130"]
-    a.credit_total = ["130"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 28 - Paid telephone bill for April, $130."
-    a.date_added = Date.new(2021, 4, 28)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Utilities Expense").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["200"]
-    a.credit_total = ["200"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 29 - Paid electric bill for April, $200."
-    a.date_added = Date.new(2021, 4, 29)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Cash").id]
-    a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["2050"]
-    a.credit_total = ["2050"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 29 - Recorded cash from cash clients for fees earned April 25-29, $2,050."
-    a.date_added = Date.new(2021, 4, 29)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Accounts Receivable").id]
-    a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["1000"]
-    a.credit_total = ["1000"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 29 - Recorded services provided on account for April 25-29, $1,000."
-    a.date_added = Date.new(2021, 4, 29)
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
-    a.credit_account = [Account.find_by(name: "Cash").id]
-    a.debit_total = ["4500"]
-    a.credit_total = ["4500"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = "April 29 - John received $4,500 from the company as his salary."
-    a.date_added = Date.new(2021, 4, 29)
-end
-
-# The remaining journal entries appear in the Solved Problem document, but do not have comments stating when the
-# transaction took place, or any other additional details the above journal entries do contain.
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Insurance Expense").id]
-    a.credit_account = [Account.find_by(name: "Prepaid Insurance").id]
-    a.debit_total = ["150"]
-    a.credit_total = ["150"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = ""
-    a.date_added = Time.now
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Supplies Expense").id]
-    a.credit_account = [Account.find_by(name: "Supplies").id]
-    a.debit_total = ["980"]
-    a.credit_total = ["980"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = ""
-    a.date_added = Time.now
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Depreciation Expense").id]
-    a.credit_account = [Account.find_by(name: "Accumulated Depreciation").id]
-    a.debit_total = ["500"]
-    a.credit_total = ["500"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = ""
-    a.date_added = Time.now
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Salaries Expense").id]
-    a.credit_account = [Account.find_by(name: "Salaries Payable").id]
-    a.debit_total = ["20"]
-    a.credit_total = ["20"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = ""
-    a.date_added = Time.now
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Rent Expense").id]
-    a.credit_account = [Account.find_by(name: "Prepaid Rent").id]
-    a.debit_total = ["1500"]
-    a.credit_total = ["1500"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = ""
-    a.date_added = Time.now
-end
-
-JournalEntry.create! do |a|
-    a.user_id = 3
-    a.debit_account = [Account.find_by(name: "Unearned Revenue").id]
-    a.credit_account = [Account.find_by(name: "Service Revenue").id]
-    a.debit_total = ["2000"]
-    a.credit_total = ["2000"]
-    a.entry_type = "Regular"
-    a.status = "Pending"
-    a.description = ""
-    a.date_added = Time.now
-end
-
-puts "Created #{JournalEntry.all.count} journal entries"
