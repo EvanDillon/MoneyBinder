@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PasswordAuthorizationTest < ActiveSupport::TestCase
+class PasswordJoinAuthorizationTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

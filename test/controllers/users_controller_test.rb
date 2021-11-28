@@ -60,7 +60,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_management_path
     assert_equal "User has been Created", flash[:success]  
     assert_equal 1, User.where(firstName: "Test", userType: 1).count
-    assert_equal 1, PasswordAuthorization.all.count
+    assert_equal 1, PasswordJoinAuthorization.all.count
   end
 
   test "should create a password authorization" do
@@ -78,7 +78,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         security_question_answer: "ATL"
       }
 
-    assert_equal 1, PasswordAuthorization.where(answer: "ATL").count
+    assert_equal 1, PasswordJoinAuthorization.where(answer: "ATL").count
   end
 
 

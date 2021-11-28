@@ -1,4 +1,4 @@
-class PasswordAuthorization < ApplicationRecord
+class PasswordJoinAuthorization < ApplicationRecord
     belongs_to :security_question
     belongs_to :user
 end
