@@ -51,7 +51,7 @@ class PasswordController < ApplicationController
   def check_answer
     if params[:security_question_answer]
       @user = User.find_by_reset(params[:token])  
-      if User.find(@user.id).password_authorization.pluck(:answer).first == params[:security_question_answer]
+      if User.find(@user.id).password_join_authorization.pluck(:answer).first == params[:security_question_answer]
         return true
       else
         return false

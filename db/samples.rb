@@ -132,18 +132,18 @@ all_questions.each do |question|
 end
 puts "Created #{SecurityQuestion.all.count} security questions"
 
-PasswordAuthorization.create(user_id: User.where(username: 'Admin').pluck(:id).first,          security_question_id: 1, answer: 'Atlanta')
-PasswordAuthorization.create(user_id: User.where(username: 'Manager').pluck(:id).first,        security_question_id: 1, answer: 'Austin')
-PasswordAuthorization.create(user_id: User.where(username: 'Accountant').pluck(:id).first,     security_question_id: 1, answer: 'DC')
-PasswordAuthorization.create(user_id: User.where(username: 'EvanD').pluck(:id).first,          security_question_id: 2, answer: 'Buddy')
-PasswordAuthorization.create(user_id: User.where(username: 'jdiaz35').pluck(:id).first,        security_question_id: 1, answer: 'New York')
-PasswordAuthorization.create(user_id: User.where(username: 'khighers1021').pluck(:id).first,   security_question_id: 1, answer: 'New York')
-PasswordAuthorization.create(user_id: User.where(username: 'ashein1021').pluck(:id).first,     security_question_id: 1, answer: 'New York')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'Admin').pluck(:id).first,          security_question_id: 1, answer: 'Atlanta')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'Manager').pluck(:id).first,        security_question_id: 1, answer: 'Austin')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'Accountant').pluck(:id).first,     security_question_id: 1, answer: 'DC')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'EvanD').pluck(:id).first,          security_question_id: 2, answer: 'Buddy')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'jdiaz35').pluck(:id).first,        security_question_id: 1, answer: 'New York')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'khighers1021').pluck(:id).first,   security_question_id: 1, answer: 'New York')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'ashein1021').pluck(:id).first,     security_question_id: 1, answer: 'New York')
 
 
-PasswordAuthorization.create(user_id: User.where(username: 'ExpiredUser').pluck(:id).first, security_question_id: 1, answer: 'LA')
+PasswordJoinAuthorization.create(user_id: User.where(username: 'ExpiredUser').pluck(:id).first, security_question_id: 1, answer: 'LA')
 
-puts "Created #{PasswordAuthorization.all.count} security question relationships"
+puts "Created #{PasswordJoinAuthorization.all.count} security question relationships"
 
 
 all_error_messages = [
@@ -3099,5 +3099,5 @@ if Rails.env != "production"
         a.date_added = Time.now
     end
 
-    puts "Created #{JournalEntry.all.count} journal entries----------------------"
+    puts "Created #{JournalEntry.all.count} journal entries--------------------------------"
 end

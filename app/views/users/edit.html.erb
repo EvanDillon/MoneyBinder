@@ -13,7 +13,7 @@
         <%= render 'form', user: @user, type: "edit" %>
 
         <%= label_tag @user.security_question.first.question%>
-        <%= text_field_tag :security_question_answer, "#{@user.password_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
+        <%= text_field_tag :security_question_answer, "#{@user.password_join_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
         <%= hidden_field_tag "user_id", @user.id %>
         <% if @user.suspendedTill > Time.now %>
           <%= label_tag "This user is already suspended until: #{@user.suspendedTill.strftime("%B%e, %Y %I:%M %p")}", nil, class: "text-danger" %><br>

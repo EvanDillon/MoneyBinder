@@ -63,7 +63,7 @@ class UsersController < ApplicationController
 
     if @user.update(username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
       auth_id = @user.password_authorization_ids.first
-      PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])
+      PasswordJoinAuthorization.update(auth_id, answer: params[:security_question_answer])
       past_user_status = @user.active
       @user.reload
       
@@ -98,6 +98,6 @@ class UsersController < ApplicationController
   end
 
   def initialize_security_question(user, question_id, answer)
-    PasswordAuthorization.create(user_id: user.id, security_question_id: question_id.to_i, answer: answer)
+    PasswordJoinAuthorization.create(user_id: user.id, security_question_id: question_id.to_i, answer: answer)
   end
 end
