@@ -6,8 +6,8 @@ class CreateJournalEntries < ActiveRecord::Migration[6.1]
       t.integer :credit_account,  array: true, default: []
       t.decimal :debit_total,     array: true, default: []
       t.decimal :credit_total,    array: true, default: []
-      t.string :entry_type
-      t.string :status
+      t.text :entry_type
+      t.text :status
       t.text :description
       t.date :date_added,         default: Time.now
     end
