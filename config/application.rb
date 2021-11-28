@@ -22,8 +22,10 @@ module MoneyBinder
     console do
       # this block is called only when running console,
       # so we can safely require pry here
-      require "pry"
-      config.console = Pry
+      if Rails.env != "production" 
+        require "pry"
+        config.console = Pry
+      end
     end
   end
 end
