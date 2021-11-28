@@ -82,5 +82,7 @@ test:
 production:
   <<: *default
   database: moneybinder_production
-  username: moneybinder
-  password: <%= ENV['MONEYBINDER_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
+
+  # username: moneybinder
+  # password: <%= ENV['MONEYBINDER_DATABASE_PASSWORD'] %>
