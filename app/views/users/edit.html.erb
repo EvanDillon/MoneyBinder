@@ -12,7 +12,7 @@
         </div><br>
         <%= render 'form', user: @user, type: "edit" %>
 
-        <%= label_tag @user.security_question.first.question%>
+        <%= label_tag SecurityQuestion.find_by(id: @user.password_join_authorization.first.security_questions_id).question%>
         <%= text_field_tag :security_question_answer, "#{@user.password_join_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
         <%= hidden_field_tag "user_id", @user.id %>
         <% if @user.suspendedTill > Time.now %>
