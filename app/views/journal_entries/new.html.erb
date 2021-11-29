@@ -44,7 +44,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                        <%= f.text_field :debit_total, class: 'form-control', id: 'numbersOnly', name: "journal_entry[debit_total][]", required: true %>
+                        <%= f.text_field :debit_total, class: 'form-control', id: 'numbersOnly', value: nil, name: "journal_entry[debit_total][]", required: true %>
                     </div>  
                   </div>
                 </td>
@@ -72,7 +72,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                      <%= f.text_field :credit_total, class: 'form-control', id: 'numbersOnly', name: "journal_entry[credit_total][]", required: true %>
+                      <%= f.text_field :credit_total, class: 'form-control', id: 'numbersOnly', value: nil, name: "journal_entry[credit_total][]", required: true %>
                     </div>
                   </div>    
                 </td>
