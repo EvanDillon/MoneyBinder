@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_28_232446) do
+ActiveRecord::Schema.define(version: 2021_11_29_163903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,11 +108,11 @@ ActiveRecord::Schema.define(version: 2021_11_28_232446) do
 
   create_table "password_join_authorizations", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "security_question_id"
+    t.integer "security_questions_id"
     t.string "answer"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["security_question_id"], name: "index_password_join_authorizations_on_security_question_id"
+    t.index ["security_questions_id"], name: "index_password_join_authorizations_on_security_questions_id"
     t.index ["user_id"], name: "index_password_join_authorizations_on_user_id"
   end
 
@@ -144,6 +144,6 @@ ActiveRecord::Schema.define(version: 2021_11_28_232446) do
   add_foreign_key "accounts", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "password_join_authorizations", "security_questions"
+  add_foreign_key "password_join_authorizations", "security_questions", column: "security_questions_id"
   add_foreign_key "password_join_authorizations", "users"
 end
