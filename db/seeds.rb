@@ -140,14 +140,14 @@ all_questions.each do |question|
 end
 puts "Created #{SecurityQuestion.all.count} security questions------------------------------"
 
-PasswordJoinAuthorization.create(user_id: User.where(username: 'Admin').pluck(:id).first,          security_questions_id: 1, answer: 'Atlanta')
-PasswordJoinAuthorization.create(user_id: User.where(username: 'Manager').pluck(:id).first,        security_questions_id: 1, answer: 'Austin')
-PasswordJoinAuthorization.create(user_id: User.where(username: 'Accountant').pluck(:id).first,     security_questions_id: 1, answer: 'DC')
-PasswordJoinAuthorization.create(user_id: User.where(username: 'EvanD').pluck(:id).first,          security_questions_id: 2, answer: 'Buddy')
-PasswordJoinAuthorization.create(user_id: User.where(username: 'jdiaz35').pluck(:id).first,        security_questions_id: 1, answer: 'New York')
-PasswordJoinAuthorization.create(user_id: User.where(username: 'khighers1021').pluck(:id).first,   security_questions_id: 1, answer: 'New York')
-PasswordJoinAuthorization.create(user_id: User.where(username: 'ashein1021').pluck(:id).first,     security_questions_id: 1, answer: 'New York')
-PasswordJoinAuthorization.create(user_id: User.where(username: 'ExpiredUser').pluck(:id).first,    security_questions_id: 1, answer: 'LA')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'Admin').pluck(:id).first,          security_question_id: 1, answer: 'Atlanta')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'Manager').pluck(:id).first,        security_question_id: 1, answer: 'Austin')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'Accountant').pluck(:id).first,     security_question_id: 1, answer: 'DC')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'EvanD').pluck(:id).first,          security_question_id: 2, answer: 'Buddy')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'jdiaz35').pluck(:id).first,        security_question_id: 1, answer: 'New York')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'khighers1021').pluck(:id).first,   security_question_id: 1, answer: 'New York')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'ashein1021').pluck(:id).first,     security_question_id: 1, answer: 'New York')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'ExpiredUser').pluck(:id).first,    security_question_id: 1, answer: 'LA')
 puts "Created #{PasswordJoinAuthorization.all.count} security question relationships-----------------"
 
 

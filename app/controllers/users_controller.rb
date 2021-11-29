@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     end
 
     if @user.update(username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
-      auth_id = @user.password_authorization_ids.first
+      auth_id = @user.password_join_authorization_ids.first
       PasswordJoinAuthorization.update(auth_id, answer: params[:security_question_answer])
       past_user_status = @user.active
       @user.reload
