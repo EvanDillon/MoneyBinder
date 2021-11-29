@@ -377,7 +377,7 @@ class SessionsController < ApplicationController
   end
 
   def initialize_security_question(user, question_id, answer)
-    PasswordJoinAuthorization.create(user_id: user.id, security_question_id: question_id.to_i, answer: answer)
+    PasswordJoinAuthorization.create(user_id: user.id, security_questions_id: question_id.to_i, answer: answer)
   end
 
   def stored_net_income
