@@ -7,7 +7,7 @@
   <div class="row justify-content-md-center">
     <div class="col col-lg-2">
       <div class="btn-group">
-        <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary" %><br>
+        <%= button_to "New Entry", new_journal_entry_path, method: :get, class: "btn btn-primary", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Create a new journal entry' %><br>
         <% if current_user.userType == 2 %> 
           <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
@@ -80,8 +80,8 @@
       <tr>
         <td class="text-center"><%= journal_entry.date_added %>
         <% if journal_entry.status == "Pending" && current_user.userType == 2 %>
-          <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block" %>
-          <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#exampleModal">Decline</button>
+          <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Approve this transaction' %>
+          <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#exampleModal" title="Decline this transaction">Decline</button>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">

@@ -31,7 +31,7 @@
                 <td><%= 'Accountant' %></td>
             <%end%>
             <td><%= user.active %></td>
-            <td><%= button_to "Edit", "user/edit/#{user.id}", method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Edit this user' %></td>
+            <td><%= button_to "Edit", "user/edit/#{user.id}", method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: "Edit #{user.username}" %></td>
           </tr>
         <%end%>
       </tbody>

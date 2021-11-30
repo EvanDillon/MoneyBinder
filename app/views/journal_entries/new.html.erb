@@ -89,10 +89,10 @@
           <div class="actions">
             <div class="form-row">
               <div class="col-6">
-                <%= f.submit class: "btn btn-primary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit'%>
+                <%= f.submit class: "btn btn-primary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit this journal entry'%>
               </div>
               <div class="col-6">
-                <%= link_to "Cancel", journal_entries_path, class: "btn btn-secondary btn-block" %>
+                <%= link_to "Cancel", journal_entries_path, class: "btn btn-secondary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Cancel this journal entry' %>
               </div>
             </div>
           </div>

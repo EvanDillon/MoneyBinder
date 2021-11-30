@@ -50,7 +50,7 @@
           <td><%= User.find(account.user_id).username %></td>
           
           <% if current_user.userType == 1 %>
-             <td><%= button_to "Edit", edit_account_path(account), method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Edit this account' %></td>
+             <td><%= button_to "Edit", edit_account_path(account), method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: "Edit #{account.name}" %></td>
           <% end %>
         </tr>
       <%end%>
