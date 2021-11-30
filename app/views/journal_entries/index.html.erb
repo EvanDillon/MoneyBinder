@@ -38,12 +38,12 @@
 
     <div class="col col-lg-2">
       <div class="input-group mb-3">
-        <%= text_field_tag :mind, "", placeholder: "Start Date", class: "form-control", id: "mindate"  %>
+        <%= text_field_tag :mind, "", placeholder: "Start Date", class: "form-control", id: "mindate", name: "mindate"  %>
       </div>
     </div>
     <div class="col col-lg-2">
       <div class="input-group mb-3">
-        <%= text_field_tag :maxd, "", placeholder: "End Date", class: "form-control", id: "maxdate" %>
+        <%= text_field_tag :maxd, "", placeholder: "End Date", class: "form-control", id: "maxdate", name: "maxdate" %>
       </div>
     </div>
 
@@ -60,9 +60,8 @@
 				</div>
 			</div>
 		</div>
+      <%= link_to "Clear Filters", reload_page_path %>
   </div>
-  
-  <br>
 
   <table class="table" id="table-layout">
     <thead>
@@ -163,74 +162,46 @@
 </div>
 
 <script>
-$.fn.dataTable.ext.search.push(
-  function( settings, data, dataIndex ) {
-    var min = parseInt( $('#min').val(), 10 );
-    var max = parseInt( $('#max').val(), 10 );
-    var balance = parseFloat(data[4].replace('$','').replace(/,|_/g, '')).toFixed(2) && data[5].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
-    
-    if ( ( isNaN( min ) && isNaN( max ) ) ||
-          ( isNaN( min ) && balance <= max ) ||
-          ( min <= balance && isNaN( max ) ) ||
-          ( min <= balance && balance <= max ) )
-    {
-      return true;
-    }
-    return false;
-  }
-);
+  var minDate, maxDate;
  
-$(document).ready(function() {
-    var table = $('#table-layout').DataTable();
+  $.fn.dataTable.ext.search.push(
+      function( settings, data, dataIndex ) {
+          var min = minDate.val();
+          var max = maxDate.val();
+          var date = new Date( data[0] );
+  
+          if (
+              ( min === null && max === null ) ||
+              ( min === null && date <= max ) ||
+              ( min <= date   && max === null ) ||
+              ( min <= date   && date <= max )
+          ) {
+              return true;
+          }
+          return false;
+      }
+  );
 
-    $('#min, #max').keyup( function() {
-      table.draw();
-    } );
-} );
-</script>
-
-<script>
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var mind = minDate.val();
-        var maxd = maxDate.val();
-        var date = new Date(data[0]);
-        if (
-            ( mind === null && maxd === null ) ||
-            ( mind === null && date <= max ) ||
-            ( mind <= date   && maxd === null ) ||
-            ( mind <= date   && date <= maxd )
-        ) {
+  $.fn.dataTable.ext.search.push(
+    function amount( settings, data, dataIndex ) {
+        var min = parseInt( $('#min').val(), 10 );
+        var max = parseInt( $('#max').val(), 10 );
+        var balance = parseFloat(data[4,5].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
+        
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && balance <= max ) ||
+             ( min <= balance && isNaN( max ) ) ||
+             ( min <= balance && balance <= max ) )
+        {
             return true;
         }
         return false;
     }
-);
-$(document).ready(function() {
-    minDate = new DateTime($('#mindate'), {
-        buttons: {
-            today: true,
-            clear: true
-        }
-    });
-    maxDate = new DateTime($('#maxdate'), {
-        buttons: {
-            today: true,
-            clear: true
-        }
-    });
-    var table = $('#table-layout').DataTable();
-    $('#mindate, #maxdate').on('change', function () {
-        table.draw();
-    });
-});
-</script>
+  );
 
-<script>
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
+  $.fn.dataTable.ext.search.push(
+    function status( settings, data, dataIndex ) {
       var status = data[6];
-
       if (document.getElementById("statusAll").disabled)
       {
         return true;
@@ -247,49 +218,68 @@ $.fn.dataTable.ext.search.push(
       {
         return true;
       }
-
       return false;
     }
-);
+  );
+  
+  $(document).ready(function() {
 
-$(document).ready(function() {
-    var table = $('#table-layout').DataTable();
+    minDate = new DateTime($('#mindate'), {
+          format: 'MMMM Do YYYY'
+      });
+      maxDate = new DateTime($('#maxdate'), {
+          format: 'MMMM Do YYYY'
+      });
+  
+      //Sorts table by date
+      var table = $('#table-layout').DataTable( {
+                    "order": [[ 0, "desc" ]]
+                  } );
 
-    $('#statusAll').click(function() {
-      document.getElementById("statusAll").disabled = false;
-      document.getElementById("statusPending").disabled = false;
-      document.getElementById("statusApproved").disabled = false;
-      document.getElementById("statusDeclined").disabled = false;
-
-      document.getElementById("statusAll").disabled = true;
-      table.draw();
-    } );
-    $('#statusPending').click(function() {
-      document.getElementById("statusAll").disabled = false;
-      document.getElementById("statusPending").disabled = false;
-      document.getElementById("statusApproved").disabled = false;
-      document.getElementById("statusDeclined").disabled = false;
-
-      document.getElementById("statusPending").disabled = true;
-      table.draw();
-    } );
-    $('#statusApproved').click(function() {
-      document.getElementById("statusAll").disabled = false;
-      document.getElementById("statusPending").disabled = false;
-      document.getElementById("statusApproved").disabled = false;
-      document.getElementById("statusDeclined").disabled = false;
-
-      document.getElementById("statusApproved").disabled = true;
-      table.draw();
-    } );
-    $('#statusDeclined').click(function() {
-      document.getElementById("statusAll").disabled = false;
-      document.getElementById("statusPending").disabled = false;
-      document.getElementById("statusApproved").disabled = false;
-      document.getElementById("statusDeclined").disabled = false;
       
-      document.getElementById("statusDeclined").disabled = true;
-      table.draw();
-    } );
-} );
+      $('#mindate, #maxdate').on('change', function () {
+          table.draw();
+      });
+
+      $('#min, #max').keyup( function() {
+        table.draw();
+      } );
+
+      $('#statusAll').click(function() {
+        document.getElementById("statusAll").disabled = false;
+        document.getElementById("statusPending").disabled = false;
+        document.getElementById("statusApproved").disabled = false;
+        document.getElementById("statusDeclined").disabled = false;
+  
+        document.getElementById("statusAll").disabled = true;
+        table.draw();
+      } );
+      $('#statusPending').click(function() {
+        document.getElementById("statusAll").disabled = false;
+        document.getElementById("statusPending").disabled = false;
+        document.getElementById("statusApproved").disabled = false;
+        document.getElementById("statusDeclined").disabled = false;
+  
+        document.getElementById("statusPending").disabled = true;
+        table.draw();
+      } );
+      $('#statusApproved').click(function() {
+        document.getElementById("statusAll").disabled = false;
+        document.getElementById("statusPending").disabled = false;
+        document.getElementById("statusApproved").disabled = false;
+        document.getElementById("statusDeclined").disabled = false;
+  
+        document.getElementById("statusApproved").disabled = true;
+        table.draw();
+      } );
+      $('#statusDeclined').click(function() {
+        document.getElementById("statusAll").disabled = false;
+        document.getElementById("statusPending").disabled = false;
+        document.getElementById("statusApproved").disabled = false;
+        document.getElementById("statusDeclined").disabled = false;
+        
+        document.getElementById("statusDeclined").disabled = true;
+        table.draw();
+      } );
+  });
 </script>

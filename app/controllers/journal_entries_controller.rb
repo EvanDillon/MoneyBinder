@@ -124,6 +124,10 @@ class JournalEntriesController < ApplicationController
     @journal_entry = JournalEntry.find_by(id: params[:id])
   end
 
+  def reload_page
+    redirect_to journal_entries_path
+  end 
+
   private
 
     def approve_entry(id)

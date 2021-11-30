@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   get '/generate_closing_entry', to: 'journal_entries#generate_closing_entry'
   get 'ledger/:account_id', to: 'ledger_entries#show'
   get '/journal_entry/:id', to: 'journal_entries#show'
+  get '/reload_page', to: 'journal_entries#reload_page'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'
