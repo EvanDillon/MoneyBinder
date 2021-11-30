@@ -36,7 +36,7 @@
             <tbody id="debit_entry_table"
               <tr>
                 <td class="debit_account_selector">
-                  <%= f.select(:debit_account, Account.all.where(active: true).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[debit_account][]', required: true}) %>
+                  <%= f.select(:debit_account, Account.where(active: true).order(:account_number).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[debit_account][]', required: true}) %>
                 </td>
                 <td>
                   <div class="debit_field">
@@ -63,7 +63,7 @@
               </tr>
               <tr>
                 <td class="credit_account_selector">
-                  <%= f.select(:credit_account, Account.all.where(active: true).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[credit_account][]', required: true}) %>
+                  <%= f.select(:credit_account, Account.where(active: true).order(:account_number).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[credit_account][]', required: true}) %>
                 </td>
                 <td></td>
                 <td>

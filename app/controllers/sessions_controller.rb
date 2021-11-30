@@ -60,46 +60,46 @@ class SessionsController < ApplicationController
   def homepage
     # Can access any variable in reports (such as the ones below) because of before_actions at the top.
     # Current ratio (current assets / total liabilites)
-    if !@total_current_assets.zero? || !@total_liabilities.zero?
+    if !@total_liabilities.zero?
       current_ratio = ActionController::Base.helpers.number_with_precision((@total_current_assets / @total_liabilities), precision: 2, delimiter: ',').to_f
     else
-      current_ratio = 0
+      current_ratio = 0.0
     end
 
     @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
-    if !@total_liabilities.zero? || !@total_current_assets.zero?
+    if !@total_liabilities.zero?
       quick_ratio = ActionController::Base.helpers.number_with_precision(((@total_current_assets - @total_inventory) / @total_liabilities ), precision: 2, delimiter: ',').to_f
     else
-      quick_ratio = 0
+      quick_ratio = 0.0
     end
 
     # Return on Equity Ratio (ROE)  (Net income / Shareholder equity)
-    if !@net_income.zero? || !@total_equity.zero?
+    if !@total_equity.zero?
       reo_percentage = ActionController::Base.helpers.number_with_precision((@net_income / @total_equity)*100, precision: 1, delimiter: ',').to_f
     else
-      reo_percentage = 0
+      reo_percentage = 0.0
     end
 
     # Return on asset
-    if !@net_income.zero? || !@total_assets.zero?
+    if !@total_assets.zero?
       return_on_asset = ActionController::Base.helpers.number_with_precision((@net_income / @total_assets)*100, precision: 1, delimiter: ',').to_f
     else
-      return_on_asset = 0;
+      return_on_asset = 0.0
     end
 
     # Net Profit ratio
     net_profit_helper = Account.find_by(name: 'Service Revenue').balance
-    if !@net_income.zero? || !net_profit_helper.zero?
-      net_profit = ActionController::Base.helpers.number_with_precision((@net_income/ (net_profit_helper.abs))*100, precision: 1, delimiter: ',').to_f
+    if !net_profit_helper.zero?
+      net_profit = ActionController::Base.helpers.number_with_precision((@net_income / (net_profit_helper.abs))*100, precision: 1, delimiter: ',').to_f
     else
-      net_profit = 0
+      net_profit = 0.0
     end
     
     # Asset Turnover Ratio  (sales / total assets)
-    if !net_profit_helper.zero? || !@total_assets.zero?
+    if !@total_assets.zero?
       asset_turnover_ratio = ActionController::Base.helpers.number_with_precision(((net_profit_helper.abs) / @total_assets), precision: 2, delimiter: ',').to_f
     else
-      asset_turnover_ratio = 0
+      asset_turnover_ratio = 0.0
     end
 
     # Ratios                                                                                              (red_max, yellow_max, max_limit, ticks)
@@ -196,7 +196,7 @@ class SessionsController < ApplicationController
 
   def trial_balance
     # authorize current_user, :user_not_admin?
-    @non_zero_accounts = Account.where('balance != ?', 0)
+    @non_zero_accounts = Account.where('balance != ?', 0).order(:account_number)
     @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum
     @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum
 

@@ -15,6 +15,7 @@ class JournalEntriesController < ApplicationController
   # GET /journal_entries/new
   def new
     authorize current_user, :user_not_admin?
+    @sorted_active_accounts = Account.where(active: true).order(:account_number)
     @journal_entry = JournalEntry.new
   end
 
