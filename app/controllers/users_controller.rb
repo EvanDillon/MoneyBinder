@@ -24,6 +24,7 @@ class UsersController < ApplicationController
 
       if @user.save 
         initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
+        create_user_event_log("", @user, "Added")
         redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_created").body 
       else 
         flash.now[:danger] = "#{@user.errors.full_messages.first}"
@@ -99,5 +100,30 @@ class UsersController < ApplicationController
 
   def initialize_security_question(user, question_id, answer)
     PasswordJoinAuthorization.create(user_id: user.id, security_questions_id: question_id.to_i, answer: answer)
+  end
+  
+  def create_user_event_log(before, after, type)
+    binding.pry
+    if type == "Added"
+      UserEventLog.new( user_name: current_user.username, 
+                        event_type: type, 
+                        user_before: before, 
+                        user_after: after.to_json
+                      ).save
+
+    # elsif type == "Deactivated"
+    # UserEventLog.new( user_name: current_user.username, 
+    #                   event_type: type, 
+    #                   user_before: before, 
+    #                   user_after: after
+    #                 ).save
+    
+    # elsif type == "Modified"
+    # UserEventLog.new( user_name: current_user.username, 
+    #                   event_type: type, 
+    #                   user_before: before, 
+    #                   user_after: after
+    #                 ).save
+    end
   end
 end
