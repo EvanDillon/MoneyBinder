@@ -241,7 +241,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -303,7 +303,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -406,7 +406,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = "BS"
     a.comment = 0
     a.contra = false
     a.active = true
@@ -468,7 +468,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -528,7 +528,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -549,7 +549,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -593,7 +593,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -635,7 +635,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -657,7 +657,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -796,7 +796,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = true
     a.active = true
@@ -881,7 +881,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -901,7 +901,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -923,7 +923,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -1022,7 +1022,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -1332,7 +1332,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -1537,7 +1537,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -1622,7 +1622,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -1708,7 +1708,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'BS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -1977,7 +1977,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2096,7 +2096,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2120,7 +2120,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2200,7 +2200,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2400,7 +2400,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2600,7 +2600,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2622,7 +2622,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2642,7 +2642,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2721,7 +2721,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2742,7 +2742,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
@@ -2765,7 +2765,7 @@ Account.create! do |a|
     a.credit = 0
     a.balance = 0
     a.order = 0
-    a.statement = 0
+    a.statement = 'IS'
     a.comment = 0
     a.contra = false
     a.active = true
