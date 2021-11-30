@@ -11,6 +11,9 @@
     <li class="nav-item">
       <a class="nav-link" id="pills-journal-entries-tab" data-toggle="pill" href="#pills-journal-entries" role="tab" aria-controls="pills-journal-entries" aria-selected="false">Entry Logs</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-user" aria-selected="false">User Logs</a>
+    </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-events" role="tabpanel" aria-labelledby="pills-events-tab">
@@ -107,57 +110,177 @@
       </table>
     </div>
     <div class="tab-pane fade" id="pills-journal-entries" role="tabpanel" aria-labelledby="pills-journal-entries-tab">
-    <table class="table" id="table-layout-2">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col" class="text-center">Date Added</th>
-          <th scope="col" class="text-center">Entry Type</th>
-          <th scope="col" class="text-center">Created by</th>
-          <th scope="col">Accounts</th>
-          <th scope="col" class="text-right">Debit</th>
-          <th scope="col" class="text-right">Credit</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @approved_journal_entries.each do |journal_entry| %>
-        <tr>
-          <td><%= journal_entry.id %></td>
-          <td class="text-center"><%= journal_entry.date_added %></td>
-          <td class="text-center"><%= journal_entry.entry_type %></td>
-          <td class="text-center"><%= User.find_by(id: journal_entry.user_id).username.truncate(10) %></td>
-          <td>
-            <% journal_entry.debit_account.each do |a|%>
-              <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(8)}", "/ledger/#{a}"%><br>
-            <%end%>
+      <table class="table" id="table-layout-2">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col" class="text-center">Date Added</th>
+            <th scope="col" class="text-center">Entry Type</th>
+            <th scope="col" class="text-center">Created by</th>
+            <th scope="col">Accounts</th>
+            <th scope="col" class="text-right">Debit</th>
+            <th scope="col" class="text-right">Credit</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @approved_journal_entries.each do |journal_entry| %>
+          <tr>
+            <td><%= journal_entry.id %></td>
+            <td class="text-center"><%= journal_entry.date_added %></td>
+            <td class="text-center"><%= journal_entry.entry_type %></td>
+            <td class="text-center"><%= User.find_by(id: journal_entry.user_id).username.truncate(10) %></td>
+            <td>
+              <% journal_entry.debit_account.each do |a|%>
+                <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(10)}", "/ledger/#{a}"%><br>
+              <%end%>
 
-            <% journal_entry.credit_account.each do |a|%>
-              <div style="text-indent: 40px">
-                <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(8)}", "/ledger/#{a}"%>
-              </div>
-            <%end%>          
-          </td>
-          <td class="text-right">
-            <% journal_entry.debit_total.each do |num|%>
-              <%= number_to_currency(num, precision: 2) %>
-              <br>
-            <%end%>
-          </td>
-          <td class="text-right">
-            <% journal_entry.debit_total.each do |num|%>
-              <br>
-            <%end%>
-            <% journal_entry.credit_total.each do |num|%>
-              <%= number_to_currency(num, precision: 2) %>
-              <br>
-            <%end%>
-          </td>
-          <td><%= button_to 'View', journal_entry_path(journal_entry.id), method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this journal entry' %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+              <% journal_entry.credit_account.each do |a|%>
+                <div style="text-indent: 40px">
+                  <%= link_to "#{Account.find_by(id: a).account_number} - #{Account.find_by(id: a).name.truncate(10)}", "/ledger/#{a}"%>
+                </div>
+              <%end%>          
+            </td>
+            <td class="text-right">
+              <% journal_entry.debit_total.each do |num|%>
+                <%= number_to_currency(num, precision: 2) %>
+                <br>
+              <%end%>
+            </td>
+            <td class="text-right">
+              <% journal_entry.debit_total.each do |num|%>
+                <br>
+              <%end%>
+              <% journal_entry.credit_total.each do |num|%>
+                <%= number_to_currency(num, precision: 2) %>
+                <br>
+              <%end%>
+            </td>
+            <td><%= button_to 'View', journal_entry_path(journal_entry.id), method: :get, class: "btn btn-primary btn-sm float-right", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this journal entry' %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+      <table class="table" id="table-layout-3">
+        <thead>
+          <tr class="table">
+            <th scope="col">#</th>
+            <th scope="col">Changed By</th>
+            <th scope="col">User</th>
+            <th scope="col">Action</th>
+            <th scope="col">Changed</th>
+            <th scope="col">Before</th>
+            <th scope="col">After</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th> 
+          </tr>
+        </thead>
+        <tbody>
+          <% @user_logs.each do |user_log| %>
+            <tr>
+              <th scope="row"><%= user_log.first.id.to_s %></th>
+              <td><%= user_log.first.user_name.truncate(10) %></td>
+              <td><%= user_log.first.account_name.truncate(15) %></td>
+              <td> 
+                <% if user_log.first.user_type == "Added" %>
+                  <span class="badge badge-pill badge-success"><%= user_log.first.user_type %></span> 
+                <% elsif user_log.first.user_type == "Deactivated"%>
+                  <span class="badge badge-pill badge-danger"><%= user_log.first.user_type %></span> 
+                <% else %>
+                  <span class="badge badge-pill badge-warning"><%= user_log.first.user_type %></span> 
+                <%end%>
+              </td>
+              <td>
+                <table class="table">
+                  <tr><td>Email</td></tr>
+                  <tr><td>Address</td></tr>
+                  <tr><td>Phone</td></tr>
+                  <tr><td>Role</td></tr>
+                  <tr><td>Active</td></tr>
+                </table>
+              </td>
+              <td>
+                <% if !event_log.second.nil? %>
+                  <table class="table table-borderless" >
+                    <tr><td><%= event_log.second.account_number unless nil %></td></tr>
+                    <tr><td><%= event_log.second.name %></td></tr>
+                    <tr><td><%= event_log.second.category %></td></tr>
+                    <tr><td>$<%= number_with_precision(event_log.second.balance, precision: 2, delimiter: ',') %></td></tr>
+                    <tr><td><%= event_log.second.active %></td></tr>
+                  </table>
+                <%else%>
+                  <table class="table table-borderless">
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                  </table>
+                <%end%>
+              </td>
+              <td>
+                <% if !event_log.third.nil? %>
+                  <table class="table table-borderless">
+                    <tr><td><%= event_log.third.account_number %></td></tr>
+                    <tr><td><%= event_log.third.name %></td></tr>
+                    <tr><td><%= event_log.third.category %></td></tr>
+                    <tr><td>$<%= number_with_precision(event_log.third.balance, precision: 2, delimiter: ',') %></td></tr>
+                    <tr><td><%= event_log.third.active %></td></tr>
+                  </table>
+                <%else%>
+                  <table class="table table-borderless">
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
+                  </table>
+                <%end%>
+              </td>
+              <td><%= event_log.first.created_at.to_date %></td>            
+              <td><%= button_to 'View', event_log_path(event_log), method: :get, class: "btn btn-primary btn-sm float-right"'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this user entry' %></td>
+            </tr>
+          <%end%>
+        </tbody>
+        <%
+=begin%>
+ <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email Address</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">Role</th>
+            <th scope="col">Date Created</th>
+            <th scope="col">Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @all_users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.username %></td>
+              <td><%= user.email %></td>
+              <td><%= user.phoneNum %></td>
+              <td><%= user.address %></td>
+              <% if user.userType == 1 %>
+                  <td><%= 'Administrator' %></td>
+              <%elsif user.userType == 2 %>
+                  <td><%= 'Manager' %></td>
+              <%elsif user.userType == 3 %>
+                  <td><%= 'Accountant' %></td>
+              <%end%>
+              <td><%= user.created_at.to_date %></td>
+              <td><%= user.active %></td>
+            </tr>
+          <%end%>
+        </tbody> 
+<%
+=end%>
+      </table>
     </div>
   </div>
 </div>
@@ -170,12 +293,14 @@
         "order": [[ 0, "desc" ]]
       }
     );
-  });
-</script>
-
-<script>
-  $(document).ready(function() {
+  
     $('#table-layout-2').dataTable(
+      {
+        "order": [[ 0, "desc" ]]
+      }
+    );
+
+    $('#table-layout-3').dataTable(
       {
         "order": [[ 0, "desc" ]]
       }
