@@ -9,7 +9,7 @@
   <% unless current_user.userType != 2 %>
     <div class="text-right"> 
       <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Email this report to another user">
           Email to:
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -17,7 +17,7 @@
             <%= link_to user.username, send_trial_balance_path(:pdf => "trial_balance_pdf", :email => user.email), class: "dropdown-item"%>
           <%end%>
         </div>
-        <%= link_to "Save PDF", trial_balance_path(format: :pdf), class: "btn btn-primary" %>
+        <%= link_to "Save PDF", trial_balance_path(format: :pdf), class: "btn btn-primary", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Save this report as a PDF or print it out' %>
       </div>
     </div>
   <%end%><br>

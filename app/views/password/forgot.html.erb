@@ -8,7 +8,7 @@
         <%= label_tag 'Email Address'%><br>
         <%= email_field :email, nil, placeholder: 'Enter your email', required: true, class: 'form-control'%><br>
         <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-        <%= submit_tag "Submit", class: 'btn btn-primary btn-block'%>
+        <%= submit_tag "Submit", class: 'btn btn-primary btn-block', 'data-placement':'top', title: 'Send recovery email to your email address'%>
       <%end%>
       <%= link_to 'Back to Login', welcome_path %>
     </div>

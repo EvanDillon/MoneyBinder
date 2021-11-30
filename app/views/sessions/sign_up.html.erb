@@ -9,7 +9,7 @@
         <%= label_tag :security_questions, "Security Questions" %>
         <%= collection_select(:security_question_1, :id,  SecurityQuestion.all, :id, :question) %>
         <%= text_field_tag :security_question_answer, nil, required: true, class: 'form-control' %><br>
-        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit' %>
+        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit information and create account' %>
       <%end%>
       <%= link_to 'Back to Sign Up', welcome_path %>
     </div>
