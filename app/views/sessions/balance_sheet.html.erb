@@ -15,7 +15,13 @@
       <tr>
         <td class="font-weight-bold" style="text-indent: 40px">Current Assets</td>
         <td></td>
-        <td class="text-right">$<%= number_with_precision(@total_current_assets, precision: 2, delimiter: ',') %></td>
+
+        <% if number_with_precision(@total_current_assets, precision: 2, delimiter: ',') < 0 %>
+          <td class="text-right">($<%= number_with_precision(@total_current_assets, precision: 2, delimiter: ',').abs() %>)</td>
+        <% else %>
+          <td class="text-right">$<%= number_with_precision(@total_current_assets, precision: 2, delimiter: ',') %></td>
+        <% end %>
+
       </tr>
     
       <% @current_assets.each do |a| %>
