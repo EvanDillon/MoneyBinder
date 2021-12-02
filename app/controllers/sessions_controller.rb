@@ -1,10 +1,10 @@
 class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:login, :welcome, :sign_up, :process_new_sign_up]
   before_action :stored_net_income, :only => [:income_statement, :retained_earnings]
-  before_action :trial_balance,     :only => :homepage
-  before_action :income_statement,  :only => :homepage
-  before_action :retained_earnings, :only => :homepage
-  before_action :balance_sheet,     :only => :homepage
+  before_action :trial_balance,     :only => [:homepage, :send_trial_balance]
+  before_action :income_statement,  :only => [:homepage, :send_income_statement]
+  before_action :retained_earnings, :only => [:homepage, :send_retained_earnings]
+  before_action :balance_sheet,     :only => [:homepage, :send_balance_sheet]
   
   rescue_from Pundit::NotAuthorizedError do 
     redirect_to error_path
@@ -60,47 +60,46 @@ class SessionsController < ApplicationController
   def homepage
     # Can access any variable in reports (such as the ones below) because of before_actions at the top.
     # Current ratio (current assets / total liabilites)
-    if !@total_current_assets.zero? || !@total_liabilities.zero?
+    if !@total_liabilities.zero?
       current_ratio = ActionController::Base.helpers.number_with_precision((@total_current_assets / @total_liabilities), precision: 2, delimiter: ',').to_f
     else
-      current_ratio = 0
+      current_ratio = 0.0
     end
 
     @total_inventory = @non_zero_accounts.where(account_number: [130, 139]).pluck(:balance).sum
-    if !@total_liabilities.zero? || !@total_current_assets.zero?
+    if !@total_liabilities.zero?
       quick_ratio = ActionController::Base.helpers.number_with_precision(((@total_current_assets - @total_inventory) / @total_liabilities ), precision: 2, delimiter: ',').to_f
     else
-      quick_ratio = 0
+      quick_ratio = 0.0
     end
 
     # Return on Equity Ratio (ROE)  (Net income / Shareholder equity)
-    if !@net_income.zero? || !@total_equity.zero?
+    if !@total_equity.zero?
       reo_percentage = ActionController::Base.helpers.number_with_precision((@net_income / @total_equity)*100, precision: 1, delimiter: ',').to_f
     else
-      reo_percentage = 0
+      reo_percentage = 0.0
     end
 
     # Return on asset
-    if !@net_income.zero? || !@total_assets.zero?
+    if !@total_assets.zero?
       return_on_asset = ActionController::Base.helpers.number_with_precision((@net_income / @total_assets)*100, precision: 1, delimiter: ',').to_f
     else
-      return_on_asset = 0;
+      return_on_asset = 0.0
     end
 
     # Net Profit ratio
-    @account = Account.find_by(name: 'Service Revenue')
-    net_profit_helper = @account.balance
-    if !@net_income.zero? || !net_profit_helper.zero?
-      net_profit = ActionController::Base.helpers.number_with_precision((@net_income/ (net_profit_helper.abs))*100, precision: 1, delimiter: ',').to_f
+    net_profit_helper = Account.find_by(name: 'Service Revenue').balance
+    if !net_profit_helper.zero?
+      net_profit = ActionController::Base.helpers.number_with_precision((@net_income / (net_profit_helper.abs))*100, precision: 1, delimiter: ',').to_f
     else
-      net_profit = 0
+      net_profit = 0.0
     end
     
     # Asset Turnover Ratio  (sales / total assets)
-    if !net_profit_helper.zero? || !@total_assets.zero?
+    if !@total_assets.zero?
       asset_turnover_ratio = ActionController::Base.helpers.number_with_precision(((net_profit_helper.abs) / @total_assets), precision: 2, delimiter: ',').to_f
     else
-      asset_turnover_ratio = 0
+      asset_turnover_ratio = 0.0
     end
 
     # Ratios                                                                                              (red_max, yellow_max, max_limit, ticks)
@@ -132,12 +131,12 @@ class SessionsController < ApplicationController
   end
 
   def process_new_sign_up
+    @user = User.new(user_params)
     user_name = User.create_username(params[:firstName], params[:lastName], Time.zone.now)
     pass_check = User.valid_pass?(params[:password])
     password_update = Time.now
 
     if pass_check.empty? && !user_name.nil?
-      @user = User.new(user_params)
       @user.username = user_name
       @user.passUpdatedAt = password_update
 
@@ -157,10 +156,12 @@ class SessionsController < ApplicationController
           redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "user_create_request").body
         end      
       else 
-        redirect_to sign_up_path, danger: "#{@user.errors.full_messages.first}"
+        flash.now[:danger] = "#{@user.errors.full_messages.first}"
+        render "sessions/sign_up"
       end
     else
-      redirect_to sign_up_path, danger: "#{pass_check}"
+      flash.now[:danger] = "#{pass_check}"
+      render "sessions/sign_up"
     end
   end
 
@@ -195,9 +196,18 @@ class SessionsController < ApplicationController
 
   def trial_balance
     # authorize current_user, :user_not_admin?
-    @non_zero_accounts = Account.where('balance != ?', 0)
+    @non_zero_accounts = Account.where('balance != ?', 0).order(:account_number)
     @debit_total = @non_zero_accounts.where(normal_side: "Debit").pluck(:balance).map(&:abs).sum
     @credit_total = @non_zero_accounts.where(normal_side: "Credit").pluck(:balance).map(&:abs).sum
+
+    # Creates the trial_balance PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "trial_balance_#{Time.now.year}", 
+                template: "sessions/reports_pdf/trial_balance_pdf.html.erb"
+      end
+    end
   end
 
   def income_statement
@@ -211,6 +221,15 @@ class SessionsController < ApplicationController
     @total_expenses = @expense_accounts.pluck(:balance).sum
 
     @net_income = @total_revenues.abs - @total_expenses
+
+    # Creates the income_statement PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "income_statement_#{Time.now.year}", 
+                template: "sessions/reports_pdf/income_statement_pdf.html.erb"
+      end
+    end
   end
 
   def balance_sheet
@@ -232,14 +251,83 @@ class SessionsController < ApplicationController
     @total_equity = @equity_accounts.pluck(:balance).map(&:abs).sum + Account.retained_earnings_value()
 
     @total_l_and_e = @total_liabilities + @total_equity
+
+    # Creates the balance_sheet PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "balance_sheet_#{Time.now.year}", 
+                template: "sessions/reports_pdf/balance_sheet_pdf.html.erb"
+      end
+    end
   end
 
   def retained_earnings
     stored_net_income
     @beginning_balance = Account.find_by(account_number: 325).balance.abs
     @net_income #Pulls from stored_net_income
+    @total_earnings = @beginning_balance + @net_income
     @less_drawings = Account.where(account_number: [205, 206]).pluck(:balance).sum   #Sums the balance of Common "Dividends Payable" and "Preferred Dividends Payable"
-    @ending_balance = (@beginning_balance + @net_income) - @less_drawings
+    @ending_balance = (@total_earnings) - @less_drawings
+
+    # Creates the retained_earnings PDF
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render  pdf: "retained_earnings_#{Time.now.year}", 
+                template: "sessions/reports_pdf/retained_earnings_pdf.html.erb"
+      end
+    end
+  end
+
+  def send_trial_balance
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    non_zero_accounts: @non_zero_accounts
+                  ).trial_balance_email.deliver_now
+    redirect_to trial_balance_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
+  end
+
+  def send_income_statement
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    revenue_accounts: @revenue_accounts,
+                    total_revenues: @total_revenues,
+                    expense_accounts: @expense_accounts,
+                    total_expenses: @total_expenses
+                  ).income_statement_email.deliver_now
+    redirect_to income_statement_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
+  end
+
+  def send_retained_earnings
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    beginning_balance: @beginning_balance,
+                    net_income: @net_income,
+                    less_drawings: @less_drawings
+                  ).retained_earnings_email.deliver_now
+    redirect_to retained_earnings_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
+  end
+
+  def send_balance_sheet
+    recipient_user = User.find_by(email: params[:email])
+    PdfMailer.with( pdf_name: params[:pdf], 
+                    user_email: params[:email], 
+                    sender_user: current_user, 
+                    current_assets: @current_assets,
+                    equipment_assets: @equipment_assets,
+                    liability_accounts: @liability_accounts,
+                    equity_accounts: @equity_accounts,
+                    retained_earnings_account: @retained_earnings_account,
+                    total_equity: @total_equity
+                  ).balance_sheet_email.deliver_now
+    redirect_to balance_sheet_path, success: "Report has been successfully emailed to: '#{recipient_user.username}'"
   end
 
   def destroy
@@ -289,7 +377,7 @@ class SessionsController < ApplicationController
   end
 
   def initialize_security_question(user, question_id, answer)
-    PasswordAuthorization.create(user_id: user.id, security_question_id: question_id.to_i, answer: answer)
+    PasswordJoinAuthorization.create(user_id: user.id, security_questions_id: question_id.to_i, answer: answer)
   end
 
   def stored_net_income

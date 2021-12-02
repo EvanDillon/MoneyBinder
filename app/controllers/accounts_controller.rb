@@ -49,12 +49,12 @@ class AccountsController < ApplicationController
     before_active_status = @account.active
 
     # Checks if account has money and if active is false
-    if account_empty?(@account, params[:account][:initial_balance]) && params[:account][:active] == "0"
+    if !account_empty?(@account) && params[:account][:active] == "0"
       redirect_to edit_account_path(@account), danger: ErrorMessage.find_by(error_name: "can_not_deactivate_account").body
     else
       if @account.update(account_params)
         changed_active = @account.active_changed?
-        @account.balance = Account.calculate_balance(@account)
+        # @account.balance = Account.calculate_balance(@account)
         @account.save
         @account_after = @account.to_json
 
@@ -62,7 +62,7 @@ class AccountsController < ApplicationController
         after_active_status = @account.active
         if before_active_status && !after_active_status
           create_event_log(@account_before, @account_after, "Deactivated")
-        else
+        elsif !@account_before.eql?(@account_after)
           create_event_log(@account_before, @account_after, "Modified")
         end
         redirect_to accounts_path, success: ErrorMessage.find_by(error_name: "account_updated").body
@@ -94,9 +94,8 @@ class AccountsController < ApplicationController
       params.fetch(:account, {}).permit!
     end
 
-    def account_empty?(account, new_initial_balance)
-      account.initial_balance = new_initial_balance   
-      return Account.calculate_balance(account) > 0
+    def account_empty?(account)
+      return (account.balance == 0)
     end
 
     def create_event_log(before, after, type)

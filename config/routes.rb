@@ -15,6 +15,12 @@ Rails.application.routes.draw do
     get 'retained_earnings/', action: 'retained_earnings'
     get 'income_statement/', action: 'income_statement'
     get 'balance_sheet/', action: 'balance_sheet'
+
+    get 'send_trial_balance/', action: 'send_trial_balance'
+    get 'send_income_statement/', action: 'send_income_statement'
+    get 'send_retained_earnings/', action: 'send_retained_earnings'
+    get 'send_balance_sheet/', action: 'send_balance_sheet'
+
     get 'sign_up/', action: 'sign_up'
     post 'process_new_sign_up/', action: 'process_new_sign_up'
     get 'profile/', action: 'profile'
@@ -46,6 +52,7 @@ Rails.application.routes.draw do
   get '/generate_closing_entry', to: 'journal_entries#generate_closing_entry'
   get 'ledger/:account_id', to: 'ledger_entries#show'
   get '/journal_entry/:id', to: 'journal_entries#show'
+  get '/reload_page', to: 'journal_entries#reload_page'
 
   scope 'password/', controller: 'password' do 
     get 'reset/', action: 'reset'

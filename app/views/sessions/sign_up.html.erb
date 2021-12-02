@@ -2,16 +2,14 @@
 <div class="container">  
   <div class="row">
     <div class="col"></div>
-    <div class="col-6">
+    <div class="col-6"><br>
       <h1 class="text-center">Create New User Account</h1>
       <%= form_tag process_new_sign_up_path, method: 'post' do %>
-
-        <%= render 'users/form', user: @user %>
-
+        <%= render 'users/form', user: @user, type: "sign_up_new"%>
         <%= label_tag :security_questions, "Security Questions" %>
         <%= collection_select(:security_question_1, :id,  SecurityQuestion.all, :id, :question) %>
         <%= text_field_tag :security_question_answer, nil, required: true, class: 'form-control' %><br>
-        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit' %>
+        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit information and create account' %>
       <%end%>
       <%= link_to 'Back to Sign Up', welcome_path %>
     </div>

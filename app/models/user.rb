@@ -2,8 +2,8 @@ class User < ApplicationRecord
     validates :username, :email, uniqueness: true
     has_secure_password
 
-    has_many :password_authorization, dependent: :destroy
-    has_many :security_question, through: :password_authorization
+    has_many :password_join_authorization, dependent: :destroy
+    has_many :security_question, through: :password_join_authorization
     has_many :accounts
 
     def admin?

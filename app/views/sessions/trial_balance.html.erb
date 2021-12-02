@@ -2,9 +2,26 @@
 <%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %><br>
 <div class="container">
-  <h1 class="text-center">Addams & Family Inc.</h1>
+  <h2 class="text-center">Addams & Family Inc.</h2>
   <h2 class="text-center">Trial Balance</h2>
-  <h5 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h5><br>
+  <h3 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3>
+
+  <% unless current_user.userType != 2 %>
+    <div class="text-right"> 
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Email this report to another user">
+          Email to:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <% User.all.each do |user| %>
+            <%= link_to user.username, send_trial_balance_path(:pdf => "trial_balance_pdf", :email => user.email), class: "dropdown-item"%>
+          <%end%>
+        </div>
+        <%= link_to "Save PDF", trial_balance_path(format: :pdf), class: "btn btn-primary", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Save this report as a PDF or print it out' %>
+      </div>
+    </div>
+  <%end%><br>
+
   <table class="table" id="table-layout">
     <thead>
       <tr class="table-primary">

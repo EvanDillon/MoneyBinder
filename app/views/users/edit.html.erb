@@ -9,11 +9,11 @@
         <div class="form-row">
           <%= label_tag 'Username'%>
           <%= text_field_tag :username, "#{@user.username}", required: true, class: 'form-control'%>
-        </div>
+        </div><br>
         <%= render 'form', user: @user, type: "edit" %>
 
-        <%= label_tag @user.security_question.first.question%>
-        <%= text_field_tag :security_question_answer, "#{@user.password_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
+        <%= label_tag SecurityQuestion.find_by(id: @user.password_join_authorization.first.security_questions_id).question%>
+        <%= text_field_tag :security_question_answer, "#{@user.password_join_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
         <%= hidden_field_tag "user_id", @user.id %>
         <% if @user.suspendedTill > Time.now %>
           <%= label_tag "This user is already suspended until: #{@user.suspendedTill.strftime("%B%e, %Y %I:%M %p")}", nil, class: "text-danger" %><br>
@@ -26,7 +26,7 @@
               <label for="inputTime">Time:</label> <input type="text" class="form-control-md" id="inputTime">
           </div>
         <%end%>
-        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block''btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit' %>
+        <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block''btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Save changes to this account' %>
       <%end%>
       <%= link_to 'Back to User Management', user_management_path %>
     </div>

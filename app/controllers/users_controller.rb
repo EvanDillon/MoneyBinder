@@ -13,12 +13,12 @@ class UsersController < ApplicationController
 
   def create
     authorize current_user, :user_admin?
+    @user = User.new(user_params)
     user_name = User.create_username(params[:firstName], params[:lastName], Time.zone.now)
     pass_check = User.valid_pass?(params[:password])
     password_update = Time.now
 
     if pass_check.empty? && !user_name.nil?
-      @user = User.new(user_params)
       @user.username = user_name
       @user.passUpdatedAt = password_update
 
@@ -26,10 +26,12 @@ class UsersController < ApplicationController
         initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
         redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_created").body 
       else 
-        redirect_to new_user_path, danger: "#{@user.errors.full_messages.first}"
+        flash.now[:danger] = "#{@user.errors.full_messages.first}"
+        render new_user_path
       end
     else
-      redirect_to new_user_path, danger: "#{pass_check}"
+      flash.now[:danger] = "#{pass_check}"
+      render new_user_path
     end
   end
 
@@ -60,8 +62,8 @@ class UsersController < ApplicationController
     end
 
     if @user.update(username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
-      auth_id = @user.password_authorization_ids.first
-      PasswordAuthorization.update(auth_id, answer: params[:security_question_answer])
+      auth_id = @user.password_join_authorization_ids.first
+      PasswordJoinAuthorization.update(auth_id, answer: params[:security_question_answer])
       past_user_status = @user.active
       @user.reload
       
@@ -96,6 +98,6 @@ class UsersController < ApplicationController
   end
 
   def initialize_security_question(user, question_id, answer)
-    PasswordAuthorization.create(user_id: user.id, security_question_id: question_id.to_i, answer: answer)
+    PasswordJoinAuthorization.create(user_id: user.id, security_questions_id: question_id.to_i, answer: answer)
   end
 end

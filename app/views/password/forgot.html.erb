@@ -1,10 +1,17 @@
 <%= render 'flash_messages' %>
-<h1>Forgot Password</h1>
-
-<%= form_tag('/password/forgot', method: 'post') do %>
-  <%= label_tag 'Email Address'%><br>
-  <%= email_field :email, nil, placeholder: 'Enter your email', required: true%><br>
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <%= submit_tag "Submit"%>
-<%end%>
-<%= link_to 'Back to Login', welcome_path %>
+<div class="container">  
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6"><br>
+      <h1 class="text-center">Forgot Password</h1>
+      <%= form_tag('/password/forgot', method: 'post') do %>
+        <%= label_tag 'Email Address'%><br>
+        <%= email_field :email, nil, placeholder: 'Enter your email', required: true, class: 'form-control'%><br>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <%= submit_tag "Submit", class: 'btn btn-primary btn-block', 'data-placement':'top', title: 'Send recovery email to your email address'%>
+      <%end%>
+      <%= link_to 'Back to Login', welcome_path %>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>

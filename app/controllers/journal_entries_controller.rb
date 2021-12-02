@@ -15,6 +15,7 @@ class JournalEntriesController < ApplicationController
   # GET /journal_entries/new
   def new
     authorize current_user, :user_not_admin?
+    @sorted_active_accounts = Account.where(active: true).order(:account_number)
     @journal_entry = JournalEntry.new
   end
 
@@ -107,7 +108,8 @@ class JournalEntriesController < ApplicationController
                                         credit_total:   @debit << Account.retained_earnings_value(),
                                         entry_type: "Closing",
                                         status: "Pending",
-                                        description: "Closing entry created by #{current_user.username}"
+                                        description: "Closing entry created by #{current_user.username}",
+                                        date_added: Time.now.to_date
                                       )
 
     if @closing_journal_entry.save
@@ -121,6 +123,10 @@ class JournalEntriesController < ApplicationController
   def show
     @journal_entry = JournalEntry.find_by(id: params[:id])
   end
+
+  def reload_page
+    redirect_to journal_entries_path
+  end 
 
   private
 

@@ -2,25 +2,46 @@
 <%= render 'flash_messages' %><br>
 
 <div class="container">
-  <h1 class="text-center">Addams & Family Inc.</h1>
+  <h2 class="text-center">Addams & Family Inc.</h2>
   <h2 class="text-center">Retained Earnings</h2>
-  <h5 class="text-center">For the period ending <%= Date.new(2021, 12, 31).strftime("%B %d, %Y") %></h5><br>
+  <h3 class="text-center">For the period ending <%= Date.new(2021, 12, 31).strftime("%B %d, %Y") %></h3>
+
+  <% unless current_user.userType != 2 %>
+    <div class="text-right">  
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Email this report to another user">
+          Email to:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <% User.all.each do |user| %>
+            <%= link_to user.username, send_retained_earnings_path(:pdf => "retained_earnings_pdf", :email => user.email), class: "dropdown-item" %>
+          <%end%>
+        </div>
+        <%= link_to "Save PDF", retained_earnings_path(format: :pdf), class: "btn btn-primary", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Save this report as a PDF or print it out' %>
+      </div>
+    </div>
+  <%end%><br>
+
   <table class="table">
   <tbody>
       <tr>
-          <td>Beginning Retained Earnings</td>
+          <td>Retained Earnings, beginning</td>
           <td class="text-right">$<%= number_with_precision(@beginning_balance, precision: 2, delimiter: ',') %></td>
       </tr>
       <tr>
           <td>Net Income</td>
           <td class="text-right">$<%= number_with_precision(@net_income, precision: 2, delimiter: ',') %></td>
       </tr>
+      <tr class="table-active font-weight-bold">
+        <td>Total Income</td>
+        <td class="text-right" style="text-decoration-line: underline; text-decoration-style: underline;">$<%= number_with_precision(@total_earnings, precision: 2, delimiter: ',') %></td>
+      </tr>
       <tr>
           <td>Less Drawings (Dividends)</td>
           <td class="text-right">$<%= number_with_precision(@less_drawings, precision: 2, delimiter: ',') %></td>
       </tr>
-      <tr class="table-active font-weight-bold">
-          <td>Ending Retained Balance</td>
+      <tr class="table-primary font-weight-bold">
+          <td>Retained Earnings, ending</td>
           <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double;">$<%= number_with_precision(@ending_balance, precision: 2, delimiter: ',') %></td>
       </tr>
   </tbody>

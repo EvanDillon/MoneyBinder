@@ -41,7 +41,7 @@ class PasswordController < ApplicationController
         @user.save
         ResetMailer.with(user: @user).reset_password.deliver_now
       end
-      redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "account_reset_password").body
+      redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "user_reset_password").body
       # render plain: "A link has been sent to your email to reset your password \n http://localhost:3000/password/reset?token=#{token}"
     end
   end
@@ -51,7 +51,7 @@ class PasswordController < ApplicationController
   def check_answer
     if params[:security_question_answer]
       @user = User.find_by_reset(params[:token])  
-      if User.find(@user.id).password_authorization.pluck(:answer).first == params[:security_question_answer]
+      if User.find(@user.id).password_join_authorization.pluck(:answer).first == params[:security_question_answer]
         return true
       else
         return false

@@ -8,10 +8,11 @@
     <%= text_field_tag :lastName, "#{@user.lastName}", required: true, class: 'form-control'%>
   </div>
 </div>
-<% if @user.password_digest.nil? %>
+
+<% if type == "new" || type == "sign_up_new" %>
   <div class="form-group">
     <%= label_tag :password%>
-    <%= password_field_tag :password, nil, required: true, class: 'form-control' %>
+    <%= password_field_tag :password, nil, required: true, class: 'form-control' %> <p>Passwords must start with a letter, contain at least one number, and contain at least one special character.</p>
   </div>
 <%end%>
 
@@ -31,13 +32,17 @@
   <%= text_field_tag :address, "#{@user.address}", required: true, class: 'form-control'%>
 </div>
 
-<div class="form-row">
-  <div class="form-group col-md-6">
-    <%= label_tag :Role%>
-    <%= select_tag :userType, options_for_select([["Administrator", 1], ["Manager", 2], ["Accountant", 3]], selected: @user.userType) %>
+<% if type !="sign_up_new" %>
+  <div class="form-row">
+    <div class="col-md-1">
+      <%= label_tag :Role, nil, class: "col-form-label"%>
+    </div>
+    <div class="col-md-5">
+      <%= select_tag :userType, options_for_select([["Administrator", 1], ["Manager", 2], ["Accountant", 3]], selected: @user.userType), class: 'form-control' %>
+    </div>
+    <div class="col text-center form-group">
+      <%= label_tag :activate, nil, class: "col-form-label"%>
+      <%= check_box_tag :active, true, @user.active %>
+    </div>
   </div>
-  <div class="form-group col-md-6">
-    <%= label_tag :activate%>
-    <%= check_box_tag :active, true, @user.active %>
-  </div> 
-</div>
+<%end%>

@@ -1,7 +1,10 @@
 <%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %><br>
 <div class="container">
-  <h1 class="text-center">Journal Entry Details</h1><br>
+  <h1 class="text-center">Journal Entry Details</h1>
+  <div class="text-right">
+    <button class="btn btn-link bi-arrow-left hBack" type="button"> Back</button><br><br>
+  </div>
     <table class="table" id="table-layout">
     <thead>
       <tr>
@@ -86,3 +89,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(".hBack").on("click", function(e){
+      e.preventDefault();
+      window.history.back();
+  });
+</script>

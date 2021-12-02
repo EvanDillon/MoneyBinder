@@ -36,7 +36,7 @@
             <tbody id="debit_entry_table"
               <tr>
                 <td class="debit_account_selector">
-                  <%= f.select(:debit_account, Account.all.where(active: true).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[debit_account][]', required: true}) %>
+                  <%= f.select(:debit_account, Account.where(active: true).order(:account_number).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[debit_account][]', required: true}) %>
                 </td>
                 <td>
                   <div class="debit_field">
@@ -44,7 +44,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                        <%= f.text_field :debit_total, class: 'form-control', id: 'numbersOnly', name: "journal_entry[debit_total][]", required: true %>
+                        <%= f.text_field :debit_total, class: 'form-control', id: 'numbersOnly', value: nil, name: "journal_entry[debit_total][]", required: true %>
                     </div>  
                   </div>
                 </td>
@@ -63,7 +63,7 @@
               </tr>
               <tr>
                 <td class="credit_account_selector">
-                  <%= f.select(:credit_account, Account.all.where(active: true).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[credit_account][]', required: true}) %>
+                  <%= f.select(:credit_account, Account.where(active: true).order(:account_number).collect {|p| [ p.name, p.id ] }, {}, {class: 'form-control', name: 'journal_entry[credit_account][]', required: true}) %>
                 </td>
                 <td></td>
                 <td>
@@ -72,7 +72,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                      <%= f.text_field :credit_total, class: 'form-control', id: 'numbersOnly', name: "journal_entry[credit_total][]", required: true %>
+                      <%= f.text_field :credit_total, class: 'form-control', id: 'numbersOnly', value: nil, name: "journal_entry[credit_total][]", required: true %>
                     </div>
                   </div>    
                 </td>
@@ -89,10 +89,10 @@
           <div class="actions">
             <div class="form-row">
               <div class="col-6">
-                <%= f.submit class: "btn btn-primary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit'%>
+                <%= f.submit class: "btn btn-primary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Submit this journal entry'%>
               </div>
               <div class="col-6">
-                <%= link_to "Cancel", journal_entries_path, class: "btn btn-secondary btn-block" %>
+                <%= link_to "Cancel", journal_entries_path, class: "btn btn-secondary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Cancel this journal entry' %>
               </div>
             </div>
           </div>
