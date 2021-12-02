@@ -67,13 +67,13 @@ class JournalEntriesController < ApplicationController
   def approve
     authorize current_user, :user_manager?
     approve_entry(params[:entry].to_i)
-    redirect_to journal_entries_path, success: "Journal entry approved"
+    redirect_to journal_entries_path, success: ErrorMessage.find_by(error_name: "Journal_approved").body
   end
 
   def decline
     authorize current_user, :user_manager?
     decline_entry(params[:entry].to_i, params[:reason])
-    redirect_to journal_entries_path, danger: "Journal entry declined"
+    redirect_to journal_entries_path, danger: ErrorMessage.find_by(error_name: "Journal_declined").body
   end
 
   def approve_all
@@ -82,7 +82,7 @@ class JournalEntriesController < ApplicationController
     @pending_entries.each do |e|
       approve_entry(e.id)
     end
-    redirect_to journal_entries_path, success: "All journal entries have been approved"
+    redirect_to journal_entries_path, success: ErrorMessage.find_by(error_name: "Journal_all_approved").body
   end
 
   def decline_all
@@ -91,7 +91,7 @@ class JournalEntriesController < ApplicationController
     @pending_entries.each do |e|
       decline_entry(e.id, "Manager has declined all entries")
     end
-    redirect_to journal_entries_path, danger: "All journal entries have been declined"
+    redirect_to journal_entries_path, danger: ErrorMessage.find_by(error_name: "Journal_all_declined").body
   end
 
   def generate_closing_entry
@@ -113,7 +113,7 @@ class JournalEntriesController < ApplicationController
                                       )
 
     if @closing_journal_entry.save
-      redirect_to journal_entries_path, success: "Created closing journal entry"
+      redirect_to journal_entries_path, success: ErrorMessage.find_by(error_name: "Journal_created_closing_entry").body
     else
       flash.now[:danger] = "Unable to create closing entry"
       render new_journal_entry_path
