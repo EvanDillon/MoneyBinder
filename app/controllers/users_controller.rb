@@ -44,6 +44,8 @@ class UsersController < ApplicationController
   def update
     authorize current_user, :user_admin?
     @user = User.find(params[:user_id].to_i)
+    @user_before = @user.to_json
+    before_active_status = @user.active
     userType = params[:userType].to_i
 
     if params[:active].nil?
@@ -77,6 +79,14 @@ class UsersController < ApplicationController
       if (!@user.active && (@user == current_user)) || @user.suspendedTill > Time.now
         redirect_to '/logout'
       else
+
+        @user_after = @user.to_json
+        after_active_status = @user.active
+        if before_active_status && !after_active_status
+          create_user_event_log(@user_before, @user_after, "Deactivated")
+        elsif !@user_before.eql?(@user_after)
+          create_user_event_log(@user_before, @user_after, "Modified")
+        end
         redirect_to user_management_path, success: ErrorMessage.find_by(error_name: "user_updated").body
       end
     else
@@ -103,7 +113,6 @@ class UsersController < ApplicationController
   end
   
   def create_user_event_log(before, after, type)
-    binding.pry
     if type == "Added"
       UserEventLog.new( user_name: current_user.username, 
                         event_type: type, 
@@ -111,19 +120,19 @@ class UsersController < ApplicationController
                         user_after: after.to_json
                       ).save
 
-    # elsif type == "Deactivated"
-    # UserEventLog.new( user_name: current_user.username, 
-    #                   event_type: type, 
-    #                   user_before: before, 
-    #                   user_after: after
-    #                 ).save
+    elsif type == "Deactivated"
+    UserEventLog.new( user_name: current_user.username, 
+                      event_type: type, 
+                      user_before: before, 
+                      user_after: after
+                    ).save
     
-    # elsif type == "Modified"
-    # UserEventLog.new( user_name: current_user.username, 
-    #                   event_type: type, 
-    #                   user_before: before, 
-    #                   user_after: after
-    #                 ).save
+    elsif type == "Modified"
+    UserEventLog.new( user_name: current_user.username, 
+                      event_type: type, 
+                      user_before: before, 
+                      user_after: after
+                    ).save
     end
   end
 end

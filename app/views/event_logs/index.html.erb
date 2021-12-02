@@ -102,7 +102,7 @@
                 <%end%>
 
               </td>
-              <td><%= event_log.first.created_at.to_date %></td>            
+              <td><%= event_log.first.created_at.to_date %></td>
               <td><%= button_to 'View', event_log_path(event_log), method: :get, class: "btn btn-primary btn-sm float-right"'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this log entry' %></td>
             </tr>
           <% end %>
@@ -168,7 +168,6 @@
           <tr class="table">
             <th scope="col">#</th>
             <th scope="col">Changed By</th>
-            <th scope="col">User</th>
             <th scope="col">Action</th>
             <th scope="col">Changed</th>
             <th scope="col">Before</th>
@@ -182,36 +181,46 @@
             <tr>
               <th scope="row"><%= user_log.first.id.to_s %></th>
               <td><%= user_log.first.user_name.truncate(10) %></td>
-              <td><%= user_log.first.account_name.truncate(15) %></td>
               <td> 
-                <% if user_log.first.user_type == "Added" %>
-                  <span class="badge badge-pill badge-success"><%= user_log.first.user_type %></span> 
-                <% elsif user_log.first.user_type == "Deactivated"%>
-                  <span class="badge badge-pill badge-danger"><%= user_log.first.user_type %></span> 
+                <% if user_log.first.event_type == "Added" %>
+                  <span class="badge badge-pill badge-success"><%= user_log.first.event_type %></span> 
+                <% elsif user_log.first.event_type == "Deactivated"%>
+                  <span class="badge badge-pill badge-danger"><%= user_log.first.event_type %></span> 
                 <% else %>
-                  <span class="badge badge-pill badge-warning"><%= user_log.first.user_type %></span> 
+                  <span class="badge badge-pill badge-warning"><%= user_log.first.event_type %></span> 
                 <%end%>
               </td>
               <td>
                 <table class="table">
+                  <tr><td>Username</td></tr>
                   <tr><td>Email</td></tr>
-                  <tr><td>Address</td></tr>
                   <tr><td>Phone</td></tr>
+                  <tr><td>Address</td></tr>
                   <tr><td>Role</td></tr>
                   <tr><td>Active</td></tr>
                 </table>
               </td>
               <td>
-                <% if !event_log.second.nil? %>
+                <% if !user_log.second.nil? %>
                   <table class="table table-borderless" >
-                    <tr><td><%= event_log.second.account_number unless nil %></td></tr>
-                    <tr><td><%= event_log.second.name %></td></tr>
-                    <tr><td><%= event_log.second.category %></td></tr>
-                    <tr><td>$<%= number_with_precision(event_log.second.balance, precision: 2, delimiter: ',') %></td></tr>
-                    <tr><td><%= event_log.second.active %></td></tr>
+                    <tr><td><%= user_log.second.username unless nil %></td></tr>
+                    <tr><td><%= user_log.second.email %></td></tr>
+                    <tr><td><%= user_log.second.phoneNum %></td></tr>
+                    <tr><td><%= user_log.second.address.truncate(20) %></td></tr>
+                    <tr><td>
+                      <% if user_log.second.userType == 1 %>
+                        Admin
+                      <%elsif user_log.second.userType == 2 %>
+                        Manager
+                      <%elsif user_log.second.userType == 3 %>
+                        Accountant
+                      <%end%>
+                    </td></tr>
+                    <tr><td><%= user_log.second.active %></td></tr>
                   </table>
                 <%else%>
                   <table class="table table-borderless">
+                    <tr><td>None</td></tr>
                     <tr><td>None</td></tr>
                     <tr><td>None</td></tr>
                     <tr><td>None</td></tr>
@@ -221,13 +230,22 @@
                 <%end%>
               </td>
               <td>
-                <% if !event_log.third.nil? %>
+                <% if !user_log.third.nil? %>
                   <table class="table table-borderless">
-                    <tr><td><%= event_log.third.account_number %></td></tr>
-                    <tr><td><%= event_log.third.name %></td></tr>
-                    <tr><td><%= event_log.third.category %></td></tr>
-                    <tr><td>$<%= number_with_precision(event_log.third.balance, precision: 2, delimiter: ',') %></td></tr>
-                    <tr><td><%= event_log.third.active %></td></tr>
+                    <tr><td><%= user_log.third.username unless nil %></td></tr>
+                    <tr><td><%= user_log.third.email %></td></tr>
+                    <tr><td><%= user_log.third.phoneNum %></td></tr>
+                    <tr><td><%= user_log.third.address.truncate(20) %></td></tr>
+                    <tr><td>
+                      <% if user_log.third.userType == 1 %>
+                        Admin
+                      <%elsif user_log.third.userType == 2 %>
+                        Manager
+                      <%elsif user_log.third.userType == 3 %>
+                        Accountant
+                      <%end%>
+                    </td></tr>                    
+                    <tr><td><%= user_log.third.active %></td></tr>
                   </table>
                 <%else%>
                   <table class="table table-borderless">
@@ -236,50 +254,15 @@
                     <tr><td>None</td></tr>
                     <tr><td>None</td></tr>
                     <tr><td>None</td></tr>
+                    <tr><td>None</td></tr>
                   </table>
                 <%end%>
               </td>
-              <td><%= event_log.first.created_at.to_date %></td>            
-              <td><%= button_to 'View', event_log_path(event_log), method: :get, class: "btn btn-primary btn-sm float-right"'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this user entry' %></td>
+              <td><%= user_log.first.created_at.to_date %></td>   
+              <td><%= button_to 'View', user_log_path(user_log), method: :get, class: "btn btn-primary btn-sm float-right"'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this user entry' %></td>
             </tr>
           <%end%>
         </tbody>
-        <%
-=begin%>
- <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email Address</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Address</th>
-            <th scope="col">Role</th>
-            <th scope="col">Date Created</th>
-            <th scope="col">Active</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @all_users.each do |user| %>
-            <tr>
-              <td><%= user.id %></td>
-              <td><%= user.username %></td>
-              <td><%= user.email %></td>
-              <td><%= user.phoneNum %></td>
-              <td><%= user.address %></td>
-              <% if user.userType == 1 %>
-                  <td><%= 'Administrator' %></td>
-              <%elsif user.userType == 2 %>
-                  <td><%= 'Manager' %></td>
-              <%elsif user.userType == 3 %>
-                  <td><%= 'Accountant' %></td>
-              <%end%>
-              <td><%= user.created_at.to_date %></td>
-              <td><%= user.active %></td>
-            </tr>
-          <%end%>
-        </tbody> 
-<%
-=end%>
       </table>
     </div>
   </div>

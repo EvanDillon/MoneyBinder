@@ -177,7 +177,15 @@ all_error_messages = [
                         ["user_suspended_until", "This account is suspended until: "],
                         ["user_inactive", "This account is not active"],
                         ["email_sent", "Email was successfully sent."],
-                        ["can_not_deactivate_account", "You can not deactivate an account with a balance greater than 0"]
+                        ["can_not_deactivate_account", "You can not deactivate an account with a balance greater than 0"],
+
+                        ["Journal_approved", "Journal entry approved"],
+                        ["Journal_declined", "Journal entry declined"],
+                        ["Journal_all_approved", "All journal entries have been approved"],
+                        ["Journal_all_declined", "All journal entries have been declined"],
+                        ["journal_created_closing_entry", "Successfully created closing entry"],
+                        ["journal_closing_entry_failed", "Unable to create closing entry"]
+
                     ]
 
 # Creates all error messages

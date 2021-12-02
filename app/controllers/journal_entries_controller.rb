@@ -113,9 +113,9 @@ class JournalEntriesController < ApplicationController
                                       )
 
     if @closing_journal_entry.save
-      redirect_to journal_entries_path, success: ErrorMessage.find_by(error_name: "Journal_created_closing_entry").body
+      redirect_to journal_entries_path, success: ErrorMessage.find_by(error_name: "journal_created_closing_entry").body
     else
-      flash.now[:danger] = "Unable to create closing entry"
+      flash.now[:danger] = ErrorMessage.find_by(error_name: "journal_closing_entry_failed").body
       render new_journal_entry_path
     end
   end
