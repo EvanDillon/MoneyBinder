@@ -103,25 +103,13 @@
       <tr>
         <td class="font-weight-bold" style="text-indent: 40px">Liabilities</td>
         <td></td>
-
-         <% if @total_liabilities < 0 %>
-            <td class="text-right">($<%= number_with_precision(@total_liabilities.abs(), precision: 2, delimiter: ',') %>)</td>
-          <% else %>
-            <td class="text-right">$<%= number_with_precision(@total_liabilities, precision: 2, delimiter: ',') %></td>
-          <% end %>
-          
+        <td class="text-right">$<%= number_with_precision(@total_liabilities.abs, precision: 2, delimiter: ',') %></td>
       </tr>
 
       <% @liability_accounts.each do |a| %>
       <tr>
         <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
-
-          <% if @balance < 0 %>
-            <td class="text-right" style="text-indent: 80px" >($<%= number_with_precision(a.balance.abs(), precision: 2, delimiter: ',') %>)</td>
-          <% else %>
-            <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-          <% end %>
-
+        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
         <td></td>
       </tr>
       <% end %>
@@ -130,51 +118,27 @@
       <tr>
         <td class="font-weight-bold" style="text-indent: 40px">Equity</td>
         <td></td>
-
-          <% if @total_equity < 0 %>
-            <td class="text-right">($<%= number_with_precision(@total_equity.abs(), precision: 2, delimiter: ',') %>)</td>
-          <% else %>
-            <td class="text-right">$<%= number_with_precision(@total_equity, precision: 2, delimiter: ',') %></td>
-          <% end %>
-
+        <td class="text-right">$<%= number_with_precision(@total_equity.abs, precision: 2, delimiter: ',') %></td>
       </tr>
 
       <% @equity_accounts.each do |a| %>
       <tr>
         <td style="text-indent: 80px"><%= a.name.truncate(40) %> </td>
-
-          <% if a.balance < 0 %>
-            <td class="text-right" style="text-indent: 80px" >($<%= number_with_precision(a.balance.abs(), precision: 2, delimiter: ',') %>)</td>
-          <% else %>
-            <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance, precision: 2, delimiter: ',') %></td>
-          <% end %>
-
+        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(a.balance.abs, precision: 2, delimiter: ',') %></td>
         <td></td>
       </tr>
       <% end %>
 
       <tr>
         <td style="text-indent: 80px"><%= @retained_earnings_account.first.truncate(40) %> </td>
-
-          <% if @retained_earnings_account.second < 0 %>
-            <td class="text-right" style="text-indent: 80px" >($<%= number_with_precision(@retained_earnings_account.second.abs(), precision: 2, delimiter: ',') %>)</td>
-          <% else %>
-            <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(@retained_earnings_account.second, precision: 2, delimiter: ',') %></td>
-          <% end %>
-
+        <td class="text-right" style="text-indent: 80px" >$<%= number_with_precision(@retained_earnings_account.second, precision: 2, delimiter: ',') %></td>
         <td></td>
       </tr>
 
       <tr class="table-active font-weight-bold">
         <td>Total Liabilities and Equity</td>
         <td></td>
-
-          <% if @total_l_and_e < 0 %>
-            <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double; ">($<%= number_with_precision(@total_l_and_e.abs(), precision: 2, delimiter: ',') %>)</td>
-          <% else %>
-          <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double; ">$<%= number_with_precision(@total_l_and_e, precision: 2, delimiter: ',') %></td>
-          <% end %>
-
+        <td class="text-right" style="text-decoration-line: underline; text-decoration-style: double; ">$<%= number_with_precision(@total_l_and_e.abs, precision: 2, delimiter: ',') %></td>
       </tr>
     </tbody>
   </table>

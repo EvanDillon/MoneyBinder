@@ -24,6 +24,7 @@ class EventLogsController < ApplicationController
       end
     end
     @approved_journal_entries = JournalEntry.where(status: "Approved")
+    @user_logs = UserEventLog.user_log_models()
   end
 
   # GET /event_logs/1 or /event_logs/1.json

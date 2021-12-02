@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  # resources :ledger_entries
+  root to: 'sessions#welcome'
   resources :journal_entries
   resources :event_logs
-  root to: 'sessions#welcome'
+  resources :user_logs
   resources :users
   resources :accounts
 

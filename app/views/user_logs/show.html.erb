@@ -1,0 +1,101 @@
+<%= render partial: "shared/navigation_bar"%>
+<%= render 'flash_messages' %><br>
+<div class="container">
+  <h1 class="text-center">User Log Details</h1><br>
+  <div class="form-row">
+    <div class="col">
+      <p>Event ID: <%= @user_log_id %></p>
+    </div>
+    <div class="col text-center">
+      <p>Event Type:
+        <% if UserEventLog.find(@user_log_id).event_type == "Added" %>
+          <span class="badge badge-pill badge-success"> <%= UserEventLog.find(@user_log_id).event_type %>   </span> 
+        <% elsif UserEventLog.find(@user_log_id).event_type == "Deactivated"%>
+          <span class="badge badge-pill badge-danger"> <%= UserEventLog.find(@user_log_id).event_type %>   </span> 
+        <% else %>
+          <span class="badge badge-pill badge-warning"> <%= UserEventLog.find(@user_log_id).event_type%>   </span> 
+        <%end%>  
+      </p>
+    </div>
+    <div class="col">
+      <p class="text-right"><%= link_to 'Back to Event Logs', event_logs_path %></p>
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr class="table">
+        <th scope="col">Fields Changed</th>
+        <th scope="col">Before</th>
+        <th scope="col">After</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <th scope="row">Username</th>
+          <td><%= @before.username %></td>
+          <td><%= @after.username %></td>
+        </tr>
+        <tr>
+          <th scope="row">First Name</th>
+          <td><%= @before.firstName %></td>
+          <td><%= @after.firstName %></td>
+        </tr>
+        <tr>
+          <th scope="row">Last Name</th>
+          <td><%= @before.lastName %></td>
+          <td><%= @after.lastName %></td>
+        </tr>
+        <tr>
+          <th scope="row">Email</th>
+          <td><%= @before.email %></td>
+          <td><%= @after.email %></td>
+        </tr>
+        <tr>
+          <th scope="row">Number</th>
+          <td><%= @before.phoneNum %></td>
+          <td><%= @after.phoneNum %></td>
+        </tr>
+        <tr>
+          <th scope="row">Address</th>
+          <td><%= @before.address %></td>
+          <td><%= @after.address %></td>
+        </tr>
+
+        <tr>
+          <th scope="row">User Type</th>
+          <td>
+            <% if @before.userType == 1 %>
+              Admin
+            <%elsif @before.userType == 2 %>
+              Manager
+            <%elsif @before.userType == 3 && !@before.id.nil? %>
+              Accountant
+            <%end%>
+          </td>
+          <td>
+            <% if @after.userType == 1 %>
+              Admin
+            <%elsif @after.userType == 2 %>
+              Manager
+            <%elsif @after.userType == 3 %>
+              Accountant
+            <%end%>
+          </td>
+        </tr>  
+        <tr>
+          <th scope="row">Active</th>
+          <% if @before.id.nil? %>
+            <td>false</td>
+            <td><%= @after.active %></td>
+          <% elsif @after.id.nil? %>
+            <td><%= @before.active %></td>
+            <td>false</td>
+          <%else%>
+            <td><%= @before.active %></td>
+            <td><%= @after.active %></td>
+          <%end%>
+        </tr>
+      </tbody>
+  </table>
+</div>

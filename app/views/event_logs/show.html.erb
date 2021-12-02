@@ -1,7 +1,7 @@
 <%= render partial: "shared/navigation_bar"%>
 <%= render 'flash_messages' %><br>
 <div class="container">
-      <h1 class="text-center">Event Log Details</h1><br>
+      <h1 class="text-center">Account Log Details</h1><br>
   <div class="form-row">
     <div class="col">
       <p>Event ID: <%= @event_id %></p>
@@ -30,7 +30,6 @@
         <th scope="col">After</th>
       </tr>
     </thead>
-
     <tbody>
         <tr>
           <th scope="row">Account ID</th>
@@ -94,7 +93,6 @@
         </tr>
         <tr>
           <th scope="row">Active</th>
-
           <% if @before.id.nil? %>
             <td>false</td>
             <td><%= @after.active %></td>
@@ -105,8 +103,6 @@
             <td><%= @before.active %></td>
             <td><%= @after.active %></td>
           <%end%>
-
-
         </tr>
       </tbody>
   </table>

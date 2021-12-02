@@ -66,6 +66,7 @@
   <table class="table" id="table-layout">
     <thead>
       <tr>
+        <th scope="col" class="text-center">ID</th>
         <th scope="col" class="text-center">Date Added</th>
         <th scope="col" class="text-center">Entry Type</th>
         <th scope="col">User</th>
@@ -78,6 +79,7 @@
     <tbody>
       <% @journal_entries.each do |journal_entry| %>
       <tr>
+        <td class="text-center"><%= journal_entry.id %>
         <td class="text-center"><%= journal_entry.date_added %>
         <% if journal_entry.status == "Pending" && current_user.userType == 2 %>
           <%= button_to "Approve", approve_path(entry: journal_entry), method: :post, class: "btn btn-success btn-sm btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Approve this transaction' %>
@@ -168,7 +170,7 @@
       function( settings, data, dataIndex ) {
           var min = minDate.val();
           var max = maxDate.val();
-          var date = new Date( data[0] );
+          var date = new Date( data[1] );
   
           if (
               ( min === null && max === null ) ||
@@ -186,7 +188,7 @@
     function amount( settings, data, dataIndex ) {
         var min = parseInt( $('#min').val(), 10 );
         var max = parseInt( $('#max').val(), 10 );
-        var balance = parseFloat(data[4,5].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
+        var balance = parseFloat(data[5,6].replace('$','').replace(/,|_/g, '')).toFixed(2) || 0;
         
         if ( ( isNaN( min ) && isNaN( max ) ) ||
              ( isNaN( min ) && balance <= max ) ||
@@ -201,7 +203,7 @@
 
   $.fn.dataTable.ext.search.push(
     function status( settings, data, dataIndex ) {
-      var status = data[6];
+      var status = data[7];
       if (document.getElementById("statusAll").disabled)
       {
         return true;
@@ -223,7 +225,6 @@
   );
   
   $(document).ready(function() {
-
     minDate = new DateTime($('#mindate'), {
           format: 'MMMM Do YYYY'
       });
@@ -233,6 +234,12 @@
   
       //Sorts table by date
       var table = $('#table-layout').DataTable( {
+                    "columnDefs": [
+                      {
+                        "targets": [ 0 ],
+                        "visible": false,
+                      }
+                    ],
                     "order": [[ 0, "desc" ]]
                   } );
 
