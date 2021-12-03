@@ -6,9 +6,10 @@ class ResetMailer < ApplicationMailer
   end
 
   def approve_new_account
-    @user = params[:user]
-    @url = "#{url_address}/user/edit/#{@user.id}"
-    mail(to: User.where(userType: 1).first.email, subject: "New Account Request")
+    @admin_user = params[:recipient_user]
+    @new_user = params[:new_user]
+    @url = "#{url_address}/user/edit/#{@new_user.id}"
+    mail(to: @admin_user.email, subject: "New Account Request")
   end
 
   def account_activated

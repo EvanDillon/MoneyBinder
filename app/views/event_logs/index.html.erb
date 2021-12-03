@@ -11,9 +11,11 @@
     <li class="nav-item">
       <a class="nav-link" id="pills-journal-entries-tab" data-toggle="pill" href="#pills-journal-entries" role="tab" aria-controls="pills-journal-entries" aria-selected="false">Entry Logs</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-user" aria-selected="false">User Logs</a>
-    </li>
+    <% if current_user.userType == 1 %>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab" aria-controls="pills-user" aria-selected="false">User Logs</a>
+      </li>
+    <%end%>
   </ul>
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-events" role="tabpanel" aria-labelledby="pills-events-tab">
@@ -162,109 +164,111 @@
         </tbody>
       </table>
     </div>
-    <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
-      <table class="table" id="table-layout-3">
-        <thead>
-          <tr class="table">
-            <th scope="col">#</th>
-            <th scope="col">Changed By</th>
-            <th scope="col">Action</th>
-            <th scope="col">Changed</th>
-            <th scope="col">Before</th>
-            <th scope="col">After</th>
-            <th scope="col">Date</th>
-            <th scope="col"></th> 
-          </tr>
-        </thead>
-        <tbody>
-          <% @user_logs.each do |user_log| %>
-            <tr>
-              <th scope="row"><%= user_log.first.id.to_s %></th>
-              <td><%= user_log.first.user_name.truncate(10) %></td>
-              <td> 
-                <% if user_log.first.event_type == "Added" %>
-                  <span class="badge badge-pill badge-success"><%= user_log.first.event_type %></span> 
-                <% elsif user_log.first.event_type == "Deactivated"%>
-                  <span class="badge badge-pill badge-danger"><%= user_log.first.event_type %></span> 
-                <% else %>
-                  <span class="badge badge-pill badge-warning"><%= user_log.first.event_type %></span> 
-                <%end%>
-              </td>
-              <td>
-                <table class="table">
-                  <tr><td>Username</td></tr>
-                  <tr><td>Email</td></tr>
-                  <tr><td>Phone</td></tr>
-                  <tr><td>Address</td></tr>
-                  <tr><td>Role</td></tr>
-                  <tr><td>Active</td></tr>
-                </table>
-              </td>
-              <td>
-                <% if !user_log.second.nil? %>
-                  <table class="table table-borderless" >
-                    <tr><td><%= user_log.second.username unless nil %></td></tr>
-                    <tr><td><%= user_log.second.email %></td></tr>
-                    <tr><td><%= user_log.second.phoneNum %></td></tr>
-                    <tr><td><%= user_log.second.address.truncate(20) %></td></tr>
-                    <tr><td>
-                      <% if user_log.second.userType == 1 %>
-                        Admin
-                      <%elsif user_log.second.userType == 2 %>
-                        Manager
-                      <%elsif user_log.second.userType == 3 %>
-                        Accountant
-                      <%end%>
-                    </td></tr>
-                    <tr><td><%= user_log.second.active %></td></tr>
-                  </table>
-                <%else%>
-                  <table class="table table-borderless">
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                  </table>
-                <%end%>
-              </td>
-              <td>
-                <% if !user_log.third.nil? %>
-                  <table class="table table-borderless">
-                    <tr><td><%= user_log.third.username unless nil %></td></tr>
-                    <tr><td><%= user_log.third.email %></td></tr>
-                    <tr><td><%= user_log.third.phoneNum %></td></tr>
-                    <tr><td><%= user_log.third.address.truncate(20) %></td></tr>
-                    <tr><td>
-                      <% if user_log.third.userType == 1 %>
-                        Admin
-                      <%elsif user_log.third.userType == 2 %>
-                        Manager
-                      <%elsif user_log.third.userType == 3 %>
-                        Accountant
-                      <%end%>
-                    </td></tr>                    
-                    <tr><td><%= user_log.third.active %></td></tr>
-                  </table>
-                <%else%>
-                  <table class="table table-borderless">
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                    <tr><td>None</td></tr>
-                  </table>
-                <%end%>
-              </td>
-              <td><%= user_log.first.created_at.to_date %></td>   
-              <td><%= button_to 'View', user_log_path(user_log), method: :get, class: "btn btn-primary btn-sm float-right"'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this user entry' %></td>
+    <% if current_user.userType == 1 %>
+      <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab">
+        <table class="table" id="table-layout-3">
+          <thead>
+            <tr class="table">
+              <th scope="col">#</th>
+              <th scope="col">Changed By</th>
+              <th scope="col">Action</th>
+              <th scope="col">Changed</th>
+              <th scope="col">Before</th>
+              <th scope="col">After</th>
+              <th scope="col">Date</th>
+              <th scope="col"></th>
             </tr>
-          <%end%>
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            <% @user_logs.each do |user_log| %>
+              <tr>
+                <th scope="row"><%= user_log.first.id.to_s %></th>
+                <td><%= user_log.first.user_name.truncate(10) %></td>
+                <td> 
+                  <% if user_log.first.event_type == "Added" %>
+                    <span class="badge badge-pill badge-success"><%= user_log.first.event_type %></span> 
+                  <% elsif user_log.first.event_type == "Deactivated"%>
+                    <span class="badge badge-pill badge-danger"><%= user_log.first.event_type %></span> 
+                  <% else %>
+                    <span class="badge badge-pill badge-warning"><%= user_log.first.event_type %></span> 
+                  <%end%>
+                </td>
+                <td>
+                  <table class="table">
+                    <tr><td>Username</td></tr>
+                    <tr><td>Email</td></tr>
+                    <tr><td>Phone</td></tr>
+                    <tr><td>Address</td></tr>
+                    <tr><td>Role</td></tr>
+                    <tr><td>Active</td></tr>
+                  </table>
+                </td>
+                <td>
+                  <% if !user_log.second.nil? %>
+                    <table class="table table-borderless" >
+                      <tr><td><%= user_log.second.username unless nil %></td></tr>
+                      <tr><td><%= user_log.second.email %></td></tr>
+                      <tr><td><%= user_log.second.phoneNum %></td></tr>
+                      <tr><td><%= user_log.second.address.truncate(20) %></td></tr>
+                      <tr><td>
+                        <% if user_log.second.userType == 1 %>
+                          Admin
+                        <%elsif user_log.second.userType == 2 %>
+                          Manager
+                        <%elsif user_log.second.userType == 3 %>
+                          Accountant
+                        <%end%>
+                      </td></tr>
+                      <tr><td><%= user_log.second.active %></td></tr>
+                    </table>
+                  <%else%>
+                    <table class="table table-borderless">
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                    </table>
+                  <%end%>
+                </td>
+                <td>
+                  <% if !user_log.third.nil? %>
+                    <table class="table table-borderless">
+                      <tr><td><%= user_log.third.username unless nil %></td></tr>
+                      <tr><td><%= user_log.third.email %></td></tr>
+                      <tr><td><%= user_log.third.phoneNum %></td></tr>
+                      <tr><td><%= user_log.third.address.truncate(20) %></td></tr>
+                      <tr><td>
+                        <% if user_log.third.userType == 1 %>
+                          Admin
+                        <%elsif user_log.third.userType == 2 %>
+                          Manager
+                        <%elsif user_log.third.userType == 3 %>
+                          Accountant
+                        <%end%>
+                      </td></tr>                    
+                      <tr><td><%= user_log.third.active %></td></tr>
+                    </table>
+                  <%else%>
+                    <table class="table table-borderless">
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                      <tr><td>None</td></tr>
+                    </table>
+                  <%end%>
+                </td>
+                <td><%= user_log.first.created_at.to_date %></td>   
+                <td><%= button_to 'View', user_log_path(user_log), method: :get, class: "btn btn-primary btn-sm float-right"'btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'View this user entry' %></td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    <%end%>
   </div>
 </div>
 

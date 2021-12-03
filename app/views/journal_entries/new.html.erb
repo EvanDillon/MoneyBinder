@@ -95,6 +95,11 @@
                 <%= link_to "Cancel", journal_entries_path, class: "btn btn-secondary btn-block", 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Cancel this journal entry' %>
               </div>
             </div>
+            <div class="form-row">
+              <div class="col text-center">
+                <%= link_to "Clear/Reset", new_journal_entry_path %>
+              </div>
+            </div>
           </div>
         <%end%>
       </div>

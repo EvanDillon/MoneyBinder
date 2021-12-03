@@ -46,7 +46,8 @@ class SessionsController < ApplicationController
           end
         # Account is still suspended 
         else
-          redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_suspended_until").body} #{@user.suspendedTill.strftime("%B%e, %Y %I:%M %p")} "
+          suspend_time = @user.suspendedTill - 5.hours
+          redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "user_suspended_until").body} " + suspend_time.strftime("%B %e, %Y %I:%M %p")
         end
       else
         redirect_to welcome_path, danger: ErrorMessage.find_by(error_name: "user_inactive").body
@@ -159,7 +160,9 @@ class SessionsController < ApplicationController
           @user.active = false
           @user.save
           initialize_security_question(@user, params[:security_question_1][:id], params[:security_question_answer])
-          ResetMailer.with(user: @user).approve_new_account.deliver_now
+          User.where(userType: 1).each do |admin_user|
+            ResetMailer.with(recipient_user: admin_user, new_user: @user).approve_new_account.deliver_now
+          end
           redirect_to welcome_path, success: ErrorMessage.find_by(error_name: "user_create_request").body
         end      
       else 

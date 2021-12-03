@@ -1,34 +1,18 @@
 <%= render 'flash_messages' %>
-<h1>Reset Password for <%= @user.username%></h1>
-
-<!-- <% if @correct_answer == true %>
-  <%= label_tag "#{User.find(@user.id).security_question.pluck(:question).first}" %>
-  <%= text_field_tag :security_question_answer, "#{User.find(@user.id).password_authorization.pluck(:answer).first}", required: true, readonly: true %>
-  <%= form_tag('/password/reset', method: 'post') do %>
-    <%= password_field_tag :password, nil, placeholder: 'Enter New Password' %>
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <%= hidden_field_tag "token", @user.reset %>
-    <%= submit_tag "Submit"%>
-  <%end%>
-
-<% else %>
-  <%= form_tag('/password/reset', method: 'post') do %>
-    <p>Please answer this security question before entering new password</p>
-    <%= label_tag "#{User.find(@user.id).security_question.pluck(:question).first}" %>
-    <%= text_field_tag :security_question_answer, nil, required: true %>
-    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-    <%= hidden_field_tag "token", @user.reset %>
-    <%= submit_tag "Enter"%><br>
-  <%end%>
-<%end%> -->
-
-<%= form_tag('/password/reset', method: 'post') do %>
-  <%= password_field_tag :password, nil, placeholder: 'Enter New Password' %>
-  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-  <%= hidden_field_tag "token", @user.reset %>
-  <%= submit_tag "Submit"%>
-<%end%>
-
-<%= link_to 'Back to Login', welcome_path %>
-
-
+<div class="container">  
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6"><br>
+      <h1 class="text-center">Reset Password for <%= @user.username%></h1>
+      <%= form_tag('/password/reset', method: 'post') do %>
+        <%= password_field_tag :password, nil, placeholder: 'Enter New Password', class: 'form-control' %>
+        <p><small>Passwords must start with a letter, and contain at least one number and special character.</small></p>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <%= hidden_field_tag "token", @user.reset %>
+        <%= submit_tag "Submit", class: 'btn btn-primary btn-block', 'data-placement':'top', title: 'Reset Password'%>
+      <%end%>
+      <%= link_to 'Back to Login', welcome_path %>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>

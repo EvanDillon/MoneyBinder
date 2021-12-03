@@ -7,13 +7,6 @@ class PasswordController < ApplicationController
       token = params['token'] or not_found
     end
     
-    # @correct_answer = true
-    # if @correct_answer
-    #   redirect_back fallback_location: root_path, success: "Correct answer"
-    # elsif @correct_answer == false
-    #   redirect_back fallback_location: root_path, danger: "Incorrect answer"
-    # end
-
     @user = User.find_by_reset(token) or not_found  
     if params['password']
       # Checks if user is entering same password
@@ -23,7 +16,7 @@ class PasswordController < ApplicationController
         @user.password = params['password']
         @user.reset = nil
         @user.save
-        render plain: "Successfully reset password for #{@user.username}"
+        redirect_to welcome_path, success: "#{ErrorMessage.find_by(error_name: "successfully_reset_pass").body} " + @user.username
       elsif same_pass 
         redirect_back fallback_location: root_path, danger: ErrorMessage.find_by(error_name: "user_used_password").body
       elsif !pass_errors.empty?
@@ -62,6 +55,6 @@ class PasswordController < ApplicationController
   end
 
   def not_found
-    raise ActionController::RoutingError new('Not Found')
+    redirect_to welcome_path, danger: "#{ErrorMessage.find_by(error_name: "reset_pass_failed").body}"
   end
 end
