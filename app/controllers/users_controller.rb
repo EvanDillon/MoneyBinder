@@ -39,6 +39,7 @@ class UsersController < ApplicationController
   def edit
     authorize current_user, :user_admin?
     @user = User.find(params[:id])
+    @suspend_time_edit = @user.suspendedTill - 5.hours
   end
 
   def update
@@ -55,31 +56,33 @@ class UsersController < ApplicationController
     end
 
     # Manages users suspention time
-    suspend_time = Time.now.to_date
+    suspend_time = Time.now
     if params[:reset_suspension] != "true" && !params[:suspend_time].nil?
-      date_params = params[:suspend_time]
-      date = DateTime.new(date_params["(1i)"].to_i, date_params["(2i)"].to_i, date_params["(3i)"].to_i, date_params["(4i)"].to_i, date_params["(5i)"].to_i)
-      if date > Time.now.to_date
-        suspend_time = date
+      date_params = params[:suspend_time].to_datetime.in_time_zone("EST") + 5.hours
+
+      if (date_params) > Time.now.to_datetime
+        suspend_time = date_params
+      else
+        bad_suspend_date = true
       end
     end
 
     if @user.update(username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
       auth_id = @user.password_join_authorization_ids.first
       PasswordJoinAuthorization.update(auth_id, answer: params[:security_question_answer])
-      past_user_status = @user.active
       @user.reload
       
       # If Admin activates a new users account it sents email to that user
-      if @user.active != past_user_status && @user.active
+      if @user.active != before_active_status && @user.active
         ResetMailer.with(user: @user).account_activated.deliver_now
       end
 
       # If user deactiviats own account, system kicks user out 
-      if (!@user.active && (@user == current_user)) || @user.suspendedTill > Time.now
+      if (!@user.active && (@user == current_user)) || current_user.suspendedTill > Time.now
         redirect_to '/logout'
+      elsif bad_suspend_date == true
+        redirect_to edit_user_path(@user), danger: "You can not suspend a user in the past"
       else
-
         @user_after = @user.to_json
         after_active_status = @user.active
         if before_active_status && !after_active_status

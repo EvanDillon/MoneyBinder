@@ -4,9 +4,23 @@
 <br>
 <div class="container">
   <h1 class="text-center"><%= @account.account_number %> - <%= @account.name %></h1>
-  <div class="text-right">
-    <button class="btn btn-link bi-arrow-left hBack" type="button"> Back</button><br><br>
+
+  <div class="row justify-content-md-left">
+    <div class="col col-lg-2">
+      <div class="input-group mb-3">
+        <%= text_field_tag :mind, "", placeholder: "Start Date", class: "form-control", id: "mindate", name: "mindate"  %>
+      </div>
+    </div>
+    <div class="col col-lg-2">
+      <div class="input-group mb-3">
+        <%= text_field_tag :maxd, "", placeholder: "End Date", class: "form-control", id: "maxdate", name: "maxdate" %>
+      </div>
+    </div>
+    <div class="col text-right">
+      <button class="btn btn-link bi-arrow-left hBack" type="button"> Back</button>
+    </div>
   </div>
+
   <table class="table" id="table-layout">
     <thead>
     <tr>
@@ -51,17 +65,44 @@
   </table>
 
 <script>
+  var minDate, maxDate;
+  $.fn.dataTable.ext.search.push(
+      function( settings, data, dataIndex ) {
+          var min = minDate.val();
+          var max = maxDate.val();
+          var date = new Date( data[0] );
+  
+          if (
+              ( min === null && max === null ) ||
+              ( min === null && date <= max ) ||
+              ( min <= date   && max === null ) ||
+              ( min <= date   && date <= max )
+          ) {
+              return true;
+          }
+          return false;
+      }
+  );
+
   $(document).ready(function() {
-    $('#table-layout').dataTable( {
+    minDate = new DateTime($('#mindate'), {
+      format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime($('#maxdate'), {
+        format: 'MMMM Do YYYY'
+    });
+
+    var table = $('#table-layout').DataTable( {
       "pageLength": 100
     });
-  });
-</script>
 
+    $('#mindate, #maxdate').on('change', function () {
+      table.draw();
+    });
 
-<script>
-  $(".hBack").on("click", function(e){
+    $(".hBack").on("click", function(e){
       e.preventDefault();
       window.history.back();
+    });
   });
 </script>

@@ -16,19 +16,18 @@
         <%= text_field_tag :security_question_answer, "#{@user.password_join_authorization.pluck(:answer).first}", required: true, class: 'form-control'%> <br>
         <%= hidden_field_tag "user_id", @user.id %>
         <% if @user.suspendedTill > Time.now %>
-          <%= label_tag "This user is already suspended until: #{@user.suspendedTill.strftime("%B%e, %Y %I:%M %p")}", nil, class: "text-danger" %><br>
+          <%= label_tag "This user is already suspended until: #{@suspend_time_edit.strftime("%B%e, %Y %I:%M %p")}", nil, class: "text-danger" %><br>
           <%= label_tag "Remove Suspension?" %>
           <%= check_box_tag "reset_suspension", true, false %><br>
         <% else %>
           <%= label_tag 'Suspend User Until: '%>
           <div class="form-group">
-              <label for="inputDate">Date:</label> <input type="text" class="form-control-md" id="inputDate">
-              <label for="inputTime">Time:</label> <input type="text" class="form-control-md" id="inputTime">
+            <%= text_field_tag :suspend_time, nil, required: false, class: "form-control", id: "inputDateTime" %>
           </div>
         <%end%>
         <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block''btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Save changes to this account' %>
       <%end%>
-      <%= link_to 'Back to User Management', user_management_path %>
+      <%= link_to 'Back to User Management', user_management_path %><br><br>
     </div>
     <div class="col"></div>
   </div>
@@ -36,20 +35,11 @@
 
 <script>
 $(document).ready(function() {
-    new DateTime($('#inputDate'), {
-        format: 'MMMM Do YYYY'
-    });
-    new DateTime($('#inputTime'), {
-        format: 'h:mm a'
-    });
- 
-    $('#appointment').on('submit', function (e) {
-        e.preventDefault();
- 
-        alert(
-            $('#inputDate').val() + ' at ' +
-            $('#inputTime').val()
-        );
-    });
+  new DateTime($('#inputDateTime'), {  
+    format: 'DD-MM-YYYY h:mm A',
+    opts: {
+      minutesIncrement: 5
+    }
+  });
 });
 </script>

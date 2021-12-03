@@ -66,14 +66,15 @@ User.create! do |a|
     a.address = '317 Apple Street'
     a.active = true
     a.suspendedTill = Time.now
+    a.passUpdatedAt = Time.now
 end
 # puts "Created Evan Dillon" 
 
 User.create! do |a|
     a.firstName = 'James'
     a.lastName = 'Diaz'
-    a.username = 'jdiaz35'
-    a.password = "password#1"
+    a.username = 'AlmostExpiredUser'
+    a.password = "password"
     a.userType = 3
     a.dob = '4/06/1997'
     a.email = 'Cuizonix@gmail.com'
@@ -85,7 +86,6 @@ end
 # puts "Created James Diaz" 
 
 User.create! do |a|
-
     a.firstName = 'Katy'
     a.lastName = 'Highers'
     a.username = 'khighers1021'
@@ -166,7 +166,7 @@ all_error_messages = [
 
                         ["user_expired_password", "Your password is expired. Please reset your password now."],
                         ["user_almost_expired_password_part1", "Your password is going to expire in "],
-                        ["user_almost_expired_password_part2", " days. You can change your password in Profile Settings"],
+                        ["user_almost_expired_password_part2", " days. You can reset your password on the login page"],
 
                         ["user_not_found", "Username not found"],
 
@@ -184,8 +184,9 @@ all_error_messages = [
                         ["Journal_all_approved", "All journal entries have been approved"],
                         ["Journal_all_declined", "All journal entries have been declined"],
                         ["journal_created_closing_entry", "Successfully created closing entry"],
-                        ["journal_closing_entry_failed", "Unable to create closing entry"]
-
+                        ["journal_closing_entry_failed", "Unable to create closing entry"],
+                        ["successfully_reset_pass", "Successfully reset password for"],
+                        ["reset_pass_failed", "Password Reset Failed. Make sure to use the most recent email to reset your password"]
                     ]
 
 # Creates all error messages
