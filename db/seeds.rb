@@ -144,7 +144,7 @@ PasswordJoinAuthorization.create!(user_id: User.where(username: 'Admin').pluck(:
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'Manager').pluck(:id).first,        security_questions_id: 1, answer: 'Austin')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'Accountant').pluck(:id).first,     security_questions_id: 1, answer: 'DC')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'EvanD').pluck(:id).first,          security_questions_id: 2, answer: 'Buddy')
-PasswordJoinAuthorization.create!(user_id: User.where(username: 'jdiaz35').pluck(:id).first,        security_questions_id: 1, answer: 'New York')
+PasswordJoinAuthorization.create!(user_id: User.where(username: 'AlmostExpiredUser').pluck(:id).first,        security_questions_id: 1, answer: 'New York')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'khighers1021').pluck(:id).first,   security_questions_id: 1, answer: 'New York')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'ashein1021').pluck(:id).first,     security_questions_id: 1, answer: 'New York')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'ExpiredUser').pluck(:id).first,    security_questions_id: 1, answer: 'LA')
