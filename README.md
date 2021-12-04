@@ -1,6 +1,6 @@
 # MoneyBinder
 
-MoneyBinder is accounting software devoploed for a class called Application Domain at Kennesaw State University. In this class we learned about a domain (accounting) and then applied what we learned by creating a fully functioning web application from the ground up.
+MoneyBinder is an accounting software developed for a class called Application Domain at Kennesaw State University. In this class we learned about a domain (accounting) and then applied what we learned by creating a fully functioning web application from the ground up.
 * Check out [MoneyBinder on Heroku](https://moneybinder.herokuapp.com/)
 * Video demo of [MoneyBinder]()
 
@@ -19,6 +19,6 @@ MoneyBinder is accounting software devoploed for a class called Application Doma
 ## Authors
 * [Evan Dillon](www.linkedin.com/in/evanjdillon)
 * Katie H
-* James Diaz
+* [James Diaz](www.linkedin.com/in/diazjames)
 * Andrew Shein
 * Jonathan Perry
