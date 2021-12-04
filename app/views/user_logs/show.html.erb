@@ -96,6 +96,11 @@
             <td><%= @after.active %></td>
           <%end%>
         </tr>
+        <tr>
+          <th scope="row">Suspend Untill</th>
+          <td><%= @before.suspendedTill.strftime("%D %I:%M %p") %></td>
+          <td><%= @after.suspendedTill.strftime("%D %I:%M %p") %></td>
+        </tr>
       </tbody>
   </table>
 </div>

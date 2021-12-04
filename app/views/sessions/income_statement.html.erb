@@ -3,7 +3,7 @@
 <div class="container">
   <h2 class="text-center">Addams & Family Inc.</h2>
   <h2 class="text-center">Income Statement</h2>
-  <h3 class="text-center">As of <%= Date.current.to_formatted_s(:long_ordinal) %></h3>
+  <h3 class="text-center">For the period ending <%= Date.new(Time.now.year, 12, 31).strftime("%B %d, %Y") %></h3>
 
   <% unless current_user.userType != 2 %>
     <div class="text-right">  
