@@ -54,30 +54,30 @@ User.create! do |a|
 end
 # puts "Created Accountant" 
 
-User.create! do |a|
-    a.firstName = 'Evan'
-    a.lastName = 'Dillon'
-    a.username = 'EvanD'
-    a.password = "password#1"
-    a.userType = 3
-    a.dob = '3/13/1999'
-    a.email = 'evanjdillon@gmail.com'
-    a.phoneNum = '7704444444'
-    a.address = '317 Apple Street'
-    a.active = true
-    a.suspendedTill = Time.now
-    a.passUpdatedAt = Time.now
-end
-# puts "Created Evan Dillon" 
+# User.create! do |a|
+#     a.firstName = 'Evan'
+#     a.lastName = 'Dillon'
+#     a.username = 'EvanD'
+#     a.password = "password#1"
+#     a.userType = 3
+#     a.dob = '3/13/1999'
+#     a.email = 'evanjdillon@gmail.com'
+#     a.phoneNum = '7704444444'
+#     a.address = '317 Apple Street'
+#     a.active = true
+#     a.suspendedTill = Time.now
+#     a.passUpdatedAt = Time.now
+# end
+# # puts "Created Evan Dillon" 
 
 User.create! do |a|
-    a.firstName = 'James'
-    a.lastName = 'Diaz'
+    a.firstName = 'Almost'
+    a.lastName = 'ExpiredUser'
     a.username = 'AlmostExpiredUser'
     a.password = "password"
     a.userType = 3
     a.dob = '4/06/1997'
-    a.email = 'Cuizonix@gmail.com'
+    a.email = 'AlmostExpiredUser@gmail.com'
     a.phoneNum = '5555555555'
     a.address = '123 Sesame Street'
     a.active = true
@@ -85,35 +85,35 @@ User.create! do |a|
 end
 # puts "Created James Diaz" 
 
-User.create! do |a|
-    a.firstName = 'Katy'
-    a.lastName = 'Highers'
-    a.username = 'khighers1021'
-    a.password = "password1!"
-    a.userType = 2
-    a.dob = '2/19/2000'
-    a.email = 'kathrynhighers@gmail.com'
-    a.phoneNum = '5555555555'
-    a.address = '123 Sesame Street'
-    a.active = true
-    a.passUpdatedAt = Time.now-28.days
-end
-# puts "Created Katy Highers"
+# User.create! do |a|
+#     a.firstName = 'Katy'
+#     a.lastName = 'Highers'
+#     a.username = 'khighers1021'
+#     a.password = "password1!"
+#     a.userType = 2
+#     a.dob = '2/19/2000'
+#     a.email = 'kathrynhighers@gmail.com'
+#     a.phoneNum = '5555555555'
+#     a.address = '123 Sesame Street'
+#     a.active = true
+#     a.passUpdatedAt = Time.now-28.days
+# end
+# # puts "Created Katy Highers"
 
-User.create! do|a|
-    a.firstName = 'Andrew'
-    a.lastName = 'Shein'
-    a.username = 'ashein1021'
-    a.password = "password"
-    a.userType = 3
-    a.dob = '8/04/1997'
-    a.email = 'ashein60@gmail.com'
-    a.phoneNum = '7777777777'
-    a.address = '645 Fire Street'
-    a.active = true
-    a.passUpdatedAt = Time.now
-end
-# puts "Created Andrew Shein" 
+# User.create! do|a|
+#     a.firstName = 'Andrew'
+#     a.lastName = 'Shein'
+#     a.username = 'ashein1021'
+#     a.password = "password"
+#     a.userType = 3
+#     a.dob = '8/04/1997'
+#     a.email = 'ashein60@gmail.com'
+#     a.phoneNum = '7777777777'
+#     a.address = '645 Fire Street'
+#     a.active = true
+#     a.passUpdatedAt = Time.now
+# end
+# # puts "Created Andrew Shein" 
 
 User.create! do |a|
     a.firstName = 'Expired'
@@ -143,10 +143,7 @@ puts "Created #{SecurityQuestion.all.count} security questions------------------
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'Admin').pluck(:id).first,          security_questions_id: 1, answer: 'Atlanta')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'Manager').pluck(:id).first,        security_questions_id: 1, answer: 'Austin')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'Accountant').pluck(:id).first,     security_questions_id: 1, answer: 'DC')
-PasswordJoinAuthorization.create!(user_id: User.where(username: 'EvanD').pluck(:id).first,          security_questions_id: 2, answer: 'Buddy')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'AlmostExpiredUser').pluck(:id).first,        security_questions_id: 1, answer: 'New York')
-PasswordJoinAuthorization.create!(user_id: User.where(username: 'khighers1021').pluck(:id).first,   security_questions_id: 1, answer: 'New York')
-PasswordJoinAuthorization.create!(user_id: User.where(username: 'ashein1021').pluck(:id).first,     security_questions_id: 1, answer: 'New York')
 PasswordJoinAuthorization.create!(user_id: User.where(username: 'ExpiredUser').pluck(:id).first,    security_questions_id: 1, answer: 'LA')
 puts "Created #{PasswordJoinAuthorization.all.count} security question relationships-----------------"
 
