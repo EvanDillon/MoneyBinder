@@ -14,6 +14,7 @@ MoneyBinder is accounting software devoploed for a class called Application Doma
 * **Framework** - Ruby on Rails
 * **Database** - Postgresql
 * **Cloud Platform** - Heroku
+* **Version Control** - GitHub 
 * **Gems** - See "GemFile"
 
 ## Authors
