@@ -19,10 +19,11 @@
           <%= label_tag "This user is already suspended until: #{@suspend_time_edit.strftime("%B%e, %Y %I:%M %p")}", nil, class: "text-danger" %><br>
           <%= label_tag "Remove Suspension?" %>
           <%= check_box_tag "reset_suspension", true, false %><br>
+          <%= hidden_field_tag :suspend_time, @user.suspendedTill %>
         <% else %>
           <%= label_tag 'Suspend User Until: '%>
           <div class="form-group">
-            <%= text_field_tag :suspend_time, nil, required: false, class: "form-control", id: "inputDateTime" %>
+            <%= text_field_tag :suspend_time, "", required: false, class: "form-control", id: "inputDateTime" %>
           </div>
         <%end%>
         <%= submit_tag 'Submit', :class => 'btn btn-primary btn-block''btn btn-primary btn-block', 'data-toggle': 'tooltip', 'data-placement':'top', title: 'Save changes to this account' %>

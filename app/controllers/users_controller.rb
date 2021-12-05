@@ -57,8 +57,8 @@ class UsersController < ApplicationController
 
     # Manages users suspention time
     suspend_time = Time.now
-    if params[:reset_suspension] != "true" && !params[:suspend_time].nil?
-      date_params = params[:suspend_time].to_datetime.in_time_zone("EST") + 5.hours
+    if params[:reset_suspension] != "true" && !params[:suspend_time].empty?
+      date_params = params[:suspend_time].to_datetime.in_time_zone("EST") + 5.hours 
 
       if (date_params) > Time.now.to_datetime
         suspend_time = date_params
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       end
     end
 
-    if @user.update(username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], userType: userType, suspendedTill: suspend_time, active: active)
+    if @user.update(username: params[:username],firstName: params[:firstName], lastName: params[:lastName], email: params[:email], phoneNum: params[:phoneNum], address: params[:address], suspendedTill: suspend_time,  userType: userType, active: active)
       auth_id = @user.password_join_authorization_ids.first
       PasswordJoinAuthorization.update(auth_id, answer: params[:security_question_answer])
       @user.reload
