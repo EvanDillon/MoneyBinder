@@ -54,22 +54,6 @@ User.create! do |a|
 end
 # puts "Created Accountant" 
 
-# User.create! do |a|
-#     a.firstName = 'Evan'
-#     a.lastName = 'Dillon'
-#     a.username = 'EvanD'
-#     a.password = "password#1"
-#     a.userType = 3
-#     a.dob = '3/13/1999'
-#     a.email = 'evanjdillon@gmail.com'
-#     a.phoneNum = '7704444444'
-#     a.address = '317 Apple Street'
-#     a.active = true
-#     a.suspendedTill = Time.now
-#     a.passUpdatedAt = Time.now
-# end
-# # puts "Created Evan Dillon" 
-
 User.create! do |a|
     a.firstName = 'Almost'
     a.lastName = 'ExpiredUser'
@@ -83,37 +67,9 @@ User.create! do |a|
     a.active = true
     a.passUpdatedAt = Time.now-28.days
 end
-# puts "Created James Diaz" 
 
-# User.create! do |a|
-#     a.firstName = 'Katy'
-#     a.lastName = 'Highers'
-#     a.username = 'khighers1021'
-#     a.password = "password1!"
-#     a.userType = 2
-#     a.dob = '2/19/2000'
-#     a.email = 'kathrynhighers@gmail.com'
-#     a.phoneNum = '5555555555'
-#     a.address = '123 Sesame Street'
-#     a.active = true
-#     a.passUpdatedAt = Time.now-28.days
-# end
-# # puts "Created Katy Highers"
 
-# User.create! do|a|
-#     a.firstName = 'Andrew'
-#     a.lastName = 'Shein'
-#     a.username = 'ashein1021'
-#     a.password = "password"
-#     a.userType = 3
-#     a.dob = '8/04/1997'
-#     a.email = 'ashein60@gmail.com'
-#     a.phoneNum = '7777777777'
-#     a.address = '645 Fire Street'
-#     a.active = true
-#     a.passUpdatedAt = Time.now
-# end
-# # puts "Created Andrew Shein" 
+
 
 User.create! do |a|
     a.firstName = 'Expired'
