@@ -21,7 +21,6 @@ MoneyBinder is an accounting software developed for a class called Application D
 ## Features
 
 * User authorization
-* Ability to reset password using an email token
 * Dashboard with live ratios based on the data 
 * Ability to create and edit the Chart of Accounts (admin only)
 * Fully functioning ledger for each Account with post references
@@ -34,6 +33,7 @@ MoneyBinder is an accounting software developed for a class called Application D
 * Generates reports including trial balance, income statements, retained earnings, and balance sheet
 * Ability to email, save, and print PDF of any report
 * Tooltips for every clickable feature
+* Ability to reset password using an email token
 
 
 ## What we used
