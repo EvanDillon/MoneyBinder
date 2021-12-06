@@ -25,6 +25,7 @@ MoneyBinder is an accounting software developed for a class called Application D
 * Create closing entry (manager only)
 * Pages of reports detailing trial balance, income statements, retained earnings, and balance sheet
 * Email to other users/save pages of reports to a PDF
+* Tooltips for every clickable feature
 
 
 ### What we used
