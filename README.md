@@ -20,25 +20,19 @@ MoneyBinder is an accounting software developed for a class called Application D
 
 ## Features
 
-* Login page
-* Dashboard with live ratios based on the data
-* User creation
-* Account creation (admin only)
-* Account logs page
-* Journal entry logs page
-* User logs page (admin only)
-* Help page
-* Email any user
+* User authorization
+* Ability to reset password using an email token
+* Dashboard with live ratios based on the data 
+* Ability to create and edit the Chart of Accounts (admin only)
+* Fully functioning ledger for each Account with post references
+* Event log that records all changes to Accounts, Users, and Journal Entries
 * Journalize transactions (manager/accountant only)
+* Attach multiple files when creating new journal entries
+* Ability to add multiple debits/credits when creating a new journal entry
 * Approve/decline entries (manager only)
-* Filter chart of accounts by monetary balance
-* Filter journal entries by monetary balance, start/end date, and/or current status (pending, approved, declined)
-* Attach multiple files when creating a new journal entry
-* Selecting debit/credit types and amounts when creating a new journal entry
-* Adding multiple debits/credits when creating a new journal entry
-* Create closing entry (manager only)
-* Pages of reports detailing trial balance, income statements, retained earnings, and balance sheet
-* Email to other users/save pages of reports to a PDF
+* Create closing entry for the new accounting period (manager only)
+* Generates reports including trial balance, income statements, retained earnings, and balance sheet
+* Ability to email, save, and print PDF of any report
 * Tooltips for every clickable feature
 
 
