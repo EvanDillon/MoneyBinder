@@ -2,7 +2,7 @@
 
 MoneyBinder is accounting software devoploed for a class called Application Domain at Kennesaw State University. In this class we learned about a domain (accounting) and then applied what we learned by creating a fully functioning web application from the ground up.
 * Check out [MoneyBinder on Heroku](https://moneybinder.herokuapp.com/)
-* Video demo of [MoneyBinder]()
+* Video demo of [MoneyBinder](https://youtu.be/MROQGBXpNeU)
 
 ### Features
 
