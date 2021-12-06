@@ -4,7 +4,21 @@ MoneyBinder is an accounting software developed for a class called Application D
 * Check out [MoneyBinder on Heroku](https://moneybinder.herokuapp.com/)
 * Video demo of [MoneyBinder](https://youtu.be/MROQGBXpNeU)
 
-### Features
+## How to login
+
+**Admin User**
+* Username: Admin
+* Password: password
+
+**Manager User**
+* Username: Manager
+* Password: password
+
+**Accountant User**
+* Username: Accountant
+* Password: password
+
+## Features
 
 * Login page
 * Dashboard with live ratios based on the data
@@ -28,7 +42,7 @@ MoneyBinder is an accounting software developed for a class called Application D
 * Tooltips for every clickable feature
 
 
-### What we used
+## What we used
 * **Language** - Ruby
 * **Framework** - Ruby on Rails
 * **Database** - Postgresql
