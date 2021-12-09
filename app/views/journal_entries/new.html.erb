@@ -44,7 +44,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                        <%= f.text_field :debit_total, class: 'form-control', id: 'numbersOnly', value: nil, name: "journal_entry[debit_total][]", required: true %>
+                        <%= f.text_field :debit_total, class: 'form-control', id: 'numbersOnlyDebit', value: nil, name: "journal_entry[debit_total][]", required: true %>
                     </div>  
                   </div>
                 </td>
@@ -72,7 +72,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                      <%= f.text_field :credit_total, class: 'form-control', id: 'numbersOnly', value: nil, name: "journal_entry[credit_total][]", required: true %>
+                        <%= f.text_field :credit_total, class: 'form-control', id: 'numbersOnlyCredit', value: nil, name: "journal_entry[credit_total][]", required: true %>
                     </div>
                   </div>    
                 </td>
@@ -144,22 +144,10 @@
         $(this).parent().parent().remove();
     });
 
-    $('#numbersOnly').keyup(function () { 
+    $("#numbersOnlyDebit, #numbersOnlyCredit").keyup(function () { 
       this.value = this.value.replace(/[^0-9\.]/g,'');
       this.value = this.value.match(/^\d+\.?\d{0,2}/);
     });
-
-    $(".your_button").fileupload({
-      dataType: "json",
-      done: function(e, data) {
-          $(".place_for_your_text").text("File uploaded.");
-      }
-    });
-  });
-
-  $(".custom-file-input").on("change", function() {
-    var fileName = $(this).val().split("\\").pop();
-    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
   });
 
   new DateTime($('#entry_date'), {
