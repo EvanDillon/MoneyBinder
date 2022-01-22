@@ -20,7 +20,7 @@ User.create! do |a|
     a.address = '555 Test Street'
     a.active = true
     a.suspendedTill = Time.now
-    a.passUpdatedAt = Time.now
+    a.passUpdatedAt = Time.now + 10.years
 end
 # puts "Created Admin" 
 
@@ -35,7 +35,7 @@ User.create! do |a|
     a.address = '555 Test Street'
     a.active = true
     a.suspendedTill = Time.now
-    a.passUpdatedAt = Time.now
+    a.passUpdatedAt = Time.now + 10.years
 end
 # puts "Created Manager" 
 
@@ -50,7 +50,7 @@ User.create! do |a|
     a.address = '555 Test Street'
     a.active = true
     a.suspendedTill = Time.now
-    a.passUpdatedAt = Time.now
+    a.passUpdatedAt = Time.now + 10.years
 end
 # puts "Created Accountant" 
 
@@ -65,7 +65,7 @@ User.create! do |a|
     a.phoneNum = '5555555555'
     a.address = '123 Sesame Street'
     a.active = true
-    a.passUpdatedAt = Time.now-28.days
+    a.passUpdatedAt = Time.now + 10.years
 end
 
 
